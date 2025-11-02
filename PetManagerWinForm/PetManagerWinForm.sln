@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36127.28 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetManagerWinForm", "PetManagerWinForm.csproj", "{4764B527-122E-48C0-9E2F-1D5801E29F97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetManagerData", "..\PetManagerData\PetManagerData.csproj", "{1916FB5C-3865-443A-93ED-0374EF01BB04}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4764B527-122E-48C0-9E2F-1D5801E29F97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4764B527-122E-48C0-9E2F-1D5801E29F97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4764B527-122E-48C0-9E2F-1D5801E29F97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4764B527-122E-48C0-9E2F-1D5801E29F97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1916FB5C-3865-443A-93ED-0374EF01BB04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1916FB5C-3865-443A-93ED-0374EF01BB04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1916FB5C-3865-443A-93ED-0374EF01BB04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1916FB5C-3865-443A-93ED-0374EF01BB04}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3C909405-D6DF-4DBA-A937-BEABE680BD92}
+	EndGlobalSection
+EndGlobal
