@@ -1,0 +1,17 @@
+﻿CREATE DATABASE PetManager;
+GO
+USE PetManager;
+GO
+
+IF OBJECT_ID('dbo.Users') IS NULL
+BEGIN
+    CREATE TABLE dbo.Users
+    (
+        Id INT IDENTITY(1,1) PRIMARY KEY,
+        Username NVARCHAR(50) NOT NULL UNIQUE,
+        Password NVARCHAR(100) NOT NULL
+    );
+
+    INSERT INTO dbo.Users (Username, Password)
+    VALUES (N'admin', N'12345'), (N'user1', N'abc123');
+END
