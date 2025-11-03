@@ -15,3 +15,5 @@ BEGIN
     INSERT INTO dbo.Users (Username, Password)
     VALUES (N'admin', N'12345'), (N'user1', N'abc123');
 END
+
+
