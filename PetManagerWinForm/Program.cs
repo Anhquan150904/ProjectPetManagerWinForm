@@ -12,7 +12,6 @@ namespace PetManagerWinForm
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new FormDangNhap());
-
         }
     }
 }
