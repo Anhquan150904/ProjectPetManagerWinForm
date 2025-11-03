@@ -16,7 +16,7 @@ namespace PetManagerWinForm
 
             if(txtUser.Text == "" || txtPassword.Text == "")
             {
-                MessageBox.Show("Tài khoản hoặc mật khẩu không được để trống!");
+                MessageBox.Show("Tài khoản mật khẩu không được để trống!");
             }
             else
             {
