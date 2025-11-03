@@ -14,7 +14,7 @@ namespace PetManagerWinForm
             string connStr = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
             DangNhapController dangNhap = new DangNhapController(connStr);
 
-            if(txtUser.Text == null || txtPassword.Text == null)
+            if(txtUser.Text == "" || txtPassword.Text == "")
             {
                 MessageBox.Show("Khong duoc de trong!");
             }
