@@ -13,7 +13,6 @@ namespace PetManagerWinForm
             ApplicationConfiguration.Initialize();
             Application.Run(new FormDangNhap());
 
-
         }
     }
 }
