@@ -23,7 +23,7 @@ namespace PetManagerWinForm.Controllers
                 cmd.Parameters.AddWithValue("@p", matKhau);
 
                 int count = (int)cmd.ExecuteScalar();
-                return count > 0; // có thì true, không có thì false
+                return count > 0;
             }
         }
     }
