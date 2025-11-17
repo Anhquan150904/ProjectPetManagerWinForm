@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PetManagerWinForm.NghiepVu.QLThuCung;
+using PetManagerWinForm.NghiepVu.QLKhachHang;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +17,18 @@ namespace PetManagerWinForm
         public FormTrangChu()
         {
             InitializeComponent();
+        }
+
+        private void thuCungChuaBanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ThuCungChuaBan frm = new ThuCungChuaBan();
+            frm.Show();
+        }
+
+        private void thuCungDaBanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ThuCungDaBan frm = new ThuCungDaBan();
+            frm.Show();
         }
     }
 }
