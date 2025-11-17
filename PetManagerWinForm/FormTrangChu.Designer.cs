@@ -78,12 +78,14 @@
             thuCungChuaBanToolStripMenuItem.Name = "thuCungChuaBanToolStripMenuItem";
             thuCungChuaBanToolStripMenuItem.Size = new Size(389, 40);
             thuCungChuaBanToolStripMenuItem.Text = "Thú cưng chưa bán";
+            thuCungChuaBanToolStripMenuItem.Click += thuCungChuaBanToolStripMenuItem_Click;
             // 
             // thuCungDaBanToolStripMenuItem
             // 
             thuCungDaBanToolStripMenuItem.Name = "thuCungDaBanToolStripMenuItem";
             thuCungDaBanToolStripMenuItem.Size = new Size(389, 40);
             thuCungDaBanToolStripMenuItem.Text = "Thú cưng đã bán";
+            thuCungDaBanToolStripMenuItem.Click += thuCungDaBanToolStripMenuItem_Click;
             // 
             // thuCungKhachHangToolStripMenuItem
             // 
