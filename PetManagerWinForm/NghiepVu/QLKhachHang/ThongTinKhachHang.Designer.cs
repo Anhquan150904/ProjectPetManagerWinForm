@@ -12,10 +12,12 @@
         private TextBox txtAddress;
         private TextBox txtPhoneNumber;
         private TextBox txtEmail;
+        
 
         private Button btnAdd;
         private Button btnUpdate;
         private Button btnDelete;
+        private Button btnFind;
 
         private DataGridViewTextBoxColumn colCus_Id;
         private DataGridViewTextBoxColumn colCus_Name;
@@ -52,6 +54,7 @@
             btnAdd = new Button();
             btnUpdate = new Button();
             btnDelete = new Button();
+            btnFind = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
             SuspendLayout();
             // 
@@ -172,9 +175,19 @@
             btnDelete.Text = "Delete";
             btnDelete.Click += btnDelete_Click;
             // 
+            // btnFind
+            // 
+            btnFind.Location = new Point(883, 262);
+            btnFind.Name = "btnFind";
+            btnFind.Size = new Size(90, 30);
+            btnFind.TabIndex = 9;
+            btnFind.Text = "Find";
+            btnFind.Click += btnFind_Click;
+            // 
             // ThongTinKhachHang
             // 
             ClientSize = new Size(1026, 511);
+           
             Controls.Add(dgvCustomers);
             Controls.Add(txtId);
             Controls.Add(txtName);
@@ -184,6 +197,8 @@
             Controls.Add(btnAdd);
             Controls.Add(btnUpdate);
             Controls.Add(btnDelete);
+            Controls.Add(btnFind);
+
             Name = "ThongTinKhachHang";
             Text = "Thông Tin Khách Hàng";
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).EndInit();
@@ -192,5 +207,7 @@
         }
 
         #endregion
+
+        
     }
 }
