@@ -108,5 +108,39 @@ namespace PetManagerData.Controllers
                 }
             }
         }
+
+        // Tim kiem thu cung
+
+        public DataTable SearchPets(string searchString)
+        {
+            DataTable dt = new DataTable();
+
+            // Thêm ký tự % để tìm kiếm (LIKE)
+            string searchPattern = $"%{searchString}%";
+
+            using (SqlConnection conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+
+                // tìm kiếm ở 3 cột: PetName, Type, và Price
+                // chu y den kieu du lieu price
+                string query = @"SELECT * FROM Pets 
+                                 WHERE (PetName LIKE @pattern OR 
+                                        Type LIKE @pattern OR 
+                                        CONVERT(NVARCHAR(50), Price) LIKE @pattern)
+                                 AND IsSold = 0"; // Vẫn chỉ tìm thú cưng chưa bán
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@pattern", searchPattern);
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            return dt;
+        }
     }
 }
