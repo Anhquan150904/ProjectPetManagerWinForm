@@ -17,3 +17,19 @@ BEGIN
 END
 
 
+CREATE TABLE Pets (
+    PetId INT IDENTITY PRIMARY KEY,
+    PetName NVARCHAR(100),
+    Type NVARCHAR(50),       -- Loài: chó, mèo...
+    Age INT,
+    Price DECIMAL(18,2),
+    IsSold BIT DEFAULT 0     -- 0 = chưa bán, 1 = đã bán
+);
+
+
+
+INSERT INTO Pets (PetName, Type, Age, Price, IsSold)
+VALUES
+('Milu', 'Dog', 2, 1500000, 0),
+('Tom', 'Cat', 1, 800000, 1),
+('Bun', 'Rabbit', 1, 500000, 0);
