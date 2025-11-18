@@ -36,6 +36,14 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
             dgvPets.Columns.Add(btnDelete);
         }
 
+        public void Refresh()
+        {
+            txtId.Text = "";
+            txtName.Text = "";
+            txtType.Text = "";
+            txtAge.Text = "";
+            txtPrice.Text = "";
+        }
         private void ThuCungChuaBan_Load(object sender, EventArgs e)
         {
             try
@@ -175,6 +183,7 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
                     MessageBox.Show(success ? "Xóa thành công!" : "Xóa thất bại!");
                     if (success)
                         LoadPets(); // Tải lại 
+                    Refresh();
                 }
             }
             catch (Exception ex)
@@ -246,13 +255,10 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
             LoadPets(); // Chỉ cần gọi lại hàm LoadPets gốc
         }
 
+
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            txtId.Text = "";
-            txtName.Text = "";
-            txtType.Text = "";
-            txtAge.Text = "";
-            txtPrice.Text = "";
+            Refresh();
         }
     }
 }
