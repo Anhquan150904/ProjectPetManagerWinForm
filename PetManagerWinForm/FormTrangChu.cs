@@ -30,5 +30,23 @@ namespace PetManagerWinForm
             ThuCungDaBan frm = new ThuCungDaBan();
             frm.Show();
         }
+
+        private void thuCungKhachHangToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ThuCungCuaKhachHang frm = new ThuCungCuaKhachHang();
+            frm.Show();
+        }
+
+        private void thongTinKhachHangToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ThongTinKhachHang frm = new ThongTinKhachHang();
+            frm.Show();
+        }
+
+        private void lichSuGiaoDichToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LichSuGiaoDich frm = new LichSuGiaoDich();
+            frm.Show();
+        }
     }
 }
