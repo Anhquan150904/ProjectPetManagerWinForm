@@ -9,6 +9,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PetManagerWinForm.NghiepVu.QLSanPham;
+using PetManagerWinForm.NghiepVu.QLDichVu;
+using PetManagerWinForm.NghiepVu.QLHoaDon;
+using PetManagerWinForm.NghiepVu.QLNhanVien;
 
 namespace PetManagerWinForm
 {
@@ -47,6 +51,30 @@ namespace PetManagerWinForm
         {
             LichSuGiaoDich frm = new LichSuGiaoDich();
             frm.Show();
+        }
+
+        private void quanLySanPhamToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            QuanLySanPham frm = new QuanLySanPham();
+            frm.Show();
+        }
+
+        private void quanLyDichVuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            QuanLyDichVu quanLyDichVu = new QuanLyDichVu();
+            quanLyDichVu.Show();
+        }
+
+        private void quảnLyHoaDonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            QuanLyHoaDon frm = new QuanLyHoaDon();
+            frm.Show();
+        }
+
+        private void quanLyNhanVienToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            QuanLyNhanVien quanLyNhanVien = new QuanLyNhanVien();
+            quanLyNhanVien.Show();
         }
     }
 }
