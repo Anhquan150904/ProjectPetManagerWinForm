@@ -1,6 +1,6 @@
 ﻿namespace PetManagerWinForm.NghiepVu.QLKhachHang
 {
-    partial class KhachHang
+    partial class LichSuGiaoDich
     {
         /// <summary>
         /// Required designer variable.
@@ -13,8 +13,7 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -31,7 +30,7 @@
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "KhachHang";
+            this.Text = "LichSuGiaoDich";
         }
 
         #endregion
