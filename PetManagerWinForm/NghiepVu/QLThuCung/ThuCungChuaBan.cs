@@ -1,4 +1,5 @@
 ﻿using PetManagerData.Controllers;
+using PetManagerData.Models;
 using System;
 using System.Configuration;
 using System.Data;
@@ -35,6 +36,14 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
             dgvPets.Columns.Add(btnDelete);
         }
 
+        public void Refresh()
+        {
+            txtId.Text = "";
+            txtName.Text = "";
+            txtType.Text = "";
+            txtAge.Text = "";
+            txtPrice.Text = "";
+        }
         private void ThuCungChuaBan_Load(object sender, EventArgs e)
         {
             try
@@ -69,17 +78,17 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
 
         private void dgvPets_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return; 
+            if (e.RowIndex < 0) return;
 
             // Lấy dữ liệu ô của dòng hiện tại
             DataGridViewRow row = dgvPets.Rows[e.RowIndex];
 
             // Truy cập cột bằng TÊN định nghĩa trong Designer
-            int petId = Convert.ToInt32(row.Cells["PetId"].Value);
-            string petName = row.Cells["PetName"].Value.ToString();
-            string petType = row.Cells["PetType"].Value.ToString();
-            int petAge = Convert.ToInt32(row.Cells["PetAge"].Value);
-            decimal petPrice = Convert.ToDecimal(row.Cells["PetPrice"].Value);
+            int petId = Convert.ToInt32(row.Cells["colPetId"].Value);
+            string petName = row.Cells["colPetName"].Value.ToString();
+            string petType = row.Cells["colPetType"].Value.ToString();
+            int petAge = Convert.ToInt32(row.Cells["colPetAge"].Value);
+            decimal petPrice = Convert.ToDecimal(row.Cells["colPetPrice"].Value);
 
             // Hiển thị lên TextBox
             txtId.Text = petId.ToString();
@@ -174,6 +183,7 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
                     MessageBox.Show(success ? "Xóa thành công!" : "Xóa thất bại!");
                     if (success)
                         LoadPets(); // Tải lại 
+                    Refresh();
                 }
             }
             catch (Exception ex)
@@ -207,6 +217,48 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
             {
                 MessageBox.Show("Lỗi khi đánh dấu đã bán: " + ex.Message);
             }
+        }
+
+        private void btn_Search_Click(object sender, EventArgs e)
+        {
+            // Lấy nội dung từ ô tìm kiếm
+            string keyword = txtSearch.Text;
+
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm.");
+                return;
+            }
+
+            try
+            {
+                // Gọi hàm SearchPets mới trong controller
+                DataTable dt = _petController.SearchPets(keyword);
+
+                // Cập nhật DataGridView với kết quả tìm kiếm
+                dgvPets.DataSource = dt;
+
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("Không tìm thấy kết quả nào.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tìm kiếm: " + ex.Message);
+            }
+        }
+
+        private void btnShowAll_Click(object sender, EventArgs e)
+        {
+            txtSearch.Text = ""; // Xóa ô tìm kiếm
+            LoadPets(); // Chỉ cần gọi lại hàm LoadPets gốc
+        }
+
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            Refresh();
         }
     }
 }
