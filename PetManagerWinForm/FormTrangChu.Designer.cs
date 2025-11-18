@@ -37,6 +37,8 @@
             quanLySanPhamToolStripMenuItem = new ToolStripMenuItem();
             quanLyDichVuToolStripMenuItem = new ToolStripMenuItem();
             quanLyKhachHangToolStripMenuItem = new ToolStripMenuItem();
+            thôngTinKháchHàngToolStripMenuItem = new ToolStripMenuItem();
+            lịchSửGiaoDịchToolStripMenuItem = new ToolStripMenuItem();
             quảnLyHoaDonToolStripMenuItem = new ToolStripMenuItem();
             quanLyNhanVienToolStripMenuItem = new ToolStripMenuItem();
             TaiKhoanToolStripMenuItem = new ToolStripMenuItem();
@@ -109,9 +111,24 @@
             // 
             // quanLyKhachHangToolStripMenuItem
             // 
+            quanLyKhachHangToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { thôngTinKháchHàngToolStripMenuItem, lịchSửGiaoDịchToolStripMenuItem });
             quanLyKhachHangToolStripMenuItem.Name = "quanLyKhachHangToolStripMenuItem";
             quanLyKhachHangToolStripMenuItem.Size = new Size(256, 32);
             quanLyKhachHangToolStripMenuItem.Text = "Quản lý khách hàng";
+            // 
+            // thôngTinKháchHàngToolStripMenuItem
+            // 
+            thôngTinKháchHàngToolStripMenuItem.Name = "thôngTinKháchHàngToolStripMenuItem";
+            thôngTinKháchHàngToolStripMenuItem.Size = new Size(281, 32);
+            thôngTinKháchHàngToolStripMenuItem.Text = "Thông Tin Khách Hàng";
+            thôngTinKháchHàngToolStripMenuItem.Click += thongTinKhachHangToolStripMenuItem_Click;
+            // 
+            // lịchSửGiaoDịchToolStripMenuItem
+            // 
+            lịchSửGiaoDịchToolStripMenuItem.Name = "lịchSửGiaoDịchToolStripMenuItem";
+            lịchSửGiaoDịchToolStripMenuItem.Size = new Size(281, 32);
+            lịchSửGiaoDịchToolStripMenuItem.Text = "Lịch Sử Giao Dịch";
+            lịchSửGiaoDịchToolStripMenuItem.Click += lichSuGiaoDichToolStripMenuItem_Click;
             // 
             // quảnLyHoaDonToolStripMenuItem
             // 
@@ -179,5 +196,7 @@
         private ToolStripMenuItem TaiKhoanToolStripMenuItem;
         private ToolStripMenuItem doiMatKhauToolStripMenuItem;
         private ToolStripMenuItem dangXuatToolStripMenuItem;
+        private ToolStripMenuItem thôngTinKháchHàngToolStripMenuItem;
+        private ToolStripMenuItem lịchSửGiaoDịchToolStripMenuItem;
     }
 }

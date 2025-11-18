@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace PetManagerWinForm.NghiepVu.QLKhachHang
 {
-    public partial class KhachHang : Form
+    public partial class LichSuGiaoDich : Form
     {
-        public KhachHang()
+        public LichSuGiaoDich()
         {
             InitializeComponent();
         }

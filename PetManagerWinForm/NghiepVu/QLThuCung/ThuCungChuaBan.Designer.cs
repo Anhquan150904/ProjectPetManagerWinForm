@@ -68,7 +68,7 @@
             // 
             colPetId.HeaderText = "ID";
             colPetId.MinimumWidth = 6;
-            colPetId.Name = "PetId";
+            colPetId.Name = "colPetId";
             colPetId.ReadOnly = true;
             colPetId.Width = 125;
             // 
@@ -76,7 +76,7 @@
             // 
             colPetName.HeaderText = "Name";
             colPetName.MinimumWidth = 6;
-            colPetName.Name = "PetName";
+            colPetName.Name = "colPetName";
             colPetName.ReadOnly = true;
             colPetName.Width = 125;
             // 
@@ -84,7 +84,7 @@
             // 
             colPetType.HeaderText = "Type";
             colPetType.MinimumWidth = 6;
-            colPetType.Name = "PetType";
+            colPetType.Name = "colPetType";
             colPetType.ReadOnly = true;
             colPetType.Width = 125;
             // 
@@ -92,7 +92,7 @@
             // 
             colPetAge.HeaderText = "Age";
             colPetAge.MinimumWidth = 6;
-            colPetAge.Name = "PetAge";
+            colPetAge.Name = "colPetAge";
             colPetAge.ReadOnly = true;
             colPetAge.Width = 125;
             // 
@@ -100,7 +100,7 @@
             // 
             colPetPrice.HeaderText = "Price";
             colPetPrice.MinimumWidth = 6;
-            colPetPrice.Name = "PetPrice";
+            colPetPrice.Name = "colPetPrice";
             colPetPrice.ReadOnly = true;
             colPetPrice.Width = 125;
             // 
@@ -108,36 +108,36 @@
             // 
             txtId.Location = new Point(773, 12);
             txtId.Name = "txtId";
-            txtId.ReadOnly = true; // ID nên để ReadOnly
-            txtId.Size = new Size(200, 27);
+            txtId.ReadOnly = true;
+            txtId.Size = new Size(200, 23);
             txtId.TabIndex = 1;
             // 
             // txtName
             // 
             txtName.Location = new Point(773, 52);
             txtName.Name = "txtName";
-            txtName.Size = new Size(200, 27);
+            txtName.Size = new Size(200, 23);
             txtName.TabIndex = 2;
             // 
             // txtType
             // 
             txtType.Location = new Point(773, 92);
             txtType.Name = "txtType";
-            txtType.Size = new Size(200, 27);
+            txtType.Size = new Size(200, 23);
             txtType.TabIndex = 3;
             // 
             // txtAge
             // 
             txtAge.Location = new Point(773, 132);
             txtAge.Name = "txtAge";
-            txtAge.Size = new Size(200, 27);
+            txtAge.Size = new Size(200, 23);
             txtAge.TabIndex = 4;
             // 
             // txtPrice
             // 
             txtPrice.Location = new Point(773, 172);
             txtPrice.Name = "txtPrice";
-            txtPrice.Size = new Size(200, 27);
+            txtPrice.Size = new Size(200, 23);
             txtPrice.TabIndex = 5;
             // 
             // btnAdd
@@ -147,7 +147,7 @@
             btnAdd.Size = new Size(90, 30);
             btnAdd.TabIndex = 6;
             btnAdd.Text = "Add";
-            btnAdd.Click += btnAdd_Click; 
+            btnAdd.Click += btnAdd_Click;
             // 
             // btnUpdate
             // 
@@ -156,7 +156,7 @@
             btnUpdate.Size = new Size(90, 30);
             btnUpdate.TabIndex = 7;
             btnUpdate.Text = "Update";
-            btnUpdate.Click += btnUpdate_Click; 
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // btnDelete
             // 
@@ -165,7 +165,7 @@
             btnDelete.Size = new Size(90, 30);
             btnDelete.TabIndex = 8;
             btnDelete.Text = "Delete";
-            btnDelete.Click += btnDelete_Click; 
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnSold
             // 
@@ -174,7 +174,7 @@
             btnSold.Size = new Size(90, 30);
             btnSold.TabIndex = 9;
             btnSold.Text = "Sold";
-            btnSold.Click += btnSold_Click; 
+            btnSold.Click += btnSold_Click;
             // 
             // ThuCungChuaBan
             // 
@@ -191,7 +191,7 @@
             Controls.Add(btnSold);
             Name = "ThuCungChuaBan";
             Text = "Quản lý thú cưng chưa bán";
-            Load += ThuCungChuaBan_Load;  // Load lai trang
+            Load += ThuCungChuaBan_Load;
             ((System.ComponentModel.ISupportInitialize)dgvPets).EndInit();
             ResumeLayout(false);
             PerformLayout();
