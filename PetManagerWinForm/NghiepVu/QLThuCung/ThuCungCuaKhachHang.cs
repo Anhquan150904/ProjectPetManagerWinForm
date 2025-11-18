@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PetManagerWinForm.NghiepVu.QLKhachHang
+namespace PetManagerWinForm.NghiepVu.QLThuCung
 {
-    public partial class KhachHang : Form
+    public partial class ThuCungCuaKhachHang : Form
     {
-        public KhachHang()
+        public ThuCungCuaKhachHang()
         {
             InitializeComponent();
         }
