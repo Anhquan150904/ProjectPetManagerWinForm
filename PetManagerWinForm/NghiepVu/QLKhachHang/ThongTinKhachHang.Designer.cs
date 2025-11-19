@@ -19,11 +19,11 @@
         private Button btnDelete;
         private Button btnFind;
 
-        private DataGridViewTextBoxColumn colCus_Id;
-        private DataGridViewTextBoxColumn colCus_Name;
-        private DataGridViewTextBoxColumn colAddress;
-        private DataGridViewTextBoxColumn colPhoneNumber;
-        private DataGridViewTextBoxColumn colEmail;
+        //private DataGridViewTextBoxColumn colCus_Id;
+        //private DataGridViewTextBoxColumn colCus_Name;
+        //private DataGridViewTextBoxColumn colAddress;
+        //private DataGridViewTextBoxColumn colPhoneNumber;
+        //private DataGridViewTextBoxColumn colEmail;
 
         protected override void Dispose(bool disposing)
         {
@@ -41,11 +41,11 @@
         private void InitializeComponent()
         {
             dgvCustomers = new DataGridView();
-            colCus_Id = new DataGridViewTextBoxColumn();
-            colCus_Name = new DataGridViewTextBoxColumn();
-            colAddress = new DataGridViewTextBoxColumn();
-            colPhoneNumber = new DataGridViewTextBoxColumn();
-            colEmail = new DataGridViewTextBoxColumn();
+            //colCus_Id = new DataGridViewTextBoxColumn();
+            //colCus_Name = new DataGridViewTextBoxColumn();
+            //colAddress = new DataGridViewTextBoxColumn();
+            //colPhoneNumber = new DataGridViewTextBoxColumn();
+            //colEmail = new DataGridViewTextBoxColumn();
             txtId = new TextBox();
             txtName = new TextBox();
             txtAddress = new TextBox();
@@ -62,7 +62,7 @@
             // 
             dgvCustomers.AllowUserToAddRows = false;
             dgvCustomers.ColumnHeadersHeight = 29;
-            dgvCustomers.Columns.AddRange(new DataGridViewColumn[] { colCus_Id, colCus_Name, colAddress, colPhoneNumber, colEmail });
+            //dgvCustomers.Columns.AddRange(new DataGridViewColumn[] { colCus_Id, colCus_Name, colAddress, colPhoneNumber, colEmail });
             dgvCustomers.Location = new Point(12, 12);
             dgvCustomers.Name = "dgvCustomers";
             dgvCustomers.ReadOnly = true;
@@ -71,52 +71,52 @@
             dgvCustomers.Size = new Size(678, 471);
             dgvCustomers.TabIndex = 0;
             dgvCustomers.CellClick += dgvCustomers_CellClick;
-            // 
-            // colCus_Id
-            // 
-            colCus_Id.HeaderText = "ID";
-            colCus_Id.MinimumWidth = 6;
-            colCus_Id.Name = "colCus_Id";
-            colCus_Id.ReadOnly = true;
-            colCus_Id.Width = 125;
-            // 
-            // colCus_Name
-            // 
-            colCus_Name.HeaderText = "Name";
-            colCus_Name.MinimumWidth = 6;
-            colCus_Name.Name = "colCus_Name";
-            colCus_Name.ReadOnly = true;
-            colCus_Name.Width = 125;
-            // 
-            // colAddress
-            // 
-            colAddress.HeaderText = "Address";
-            colAddress.MinimumWidth = 6;
-            colAddress.Name = "colAddress";
-            colAddress.ReadOnly = true;
-            colAddress.Width = 125;
-            // 
-            // colPhoneNumber
-            // 
-            colPhoneNumber.HeaderText = "PhoneNumber";
-            colPhoneNumber.MinimumWidth = 6;
-            colPhoneNumber.Name = "colPhoneNumber";
-            colPhoneNumber.ReadOnly = true;
-            colPhoneNumber.Width = 125;
-            // 
-            // colEmail
-            // 
-            colEmail.HeaderText = "Email";
-            colEmail.MinimumWidth = 6;
-            colEmail.Name = "colEmail";
-            colEmail.ReadOnly = true;
-            colEmail.Width = 125;
+            //// 
+            //// colCus_Id
+            //// 
+            //colCus_Id.HeaderText = "ID";
+            //colCus_Id.MinimumWidth = 6;
+            //colCus_Id.Name = "colCus_Id";
+            //colCus_Id.ReadOnly = true;
+            //colCus_Id.Width = 125;
+            //// 
+            //// colCus_Name
+            //// 
+            //colCus_Name.HeaderText = "Name";
+            //colCus_Name.MinimumWidth = 6;
+            //colCus_Name.Name = "colCus_Name";
+            //colCus_Name.ReadOnly = true;
+            //colCus_Name.Width = 125;
+            //// 
+            //// colAddress
+            //// 
+            //colAddress.HeaderText = "Address";
+            //colAddress.MinimumWidth = 6;
+            //colAddress.Name = "colAddress";
+            //colAddress.ReadOnly = true;
+            //colAddress.Width = 125;
+            //// 
+            //// colPhoneNumber
+            //// 
+            //colPhoneNumber.HeaderText = "PhoneNumber";
+            //colPhoneNumber.MinimumWidth = 6;
+            //colPhoneNumber.Name = "colPhoneNumber";
+            //colPhoneNumber.ReadOnly = true;
+            //colPhoneNumber.Width = 125;
+            //// 
+            //// colEmail
+            //// 
+            //colEmail.HeaderText = "Email";
+            //colEmail.MinimumWidth = 6;
+            //colEmail.Name = "colEmail";
+            //colEmail.ReadOnly = true;
+            //colEmail.Width = 125;
             // 
             // txtId
             // 
             txtId.Location = new Point(773, 12);
             txtId.Name = "txtId";
-            txtId.ReadOnly = true;
+            txtId.ReadOnly = false;
             txtId.Size = new Size(200, 23);
             txtId.TabIndex = 1;
             // 
