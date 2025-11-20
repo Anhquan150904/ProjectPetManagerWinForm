@@ -73,9 +73,9 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
         {
             _mockServices = new BindingList<Service>
             {
-                new Service { ServiceId = _nextMockId++, ServiceName = "Grooming", Type = "Care", Amount = 10, Price = 150000 },
-                new Service { ServiceId = _nextMockId++, ServiceName = "Vaccination", Type = "Medical", Amount = 20, Price = 200000 },
-                new Service { ServiceId = _nextMockId++, ServiceName = "Training", Type = "Behavior", Amount = 5, Price = 500000 }
+                new Service { ServiceId = _nextMockId++, ServiceName = "Tắm", Type = "Spa", Amount = 10, Price = 300000 },
+                new Service { ServiceId = _nextMockId++, ServiceName = "Cắt tỉa lông", Type = "Spa", Amount = 20, Price = 100000 },
+                new Service { ServiceId = _nextMockId++, ServiceName = "Huấn luyện", Type = "Behavior", Amount = 5, Price = 500000 }
             };
         }
 
@@ -312,7 +312,7 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                     {
                         var item = _mockServices.FirstOrDefault(x => x.ServiceId == id);
                         if (item != null) _mockServices.Remove(item);
-                        MessageBox.Show("Xóa thành công (mock)");
+                        MessageBox.Show("Xóa thành công");
                         LoadSer();
                         Refresh();
                         return;
