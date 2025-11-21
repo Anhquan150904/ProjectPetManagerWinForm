@@ -68,6 +68,7 @@
             dvgProduct.RowHeadersWidth = 51;
             dvgProduct.Size = new Size(801, 389);
             dvgProduct.TabIndex = 0;
+            dvgProduct.CellContentClick += dataGridView1_CellClick;
             // 
             // ID
             // 
@@ -212,7 +213,6 @@
             // 
             txtId.Location = new Point(958, 130);
             txtId.Name = "txtId";
-            txtId.ReadOnly = true;
             txtId.Size = new Size(200, 27);
             txtId.TabIndex = 21;
             // 
