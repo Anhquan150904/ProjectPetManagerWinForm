@@ -130,6 +130,22 @@ namespace PetManagerData.Controllers
             }
         }
 
+        // Hủy bán thú cưng 
+        public bool ReturnMarkAsSold(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+                string query = "UPDATE Pets SET IsSold = 0 WHERE PetId = @id";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+
         // Tim kiem thu cung
 
         public DataTable SearchPets(string searchString)
