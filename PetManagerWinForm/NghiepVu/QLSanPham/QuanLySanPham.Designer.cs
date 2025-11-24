@@ -188,16 +188,16 @@
             // 
             btn_ShowAll.Location = new Point(1271, 31);
             btn_ShowAll.Name = "btn_ShowAll";
-            btn_ShowAll.Size = new Size(90, 65);
+            btn_ShowAll.Size = new Size(90, 42);
             btn_ShowAll.TabIndex = 32;
             btn_ShowAll.Text = "ShowAll";
             btn_ShowAll.Click += btn_ShowAll_Click;
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(1161, 31);
+            btnSearch.Location = new Point(1271, 107);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(90, 65);
+            btnSearch.Size = new Size(90, 42);
             btnSearch.TabIndex = 31;
             btnSearch.Text = "Search";
             btnSearch.Click += btnSearch_Click;
