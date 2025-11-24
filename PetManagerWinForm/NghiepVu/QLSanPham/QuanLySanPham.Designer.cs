@@ -186,7 +186,7 @@
             // 
             // btn_ShowAll
             // 
-            btn_ShowAll.Location = new Point(1271, 31);
+            btn_ShowAll.Location = new Point(1158, 79);
             btn_ShowAll.Name = "btn_ShowAll";
             btn_ShowAll.Size = new Size(90, 42);
             btn_ShowAll.TabIndex = 32;
