@@ -195,7 +195,7 @@
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(1271, 107);
+            btnSearch.Location = new Point(1158, 31);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(90, 42);
             btnSearch.TabIndex = 31;
