@@ -14,19 +14,26 @@ namespace PetManagerWinForm
             string connStr = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
             DangNhapController dangNhap = new DangNhapController(connStr);
 
-            bool hopLe = dangNhap.KiemTraDangNhap(txtUser.Text, txtPassword.Text);
-
-            if (hopLe)
+            if(txtUser.Text == "" || txtPassword.Text == "")
             {
-                MessageBox.Show("Đăng nhập thành công!");
-                // mở form chính
-                FormTrangChu formTrangChu = new FormTrangChu();
-                formTrangChu.Show();
-                this.Hide();
+                MessageBox.Show("Tài khoản mật khẩu không được để trống!");
             }
             else
             {
-                MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
+                bool hopLe = dangNhap.KiemTraDangNhap(txtUser.Text, txtPassword.Text);
+
+                if (hopLe)
+                {
+                    MessageBox.Show("Đăng nhập thành công!");
+                    // mở form chính
+                    FormTrangChu formTrangChu = new FormTrangChu();
+                    formTrangChu.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
+                }
             }
         }
     }
