@@ -1,14 +1,7 @@
-﻿using PetManagerWinForm.NghiepVu.QLThuCung;
-using PetManagerWinForm.NghiepVu.QLKhachHang;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
+using PetManagerWinForm.NghiepVu.QLThuCung;
+using PetManagerWinForm.NghiepVu.QLKhachHang;
 using PetManagerWinForm.NghiepVu.QLSanPham;
 using PetManagerWinForm.NghiepVu.QLDichVu;
 using PetManagerWinForm.NghiepVu.QLHoaDon;
@@ -23,58 +16,78 @@ namespace PetManagerWinForm
             InitializeComponent();
         }
 
-        private void thuCungChuaBanToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LoadForm(Form frm)
         {
-            ThuCungChuaBan frm = new ThuCungChuaBan();
+            panelContent.Controls.Clear();
+            frm.TopLevel = false;
+            frm.FormBorderStyle = FormBorderStyle.None;
+            frm.Dock = DockStyle.Fill;
+            panelContent.Controls.Add(frm);
             frm.Show();
         }
 
-        private void thuCungDaBanToolStripMenuItem_Click(object sender, EventArgs e)
+        private Button currentButton = null;
+
+        private void SetActiveButton(Button btn)
         {
-            ThuCungDaBan frm = new ThuCungDaBan();
-            frm.Show();
+            // Nếu có nút cũ -> reset màu
+            if (currentButton != null)
+            {
+                currentButton.BackColor = Color.FromArgb(255, 224, 192);
+            }
+
+            // Đặt nút mới
+            currentButton = btn;
+            currentButton.BackColor = Color.FromArgb(238, 213, 210); // màu nổi bật
         }
 
-        private void thuCungKhachHangToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnThuCungChuaBan_Click(object sender, EventArgs e)
         {
-            ThuCungCuaKhachHang frm = new ThuCungCuaKhachHang();
-            frm.Show();
+            SetActiveButton((Button)sender);
+            LoadForm(new ThuCungChuaBan());
         }
 
-        private void thongTinKhachHangToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnThuCungDaBan_Click(object sender, EventArgs e)
         {
-            ThongTinKhachHang frm = new ThongTinKhachHang();
-            frm.Show();
+            SetActiveButton((Button)sender);
+            LoadForm(new ThuCungDaBan());
         }
 
-        private void lichSuGiaoDichToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnThuCungKhachHang_Click(object sender, EventArgs e)
         {
-            LichSuGiaoDich frm = new LichSuGiaoDich();
-            frm.Show();
+            SetActiveButton((Button)sender);
+            LoadForm(new ThuCungCuaKhachHang());
         }
 
-        private void quanLySanPhamToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnKhachHang_Click(object sender, EventArgs e)
         {
-            QuanLySanPham frm = new QuanLySanPham();
-            frm.Show();
+            SetActiveButton((Button)sender);
+            LoadForm(new ThongTinKhachHang());
         }
 
-        private void quanLyDichVuToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnSanPham_Click(object sender, EventArgs e)
         {
-            QuanLyDichVu quanLyDichVu = new QuanLyDichVu();
-            quanLyDichVu.Show();
+            SetActiveButton((Button)sender);
+            LoadForm(new QuanLySanPham());
         }
 
-        private void quảnLyHoaDonToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnDichVu_Click(object sender, EventArgs e)
         {
-            QuanLyHoaDon frm = new QuanLyHoaDon();
-            frm.Show();
+            SetActiveButton((Button)sender);
+            LoadForm(new QuanLyDichVu());
         }
 
-        private void quanLyNhanVienToolStripMenuItem_Click(object sender, EventArgs e)
+        private void btnHoaDon_Click(object sender, EventArgs e)
         {
-            QuanLyNhanVien quanLyNhanVien = new QuanLyNhanVien();
-            quanLyNhanVien.Show();
+            SetActiveButton((Button)sender);
+            LoadForm(new QuanLyHoaDon());
         }
+
+        private void btnNhanVien_Click(object sender, EventArgs e)
+        {
+            SetActiveButton((Button)sender);
+            LoadForm(new QuanLyNhanVien());
+        }
+
     }
 }
