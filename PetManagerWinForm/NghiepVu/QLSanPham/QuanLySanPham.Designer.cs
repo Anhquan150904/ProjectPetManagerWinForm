@@ -68,6 +68,7 @@
             dvgProduct.RowHeadersWidth = 51;
             dvgProduct.Size = new Size(801, 389);
             dvgProduct.TabIndex = 0;
+            dvgProduct.CellClick += dataGridView1_CellClick;
             dvgProduct.CellContentClick += dataGridView1_CellClick;
             // 
             // ID
