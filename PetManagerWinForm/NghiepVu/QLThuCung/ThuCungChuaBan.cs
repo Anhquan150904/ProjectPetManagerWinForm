@@ -17,24 +17,6 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
             InitializeComponent();
         }
         // Hàm này dùng để thêm 2 cột "Edit" và "Delete" vào grid
-        private void SetupGridViewButtons()
-        {
-            // Nút Edit
-            DataGridViewButtonColumn btnEdit = new DataGridViewButtonColumn();
-            btnEdit.HeaderText = "Edit";
-            btnEdit.Name = "btnEdit";
-            btnEdit.Text = "Edit";
-            btnEdit.UseColumnTextForButtonValue = true;
-            dgvPets.Columns.Add(btnEdit);
-
-            // Nút Delete
-            DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn();
-            btnDelete.HeaderText = "Delete";
-            btnDelete.Name = "btnDelete";
-            btnDelete.Text = "Delete";
-            btnDelete.UseColumnTextForButtonValue = true;
-            dgvPets.Columns.Add(btnDelete);
-        }
 
         public void Refresh()
         {
@@ -51,7 +33,6 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
                 string connStr = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
                 _petController = new PetController(connStr);
 
-                SetupGridViewButtons();
 
                 // Tải dữ liệu
                 LoadPets();
