@@ -60,7 +60,7 @@
             panelLeft.Location = new Point(0, 0);
             panelLeft.Name = "panelLeft";
             panelLeft.Padding = new Padding(10);
-            panelLeft.Size = new Size(350, 1033);
+            panelLeft.Size = new Size(350, 1041);
             panelLeft.TabIndex = 1;
             // 
             // pictureBox1
@@ -213,19 +213,20 @@
             panelContent.Dock = DockStyle.Fill;
             panelContent.Location = new Point(350, 0);
             panelContent.Name = "panelContent";
-            panelContent.Size = new Size(1552, 1033);
+            panelContent.Size = new Size(1554, 1041);
             panelContent.TabIndex = 0;
             // 
             // FormTrangChu
             // 
             BackColor = Color.LightCoral;
-            ClientSize = new Size(1902, 1033);
+            ClientSize = new Size(1904, 1041);
             Controls.Add(panelContent);
             Controls.Add(panelLeft);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "FormTrangChu";
             Text = "Trang chủ quản lý thú cưng";
             WindowState = FormWindowState.Maximized;
+            Load += FormTrangChu_Load;
             panelLeft.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

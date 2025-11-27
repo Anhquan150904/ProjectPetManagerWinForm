@@ -89,5 +89,9 @@ namespace PetManagerWinForm
             LoadForm(new QuanLyNhanVien());
         }
 
+        private void FormTrangChu_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
