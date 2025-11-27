@@ -37,7 +37,6 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-
             if (!int.TryParse(textID.Text, out int id))
             {
                 MessageBox.Show("ID không hợp lệ. Vui lòng nhập số nguyên.", "Lỗi nhập liệu", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -45,10 +44,19 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
                 return;
             }
 
-            // Tạo một hàng dữ liệu mới
+            foreach (DataRow row in dtNhanVien.Rows)
+            {
+                if (row.RowState != DataRowState.Deleted && Convert.ToInt32(row["ID"]) == id)
+                {
+                    MessageBox.Show("Mã nhân viên (ID) này đã tồn tại! Vui lòng nhập ID khác.", "Trùng lặp", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    textID.Focus();
+                    textID.SelectAll(); 
+                    return;
+                }
+            }
+
             DataRow newRow = dtNhanVien.NewRow();
 
-            // Gán giá trị từ TextBox vào các cột tương ứng
             newRow["ID"] = id;
             newRow["Name"] = textName.Text;
             newRow["Address"] = textAddress.Text;
@@ -57,17 +65,10 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             newRow["Email"] = textEmail.Text;
             newRow["Position"] = textPosition.Text;
 
-            // Thêm hàng vào DataTable (DataGridView sẽ tự động cập nhật)
             dtNhanVien.Rows.Add(newRow);
 
-
-            textID.Text = string.Empty;
-            textName.Text = string.Empty;
-            textAddress.Text = string.Empty;
-            textPhone.Text = string.Empty;
-            textSex.Text = string.Empty;
-            textEmail.Text = string.Empty;
-            textPosition.Text = string.Empty;
+            MessageBox.Show("Thêm nhân viên thành công!", "Thông báo");
+            ClearTextbox(); 
             textID.Focus();
         }
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
