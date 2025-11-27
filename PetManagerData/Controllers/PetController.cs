@@ -33,6 +33,27 @@ namespace PetManagerData.Controllers
             return dt;
         }
 
+        public DataTable GetPetsIsSold()
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+                string query = "SELECT * FROM Pets WHERE IsSold = 1";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                {
+                    da.Fill(dt);
+                }
+            }
+            return dt;
+        }
+        //public DataTable GetCustomerPets()
+        //{
+        //    DataTable dt = new DataTable();
+        //    return dt;
+        //}
+
         // Thêm thú cưng
         public bool AddPet(string name, string type, int age, decimal price)
         {
@@ -100,6 +121,22 @@ namespace PetManagerData.Controllers
             {
                 conn.Open();
                 string query = "UPDATE Pets SET IsSold = 1 WHERE PetId = @id";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+                    return cmd.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+
+        // Hủy bán thú cưng 
+        public bool ReturnMarkAsSold(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+                string query = "UPDATE Pets SET IsSold = 0 WHERE PetId = @id";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
