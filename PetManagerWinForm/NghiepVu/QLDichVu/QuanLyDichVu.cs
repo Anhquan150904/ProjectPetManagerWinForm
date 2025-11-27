@@ -24,7 +24,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
         public QuanLyDichVu()
         {
             InitializeComponent();
-            SetupGripViewButton();
 
             if (_useMock)
             {
@@ -79,29 +78,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             };
         }
 
-        private void SetupGripViewButton()
-        {
-            // Edit button column
-            var btnEdit = new DataGridViewButtonColumn();
-            btnEdit.Name = "colEdit";
-            btnEdit.HeaderText = "";
-            btnEdit.Text = "Edit";
-            btnEdit.UseColumnTextForButtonValue = true;
-            btnEdit.Width = 60;
-
-            // Delete button column
-            var btnDelete = new DataGridViewButtonColumn();
-            btnDelete.Name = "colDelete";
-            btnDelete.HeaderText = "";
-            btnDelete.Text = "Delete";
-            btnDelete.UseColumnTextForButtonValue = true;
-            btnDelete.Width = 60;
-
-            // Add columns at the end
-            dgvSer.Columns.Add(btnEdit);
-            dgvSer.Columns.Add(btnDelete);
-        }
-
         private void dgvSer_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return; // header clicked
@@ -121,38 +97,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
 
                 // Optionally set focus to name for quick editing
                 txtName.Focus();
-            }
-            else if (column.Name == "colDelete")
-            {
-                // Confirm then delete the row
-                var result = MessageBox.Show("Bạn có chắc muốn xóa dịch vụ này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
-                {
-                    // Try to delete from database if controller available
-                    if (!_useMock && int.TryParse(dgvSer.Rows[e.RowIndex].Cells["colSerId"].Value?.ToString(), out int id) && _serviceController != null)
-                    {
-                        bool success = _serviceController.DeleteService(id);
-                        MessageBox.Show(success ? "Xóa thành công" : "Xóa thất bại");
-                        if (success)
-                            LoadSer();
-                    }
-                    else
-                    {
-                        // Fallback/mock: remove from mock list
-                        if (_useMock)
-                        {
-                            if (int.TryParse(dgvSer.Rows[e.RowIndex].Cells["colSerId"].Value?.ToString(), out int mid))
-                            {
-                                var item = _mockServices.FirstOrDefault(x => x.ServiceId == mid);
-                                if (item != null) _mockServices.Remove(item);
-                            }
-                        }
-                        else
-                        {
-                            dgvSer.Rows.RemoveAt(e.RowIndex);
-                        }
-                    }
-                }
             }
         }
 
