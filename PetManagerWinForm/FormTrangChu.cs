@@ -6,6 +6,7 @@ using PetManagerWinForm.NghiepVu.QLSanPham;
 using PetManagerWinForm.NghiepVu.QLDichVu;
 using PetManagerWinForm.NghiepVu.QLHoaDon;
 using PetManagerWinForm.NghiepVu.QLNhanVien;
+using PetManagerWinForm.NghiepVu;
 
 namespace PetManagerWinForm
 {
@@ -87,6 +88,12 @@ namespace PetManagerWinForm
         {
             SetActiveButton((Button)sender);
             LoadForm(new QuanLyNhanVien());
+        }
+
+        private void btnThanhToan_Click(object sender, EventArgs e)
+        {
+            SetActiveButton((Button)sender);
+            LoadForm(new FrmThanhToan());
         }
 
     }

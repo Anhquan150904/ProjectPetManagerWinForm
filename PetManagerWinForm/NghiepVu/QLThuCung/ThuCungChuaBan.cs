@@ -1,10 +1,8 @@
-﻿using PetManagerData.Controllers;
-using PetManagerData.Models;
+﻿using PetManagerData.Controllers; // Business Logic Layer (BLL)
 using System;
 using System.Configuration;
 using System.Data;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace PetManagerWinForm.NghiepVu.QLThuCung
 {
@@ -16,8 +14,8 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
         {
             InitializeComponent();
         }
-        // Hàm này dùng để thêm 2 cột "Edit" và "Delete" vào grid
 
+        // Hàm làm sạch TextBox (Giữ nguyên)
         public void Refresh()
         {
             txtId.Text = "";
@@ -26,12 +24,13 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
             txtAge.Text = "";
             txtPrice.Text = "";
         }
+
         private void ThuCungChuaBan_Load(object sender, EventArgs e)
         {
             try
             {
                 string connStr = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
-                _petController = new PetController(connStr);
+                _petController = new PetController(connStr); // Khởi tạo BLL
 
 
                 // Tải dữ liệu
@@ -45,11 +44,13 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
 
         private void LoadPets()
         {
+            // Gọi BLL để lấy dữ liệu thú cưng chưa bán
             var dt = _petController.GetPetsNotSold();
 
-            dgvPets.AutoGenerateColumns = false; // dùng cột có sẵn
+            dgvPets.AutoGenerateColumns = false;
             dgvPets.DataSource = dt;
 
+            // Mapping DataPropertyName (Giữ nguyên)
             colPetId.DataPropertyName = "PetId";
             colPetName.DataPropertyName = "PetName";
             colPetType.DataPropertyName = "Type";
@@ -61,13 +62,14 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
         {
             if (e.RowIndex < 0) return;
 
-            // Lấy dữ liệu ô của dòng hiện tại
             DataGridViewRow row = dgvPets.Rows[e.RowIndex];
 
-            // Truy cập cột bằng TÊN định nghĩa trong Designer
+            // Đảm bảo dữ liệu không null trước khi chuyển đổi
+            if (row.Cells["colPetId"].Value == null) return;
+
             int petId = Convert.ToInt32(row.Cells["colPetId"].Value);
-            string petName = row.Cells["colPetName"].Value.ToString();
-            string petType = row.Cells["colPetType"].Value.ToString();
+            string petName = row.Cells["colPetName"].Value?.ToString() ?? "";
+            string petType = row.Cells["colPetType"].Value?.ToString() ?? "";
             int petAge = Convert.ToInt32(row.Cells["colPetAge"].Value);
             decimal petPrice = Convert.ToDecimal(row.Cells["colPetPrice"].Value);
 
@@ -78,25 +80,25 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
             txtAge.Text = petAge.ToString();
             txtPrice.Text = petPrice.ToString();
 
-            // Xử lý click nút (chỉ nút trong grid)
+            // Xử lý click nút (Nếu bạn đã thêm các nút vào GridView)
             string columnName = dgvPets.Columns[e.ColumnIndex].Name;
 
             switch (columnName)
             {
-                case "btnEdit":
-                    MessageBox.Show($"Bạn đang chọn sửa thú cưng: {petName}. Hãy sửa thông tin bên phải và nhấn 'Update'.");
-                    break;
-
+                // Logic xử lý nút trong Gridview: XÓA
                 case "btnDelete":
                     var confirmDelete = MessageBox.Show($"Bạn có chắc muốn xóa {petName}?",
-                                                      "Xác nhận", MessageBoxButtons.YesNo);
+                                                        "Xác nhận", MessageBoxButtons.YesNo);
                     if (confirmDelete == DialogResult.Yes)
                     {
-                        bool success = _petController.DeletePet(petId);
+                        bool success = _petController.DeletePet(petId); // Gọi BLL
                         MessageBox.Show(success ? "Xóa thành công!" : "Xóa thất bại!");
-                        LoadPets();
+                        if (success) LoadPets();
                     }
                     break;
+
+                    // (Thêm các case khác nếu có nút trong GridView)
+                    // Ví dụ: case "btnEdit": (Nếu bạn dùng nút Edit trong grid thay vì nút Update ngoài form)
             }
         }
 
@@ -110,11 +112,11 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
                 int age = Convert.ToInt32(txtAge.Text);
                 decimal price = Convert.ToDecimal(txtPrice.Text);
 
-                bool success = _petController.AddPet(name, type, age, price);
+                bool success = _petController.InsertPet(name, type, age, price); // Gọi BLL
                 MessageBox.Show(success ? "Thêm thành công!" : "Thêm thất bại!");
 
                 if (success)
-                    LoadPets(); // Tải lại 
+                    LoadPets();
             }
             catch (Exception ex)
             {
@@ -133,11 +135,11 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
                 int age = Convert.ToInt32(txtAge.Text);
                 decimal price = Convert.ToDecimal(txtPrice.Text);
 
-                bool success = _petController.UpdatePet(id, name, type, age, price);
+                bool success = _petController.UpdatePet(id, name, type, age, price); // Gọi BLL
                 MessageBox.Show(success ? "Cập nhật thành công!" : "Cập nhật thất bại!");
 
                 if (success)
-                    LoadPets(); // Tải lại 
+                    LoadPets();
             }
             catch (Exception ex)
             {
@@ -157,13 +159,13 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
                 }
 
                 var confirmDelete = MessageBox.Show($"Bạn có chắc muốn xóa thú cưng ID {id}?",
-                                                  "Xác nhận", MessageBoxButtons.YesNo);
+                                                    "Xác nhận", MessageBoxButtons.YesNo);
                 if (confirmDelete == DialogResult.Yes)
                 {
-                    bool success = _petController.DeletePet(id);
+                    bool success = _petController.DeletePet(id); // Gọi BLL
                     MessageBox.Show(success ? "Xóa thành công!" : "Xóa thất bại!");
                     if (success)
-                        LoadPets(); // Tải lại 
+                        LoadPets();
                     Refresh();
                 }
             }
@@ -173,36 +175,9 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
             }
         }
 
-        private void btnSold_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                int id = Convert.ToInt32(txtId.Text);
-                if (id <= 0)
-                {
-                    MessageBox.Show("Vui lòng chọn thú cưng từ lưới trước.");
-                    return;
-                }
-
-                var confirmSold = MessageBox.Show($"Đánh dấu thú cưng ID {id} là đã bán?",
-                                                  "Xác nhận", MessageBoxButtons.YesNo);
-                if (confirmSold == DialogResult.Yes)
-                {
-                    bool success = _petController.MarkAsSold(id);
-                    MessageBox.Show(success ? "Đã đánh dấu 'Đã bán'!" : "Không thể đánh dấu!");
-                    if (success)
-                        LoadPets(); // Tải lại 
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi đánh dấu đã bán: " + ex.Message);
-            }
-        }
 
         private void btn_Search_Click(object sender, EventArgs e)
         {
-            // Lấy nội dung từ ô tìm kiếm
             string keyword = txtSearch.Text;
 
             if (string.IsNullOrWhiteSpace(keyword))
@@ -213,10 +188,9 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
 
             try
             {
-                // Gọi hàm SearchPets mới trong controller
-                DataTable dt = _petController.SearchPets(keyword);
+                // Gọi hàm SearchPetsNotSold mới trong BLL
+                DataTable dt = _petController.SearchPetsNotSold(keyword);
 
-                // Cập nhật DataGridView với kết quả tìm kiếm
                 dgvPets.DataSource = dt;
 
                 if (dt.Rows.Count == 0)
@@ -232,8 +206,8 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
 
         private void btnShowAll_Click(object sender, EventArgs e)
         {
-            txtSearch.Text = ""; // Xóa ô tìm kiếm
-            LoadPets(); // Chỉ cần gọi lại hàm LoadPets gốc
+            txtSearch.Text = "";
+            LoadPets();
         }
 
 

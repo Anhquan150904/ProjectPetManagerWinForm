@@ -66,9 +66,9 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(43, 748);
+            pictureBox1.Location = new Point(48, 674);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(251, 262);
+            pictureBox1.Size = new Size(238, 231);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 9;
             pictureBox1.TabStop = false;
@@ -86,6 +86,7 @@
             button1.TabIndex = 8;
             button1.Text = "Thanh Toán";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += btnThanhToan_Click;
             // 
             // btnThuCungChuaBan
             // 

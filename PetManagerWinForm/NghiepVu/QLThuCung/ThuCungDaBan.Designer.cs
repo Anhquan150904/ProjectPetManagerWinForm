@@ -7,6 +7,36 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        // Khai báo lại các controls được sử dụng trong designer
+        private DataGridView dgvPets;
+        private TextBox txtId;
+        private TextBox txtName;
+        private TextBox txtType;
+        private TextBox txtAge;
+        private TextBox txtPrice;
+        private Button btnCancelSold;
+        private DataGridViewTextBoxColumn colPetId;
+        private DataGridViewTextBoxColumn colPetName;
+        private DataGridViewTextBoxColumn colPetType;
+        private DataGridViewTextBoxColumn colPetAge;
+        private DataGridViewTextBoxColumn colPetPrice;
+        private TextBox txtSearch;
+        private Button btnSearch;
+        private Button btn_ShowAll;
+        private Button btnRefresh;
+
+        // Khai báo các Panels và Labels mới
+        private Panel panelLeft;
+        private Panel panelRight;
+        private Label lblSearch;
+        private Label lblTitle;
+        private Label label3;
+        private Label label4;
+        private Label label5;
+        private Label label6;
+        private Label label7;
+
+
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -28,306 +58,358 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label7 = new Label();
-            label6 = new Label();
-            label5 = new Label();
-            label4 = new Label();
-            label3 = new Label();
-            btnRefresh = new Button();
-            label2 = new Label();
-            label1 = new Label();
-            btn_ShowAll = new Button();
-            btnSearch = new Button();
-            txtSearch = new TextBox();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            panelLeft = new Panel();
             dgvPets = new DataGridView();
             colPetId = new DataGridViewTextBoxColumn();
             colPetName = new DataGridViewTextBoxColumn();
             colPetType = new DataGridViewTextBoxColumn();
             colPetAge = new DataGridViewTextBoxColumn();
             colPetPrice = new DataGridViewTextBoxColumn();
+            panelRight = new Panel();
+            lblSearch = new Label();
+            txtSearch = new TextBox();
+            btnSearch = new Button();
+            btn_ShowAll = new Button();
+            lblTitle = new Label();
+            label3 = new Label();
             txtId = new TextBox();
+            label4 = new Label();
             txtName = new TextBox();
+            label5 = new Label();
             txtType = new TextBox();
+            label6 = new Label();
             txtAge = new TextBox();
+            label7 = new Label();
             txtPrice = new TextBox();
-            btnUpdate = new Button();
-            btnDelete = new Button();
             btnCancelSold = new Button();
+            btnRefresh = new Button();
+            panelLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPets).BeginInit();
+            panelRight.SuspendLayout();
             SuspendLayout();
             // 
-            // label7
+            // panelLeft
             // 
-            label7.AutoSize = true;
-            label7.Location = new Point(893, 281);
-            label7.Name = "label7";
-            label7.Size = new Size(44, 20);
-            label7.TabIndex = 41;
-            label7.Text = "Price:";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(893, 241);
-            label6.Name = "label6";
-            label6.Size = new Size(39, 20);
-            label6.TabIndex = 40;
-            label6.Text = "Age:";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(893, 201);
-            label5.Name = "label5";
-            label5.Size = new Size(43, 20);
-            label5.TabIndex = 39;
-            label5.Text = "Type:";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(893, 161);
-            label4.Name = "label4";
-            label4.Size = new Size(52, 20);
-            label4.TabIndex = 38;
-            label4.Text = "Name:";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(893, 121);
-            label3.Name = "label3";
-            label3.Size = new Size(27, 20);
-            label3.TabIndex = 37;
-            label3.Text = "ID:";
-            // 
-            // btnRefresh
-            // 
-            btnRefresh.Location = new Point(1177, 116);
-            btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(90, 30);
-            btnRefresh.TabIndex = 36;
-            btnRefresh.Text = "Refresh";
-            btnRefresh.Click += btnRefresh_Click;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(692, 86);
-            label2.Name = "label2";
-            label2.Size = new Size(222, 20);
-            label2.TabIndex = 35;
-            label2.Text = "Form để thêm/sửa/xóa/hủy bán:";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(692, 22);
-            label1.Name = "label1";
-            label1.Size = new Size(208, 20);
-            label1.TabIndex = 34;
-            label1.Text = "Tìm kiếm theo tên/giống/giá :";
-            // 
-            // btn_ShowAll
-            // 
-            btn_ShowAll.Location = new Point(1269, 19);
-            btn_ShowAll.Name = "btn_ShowAll";
-            btn_ShowAll.Size = new Size(90, 30);
-            btn_ShowAll.TabIndex = 33;
-            btn_ShowAll.Text = "ShowAll";
-            btn_ShowAll.Click += btnShowAll_Click;
-            // 
-            // btnSearch
-            // 
-            btnSearch.Location = new Point(1159, 19);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(90, 30);
-            btnSearch.TabIndex = 32;
-            btnSearch.Text = "Search";
-            btnSearch.Click += btn_Search_Click;
-            // 
-            // txtSearch
-            // 
-            txtSearch.Location = new Point(906, 19);
-            txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(200, 27);
-            txtSearch.TabIndex = 31;
+            panelLeft.BackColor = Color.White;
+            panelLeft.Controls.Add(dgvPets);
+            panelLeft.Dock = DockStyle.Left;
+            panelLeft.Location = new Point(0, 0);
+            panelLeft.Name = "panelLeft";
+            panelLeft.Padding = new Padding(10);
+            panelLeft.Size = new Size(650, 1033);
+            panelLeft.TabIndex = 0;
             // 
             // dgvPets
             // 
             dgvPets.AllowUserToAddRows = false;
-            dgvPets.ColumnHeadersHeight = 29;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 240, 240);
+            dgvPets.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dgvPets.BackgroundColor = Color.White;
+            dgvPets.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 100, 100);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dgvPets.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvPets.ColumnHeadersHeight = 40;
             dgvPets.Columns.AddRange(new DataGridViewColumn[] { colPetId, colPetName, colPetType, colPetAge, colPetPrice });
-            dgvPets.Location = new Point(3, 12);
+            dgvPets.Dock = DockStyle.Fill;
+            dgvPets.EnableHeadersVisualStyles = false;
+            dgvPets.GridColor = Color.FromArgb(255, 230, 230);
+            dgvPets.Location = new Point(10, 10);
             dgvPets.Name = "dgvPets";
             dgvPets.ReadOnly = true;
-            dgvPets.RowHeadersWidth = 51;
+            dgvPets.RowHeadersVisible = false;
+            dgvPets.RowHeadersWidth = 10;
+            dataGridViewCellStyle5.BackColor = SystemColors.Window;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(255, 224, 192);
+            dataGridViewCellStyle5.SelectionForeColor = Color.Black;
+            dgvPets.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dgvPets.RowTemplate.Height = 35;
             dgvPets.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPets.Size = new Size(683, 471);
-            dgvPets.TabIndex = 21;
+            dgvPets.Size = new Size(630, 1013);
+            dgvPets.TabIndex = 0;
             dgvPets.CellClick += dgvPets_CellClick;
             // 
             // colPetId
             // 
-            colPetId.HeaderText = "ID";
+            colPetId.HeaderText = "Mã Pet";
             colPetId.MinimumWidth = 6;
             colPetId.Name = "colPetId";
             colPetId.ReadOnly = true;
-            colPetId.Width = 125;
+            colPetId.Width = 90;
             // 
             // colPetName
             // 
-            colPetName.HeaderText = "Name";
+            colPetName.HeaderText = "Tên Thú Cưng";
             colPetName.MinimumWidth = 6;
             colPetName.Name = "colPetName";
             colPetName.ReadOnly = true;
-            colPetName.Width = 125;
+            colPetName.Width = 150;
             // 
             // colPetType
             // 
-            colPetType.HeaderText = "Type";
+            colPetType.HeaderText = "Giống";
             colPetType.MinimumWidth = 6;
             colPetType.Name = "colPetType";
             colPetType.ReadOnly = true;
-            colPetType.Width = 125;
+            colPetType.Width = 150;
             // 
             // colPetAge
             // 
-            colPetAge.HeaderText = "Age";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
+            colPetAge.DefaultCellStyle = dataGridViewCellStyle3;
+            colPetAge.HeaderText = "Tuổi";
             colPetAge.MinimumWidth = 6;
             colPetAge.Name = "colPetAge";
             colPetAge.ReadOnly = true;
-            colPetAge.Width = 125;
+            colPetAge.Width = 80;
             // 
             // colPetPrice
             // 
-            colPetPrice.HeaderText = "Price";
+            dataGridViewCellStyle4.Format = "#,##0.##";
+            colPetPrice.DefaultCellStyle = dataGridViewCellStyle4;
+            colPetPrice.HeaderText = "Giá (VNĐ)";
             colPetPrice.MinimumWidth = 6;
             colPetPrice.Name = "colPetPrice";
             colPetPrice.ReadOnly = true;
-            colPetPrice.Width = 125;
+            colPetPrice.Width = 150;
+            // 
+            // panelRight
+            // 
+            panelRight.BackColor = Color.FromArgb(255, 230, 230);
+            panelRight.Controls.Add(lblSearch);
+            panelRight.Controls.Add(txtSearch);
+            panelRight.Controls.Add(btnSearch);
+            panelRight.Controls.Add(btn_ShowAll);
+            panelRight.Controls.Add(lblTitle);
+            panelRight.Controls.Add(label3);
+            panelRight.Controls.Add(txtId);
+            panelRight.Controls.Add(label4);
+            panelRight.Controls.Add(txtName);
+            panelRight.Controls.Add(label5);
+            panelRight.Controls.Add(txtType);
+            panelRight.Controls.Add(label6);
+            panelRight.Controls.Add(txtAge);
+            panelRight.Controls.Add(label7);
+            panelRight.Controls.Add(txtPrice);
+            panelRight.Controls.Add(btnCancelSold);
+            panelRight.Controls.Add(btnRefresh);
+            panelRight.Dock = DockStyle.Fill;
+            panelRight.Location = new Point(650, 0);
+            panelRight.Name = "panelRight";
+            panelRight.Padding = new Padding(30);
+            panelRight.Size = new Size(1252, 1033);
+            panelRight.TabIndex = 1;
+            // 
+            // lblSearch
+            // 
+            lblSearch.AutoSize = true;
+            lblSearch.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblSearch.Location = new Point(20, 20);
+            lblSearch.Name = "lblSearch";
+            lblSearch.Size = new Size(208, 25);
+            lblSearch.TabIndex = 0;
+            lblSearch.Text = "Tìm theo tên hoặc giá:";
+            // 
+            // txtSearch
+            // 
+            txtSearch.Location = new Point(20, 55);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(280, 27);
+            txtSearch.TabIndex = 10;
+            // 
+            // btnSearch
+            // 
+            btnSearch.BackColor = Color.FromArgb(255, 210, 210);
+            btnSearch.FlatAppearance.BorderSize = 0;
+            btnSearch.FlatStyle = FlatStyle.Flat;
+            btnSearch.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnSearch.ForeColor = Color.DimGray;
+            btnSearch.Location = new Point(320, 50);
+            btnSearch.Name = "btnSearch";
+            btnSearch.Size = new Size(130, 40);
+            btnSearch.TabIndex = 11;
+            btnSearch.Text = "Tìm kiếm";
+            btnSearch.UseVisualStyleBackColor = false;
+            btnSearch.Click += btn_Search_Click;
+            // 
+            // btn_ShowAll
+            // 
+            btn_ShowAll.BackColor = Color.FromArgb(255, 210, 210);
+            btn_ShowAll.FlatAppearance.BorderSize = 0;
+            btn_ShowAll.FlatStyle = FlatStyle.Flat;
+            btn_ShowAll.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btn_ShowAll.ForeColor = Color.DimGray;
+            btn_ShowAll.Location = new Point(455, 50);
+            btn_ShowAll.Name = "btn_ShowAll";
+            btn_ShowAll.Size = new Size(130, 40);
+            btn_ShowAll.TabIndex = 12;
+            btn_ShowAll.Text = "Tất cả";
+            btn_ShowAll.UseVisualStyleBackColor = false;
+            btn_ShowAll.Click += btnShowAll_Click;
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblTitle.Location = new Point(20, 115);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(348, 32);
+            lblTitle.TabIndex = 13;
+            lblTitle.Text = "Thông tin thú cưng (Đã bán):";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 11F);
+            label3.Location = new Point(20, 163);
+            label3.Name = "label3";
+            label3.Size = new Size(34, 25);
+            label3.TabIndex = 14;
+            label3.Text = "ID:";
             // 
             // txtId
             // 
-            txtId.Location = new Point(956, 118);
+            txtId.Location = new Point(150, 160);
             txtId.Name = "txtId";
             txtId.ReadOnly = true;
-            txtId.Size = new Size(200, 27);
-            txtId.TabIndex = 22;
+            txtId.Size = new Size(280, 27);
+            txtId.TabIndex = 1;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 11F);
+            label4.Location = new Point(20, 213);
+            label4.Name = "label4";
+            label4.Size = new Size(45, 25);
+            label4.TabIndex = 15;
+            label4.Text = "Tên:";
             // 
             // txtName
             // 
-            txtName.Location = new Point(956, 158);
+            txtName.Location = new Point(150, 210);
             txtName.Name = "txtName";
-            txtName.Size = new Size(200, 27);
-            txtName.TabIndex = 23;
+            txtName.ReadOnly = true;
+            txtName.Size = new Size(280, 27);
+            txtName.TabIndex = 2;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 11F);
+            label5.Location = new Point(20, 263);
+            label5.Name = "label5";
+            label5.Size = new Size(67, 25);
+            label5.TabIndex = 16;
+            label5.Text = "Giống:";
             // 
             // txtType
             // 
-            txtType.Location = new Point(956, 198);
+            txtType.Location = new Point(150, 260);
             txtType.Name = "txtType";
-            txtType.Size = new Size(200, 27);
-            txtType.TabIndex = 24;
+            txtType.ReadOnly = true;
+            txtType.Size = new Size(280, 27);
+            txtType.TabIndex = 3;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Segoe UI", 11F);
+            label6.Location = new Point(20, 313);
+            label6.Name = "label6";
+            label6.Size = new Size(53, 25);
+            label6.TabIndex = 17;
+            label6.Text = "Tuổi:";
             // 
             // txtAge
             // 
-            txtAge.Location = new Point(956, 238);
+            txtAge.Location = new Point(150, 310);
             txtAge.Name = "txtAge";
-            txtAge.Size = new Size(200, 27);
-            txtAge.TabIndex = 25;
+            txtAge.ReadOnly = true;
+            txtAge.Size = new Size(280, 27);
+            txtAge.TabIndex = 4;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Font = new Font("Segoe UI", 11F);
+            label7.Location = new Point(20, 363);
+            label7.Name = "label7";
+            label7.Size = new Size(44, 25);
+            label7.TabIndex = 18;
+            label7.Text = "Giá:";
             // 
             // txtPrice
             // 
-            txtPrice.Location = new Point(956, 278);
+            txtPrice.Location = new Point(150, 360);
             txtPrice.Name = "txtPrice";
-            txtPrice.Size = new Size(200, 27);
-            txtPrice.TabIndex = 26;
-            // 
-            // btnUpdate
-            // 
-            btnUpdate.Location = new Point(1186, 236);
-            btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(90, 30);
-            btnUpdate.TabIndex = 28;
-            btnUpdate.Text = "Update";
-            btnUpdate.Click += btnUpdate_Click;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(1186, 276);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(90, 30);
-            btnDelete.TabIndex = 29;
-            btnDelete.Text = "Delete";
-            btnDelete.Click += btnDelete_Click;
+            txtPrice.ReadOnly = true;
+            txtPrice.Size = new Size(280, 27);
+            txtPrice.TabIndex = 5;
             // 
             // btnCancelSold
             // 
-            btnCancelSold.Location = new Point(1283, 238);
+            btnCancelSold.BackColor = Color.FromArgb(255, 210, 210);
+            btnCancelSold.FlatAppearance.BorderSize = 0;
+            btnCancelSold.FlatStyle = FlatStyle.Flat;
+            btnCancelSold.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnCancelSold.ForeColor = Color.DimGray;
+            btnCancelSold.Location = new Point(150, 410);
             btnCancelSold.Name = "btnCancelSold";
-            btnCancelSold.Size = new Size(90, 68);
-            btnCancelSold.TabIndex = 30;
-            btnCancelSold.Text = "Cancel Sold";
-            btnCancelSold.Click += btnCancelSold_Click;
+            btnCancelSold.Size = new Size(130, 40);
+            btnCancelSold.TabIndex = 9;
+            btnCancelSold.Text = "Hủy bán";
+            btnCancelSold.UseVisualStyleBackColor = false;
+            // 
+            // btnRefresh
+            // 
+            btnRefresh.BackColor = Color.FromArgb(255, 210, 210);
+            btnRefresh.FlatAppearance.BorderSize = 0;
+            btnRefresh.FlatStyle = FlatStyle.Flat;
+            btnRefresh.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnRefresh.ForeColor = Color.DimGray;
+            btnRefresh.Location = new Point(300, 410);
+            btnRefresh.Name = "btnRefresh";
+            btnRefresh.Size = new Size(130, 40);
+            btnRefresh.TabIndex = 15;
+            btnRefresh.Text = "Làm mới";
+            btnRefresh.UseVisualStyleBackColor = false;
+            btnRefresh.Click += btnRefresh_Click;
             // 
             // ThuCungDaBan
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1385, 515);
-            Controls.Add(label7);
-            Controls.Add(label6);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(btnRefresh);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(btn_ShowAll);
-            Controls.Add(btnSearch);
-            Controls.Add(txtSearch);
-            Controls.Add(dgvPets);
-            Controls.Add(txtId);
-            Controls.Add(txtName);
-            Controls.Add(txtType);
-            Controls.Add(txtAge);
-            Controls.Add(txtPrice);
-            Controls.Add(btnUpdate);
-            Controls.Add(btnDelete);
-            Controls.Add(btnCancelSold);
+            BackColor = Color.FromArgb(255, 230, 230);
+            ClientSize = new Size(1902, 1033);
+            Controls.Add(panelRight);
+            Controls.Add(panelLeft);
             Name = "ThuCungDaBan";
-            Text = "ThuCungDaBan";
+            Text = "Quản lý thú cưng đã bán";
+            WindowState = FormWindowState.Maximized;
+            Load += ThuCungDaBan_Load;
+            panelLeft.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvPets).EndInit();
+            panelRight.ResumeLayout(false);
+            panelRight.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private Label label7;
-        private Label label6;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private Button btnRefresh;
-        private Label label2;
-        private Label label1;
-        private Button btn_ShowAll;
-        private Button btnSearch;
-        private TextBox txtSearch;
-        private DataGridView dgvPets;
-        private DataGridViewTextBoxColumn colPetId;
-        private DataGridViewTextBoxColumn colPetName;
-        private DataGridViewTextBoxColumn colPetType;
-        private DataGridViewTextBoxColumn colPetAge;
-        private DataGridViewTextBoxColumn colPetPrice;
-        private TextBox txtId;
-        private TextBox txtName;
-        private TextBox txtType;
-        private TextBox txtAge;
-        private TextBox txtPrice;
-        private Button btnUpdate;
-        private Button btnDelete;
-        private Button btnCancelSold;
+        // ... (Khai báo fields đã được giữ lại ở đầu class)
     }
 }
