@@ -33,3 +33,55 @@ VALUES
 ('Milu', 'Dog', 2, 1500000, 0),
 ('Tom', 'Cat', 1, 800000, 1),
 ('Bun', 'Rabbit', 1, 500000, 0);
+
+
+
+
+
+-- Customer
+CREATE TABLE Customer (
+    Cus_Id INT IDENTITY PRIMARY KEY,
+    Cus_Name NVARCHAR(100),
+    Address NVARCHAR(200),
+    Cus_PhoneNumber NVARCHAR(20),
+    Cus_Email NVARCHAR(50)
+);
+
+-- Product
+CREATE TABLE Product (
+    ID INT IDENTITY PRIMARY KEY,
+    product_Name NVARCHAR(100),
+    Quantity INT,
+    Price DECIMAL(18,2),
+    Country NVARCHAR(50),
+    Condition NVARCHAR(50)
+);
+
+-- Service
+CREATE TABLE Service (
+    ServiceId INT IDENTITY PRIMARY KEY,
+    ServiceName NVARCHAR(100),
+    Type NVARCHAR(50),
+    Price DECIMAL(18,2)
+);
+
+-- Invoice
+CREATE TABLE Invoice (
+    InvoiceId INT IDENTITY PRIMARY KEY,
+    Cus_Id INT,
+    Total DECIMAL(18,2),
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (Cus_Id) REFERENCES Customer(Cus_Id)
+);
+
+-- InvoiceDetail
+CREATE TABLE InvoiceDetail (
+    DetailId INT IDENTITY PRIMARY KEY,
+    InvoiceId INT,
+    ItemId INT,
+    Type NVARCHAR(50), -- Pet, Product, Service
+    Quantity INT,
+    Price DECIMAL(18,2),
+    Status INT DEFAULT 0, -- 0 = chưa hoàn tiền, 1 = đã hoàn tiền
+    FOREIGN KEY (InvoiceId) REFERENCES Invoice(InvoiceId)
+);
