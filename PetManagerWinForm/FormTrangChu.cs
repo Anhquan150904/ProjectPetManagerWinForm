@@ -6,6 +6,7 @@ using PetManagerWinForm.NghiepVu.QLSanPham;
 using PetManagerWinForm.NghiepVu.QLDichVu;
 using PetManagerWinForm.NghiepVu.QLHoaDon;
 using PetManagerWinForm.NghiepVu.QLNhanVien;
+using PetManagerWinForm.NghiepVu;
 
 namespace PetManagerWinForm
 {
@@ -56,7 +57,7 @@ namespace PetManagerWinForm
         private void btnThuCungKhachHang_Click(object sender, EventArgs e)
         {
             SetActiveButton((Button)sender);
-            LoadForm(new ThuCungCuaKhachHang());
+            LoadForm(new QLThuCungDichVu());
         }
 
         private void btnKhachHang_Click(object sender, EventArgs e)
@@ -89,9 +90,11 @@ namespace PetManagerWinForm
             LoadForm(new QuanLyNhanVien());
         }
 
-        private void FormTrangChu_Load(object sender, EventArgs e)
+        private void btnThanhToan_Click(object sender, EventArgs e)
         {
-
+            SetActiveButton((Button)sender);
+            LoadForm(new FrmThanhToan());
         }
+
     }
 }
