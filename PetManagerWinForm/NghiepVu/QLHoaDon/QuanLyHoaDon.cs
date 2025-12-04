@@ -1,197 +1,196 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Windows.Forms;
+﻿using PetManagerData.Controllers;
 using PetManagerData.Models;
+using System;
+using System.Configuration;
+using System.Data;
+using System.Windows.Forms;
+using System.Collections.Generic; // Cần cho List<InvoiceDetail>
 
 namespace PetManagerWinForm.NghiepVu.QLHoaDon
 {
     public partial class QuanLyHoaDon : Form
     {
+        private InvoiceController _invoiceCtrl;
+        private CustomerController _customerCtrl;
+        private PetController _petCtrl;
+
         public QuanLyHoaDon()
         {
             InitializeComponent();
-            QuanLyHoaDon_Load();
         }
 
-        private List<Invoice> invoices = new List<Invoice>();
-        private int oldInvoiceId;
-
-        private void QuanLyHoaDon_Load()
+        private void QuanLyHoaDon_Load(object sender, EventArgs e)
         {
-            ID.DataPropertyName = "ID";
-            Cus_ID.DataPropertyName = "Cus_ID";
-            Product_Service_Name.DataPropertyName = "Product_Service_Name";
-            Quantity.DataPropertyName = "Quantity";
-            Price.DataPropertyName = "Price";
-            TotalPrice.DataPropertyName = "TotalPrice";
-            Time_to_create.DataPropertyName = "Time_to_create";
-            dataGridView1.AutoGenerateColumns = false;
-            invoices = new List<Invoice>()
+            try
             {
-                new Invoice { ID = 1, Cus_ID = 101, Product_Service_Name = "Tắm spa cho chó", Quantity = 1, Price = 150000, TotalPrice = 150000, Time_to_create = "2024-11-21" },
-                new Invoice { ID = 2, Cus_ID = 102, Product_Service_Name = "Mua hạt Royal Canin", Quantity = 2, Price = 120000, TotalPrice = 240000, Time_to_create = "2024-11-22" },
-                new Invoice { ID = 3, Cus_ID = 103, Product_Service_Name = "Cắt tỉa lông", Quantity = 1, Price = 200000, TotalPrice = 200000, Time_to_create = "2024-11-23" },
-            };
+                string connStr = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
+                // Giả định InvoiceController đã tồn tại và có các phương thức cần thiết
+                _invoiceCtrl = new InvoiceController(connStr);
+                _customerCtrl = new CustomerController(connStr);
+                _petCtrl = new PetController(connStr);
 
-            dataGridView1.DataSource = invoices;
+                LoadInvoices();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể tải dữ liệu: " + ex.Message, "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        // ====================== LOAD HÓA ĐƠN ======================
+        private void LoadInvoices()
+        {
+            try
+            {
+                DataTable dt = _invoiceCtrl.GetInvoices();
+
+                dgvInvoice.AutoGenerateColumns = false;
+                dgvInvoice.DataSource = dt;
+
+                // Đảm bảo DataPropertyName đã được gán trong Designer
+                // colInvoiceId.DataPropertyName = "InvoiceId"; ...
+
+                txtSearch.Text = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải danh sách hóa đơn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ====================== CLICK ROW ======================
+        private void dgvInvoice_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+            // Đảm bảo chỉ số Row không vượt quá số lượng hàng
+            if (e.RowIndex >= dgvInvoice.Rows.Count) return;
 
-            txtId.Text = row.Cells["ID"].Value.ToString();
-            txtCusID.Text = row.Cells["Cus_ID"].Value.ToString();
-            txtProductServiceName.Text = row.Cells["Product_Service_Name"].Value.ToString();
-            txtQuantity.Text = row.Cells["Quantity"].Value.ToString();
-            txtPrice.Text = row.Cells["Price"].Value.ToString();
-            txtTotalPrice.Text = row.Cells["TotalPrice"].Value.ToString();
-            txtTimeToCreated.Text = row.Cells["Time_to_create"].Value.ToString();
+            DataGridViewRow row = dgvInvoice.Rows[e.RowIndex];
 
-            oldInvoiceId = Convert.ToInt32(row.Cells["ID"].Value);
+            txtInvoiceId.Text = row.Cells["colInvoiceId"].Value?.ToString() ?? "";
+            txtCusId.Text = row.Cells["colCusId"].Value?.ToString() ?? "";
+            txtTotal.Text = row.Cells["colTotal"].Value?.ToString() ?? "";
+            txtCreatedAt.Text = row.Cells["colCreatedAt"].Value?.ToString() ?? "";
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
+        // ====================== SEARCH ======================
+        private void btnSearch_Click(object sender, EventArgs e) // Đã bỏ chú thích
         {
-            Invoice newInv = new Invoice
+            string keyword = txtSearch.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(keyword))
             {
-                ID = int.Parse(txtId.Text),
-                Cus_ID = int.Parse(txtCusID.Text),
-                Product_Service_Name = txtProductServiceName.Text,
-                Quantity = int.Parse(txtQuantity.Text),
-                Price = decimal.Parse(txtPrice.Text),
-                TotalPrice = decimal.Parse(txtTotalPrice.Text),
-                Time_to_create = txtTimeToCreated.Text
-            };
-
-            invoices.Add(newInv);
-
-            ReloadGrid();
-        }
-
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            Invoice updated = new Invoice
-            {
-                ID = int.Parse(txtId.Text),
-                Cus_ID = int.Parse(txtCusID.Text),
-                Product_Service_Name = txtProductServiceName.Text,
-                Quantity = int.Parse(txtQuantity.Text),
-                Price = decimal.Parse(txtPrice.Text),
-                TotalPrice = decimal.Parse(txtTotalPrice.Text),
-                Time_to_create = txtTimeToCreated.Text
-            };
-
-            invoices.Add(updated);
-
-            var old = invoices.FirstOrDefault(i => i.ID == oldInvoiceId);
-            if (old != null)
-                invoices.Remove(old);
-
-            ReloadGrid();
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            int id = int.Parse(txtId.Text);
-
-            var del = invoices.FirstOrDefault(i => i.ID == id);
-            if (del != null)
-                invoices.Remove(del);
-
-            ReloadGrid();
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            string keyword = txtSearch.Text.ToLower();
-
-            var result = invoices.Where(i =>
-                i.ID.ToString().Contains(keyword) ||
-                i.Cus_ID.ToString().Contains(keyword) ||
-                i.Product_Service_Name.ToLower().Contains(keyword)
-            ).ToList();
-
-            dataGridView1.DataSource = result;
-        }
-
-        private void btn_ShowAll_Click(object sender, EventArgs e)
-        {
-            ReloadGrid();
-        }
-
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            txtId.Clear();
-            txtCusID.Clear();
-            txtProductServiceName.Clear();
-            txtQuantity.Clear();
-            txtPrice.Clear();
-            txtTotalPrice.Clear();
-            txtTimeToCreated.Clear();
-            txtSearch.Clear();
-        }
-
-        private void ReloadGrid()
-        {
-            dataGridView1.DataSource = null;
-            dataGridView1.DataSource = invoices;
-        }
-
-        private void btnDetail_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(txtId.Text))
-            {
-                MessageBox.Show("Bạn chưa chọn hóa đơn!", "Thông báo");
+                MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm (VD: ID Hóa đơn, ID Khách hàng).", "Cảnh báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Hard-code thông tin khách hàng
-            string customerName = "Nguyễn Văn A";
-            string customerPhone = "0901234567";
-            string customerAddress = "123 đường ABC, Hà Nội";
-            string customerEmail = "vana@example.com";
-
-            // Hard-code thời gian tạo hóa đơn
-            string createdAt = txtTimeToCreated.Text;
-
-            InvoiceDetail detail = new InvoiceDetail
+            try
             {
-                ID = int.Parse(txtId.Text),
-                product_Name = txtProductServiceName.Text,
-                Quantity = int.Parse(txtQuantity.Text),
-                Price = decimal.Parse(txtPrice.Text),
-                Country = "Việt Nam",
-                Condition = "New"
-            };
+                // Giả định InvoiceController có phương thức SearchInvoices
+                // và trả về DataTable chứa kết quả tìm kiếm.
+                //DataTable dt = _invoiceCtrl.SearchInvoices(keyword);
+                //dgvInvoice.DataSource = dt;
 
-            // Thành tiền = Số lượng * Đơn giá
-            decimal totalAmount = detail.Quantity * detail.Price;
-
-            string customerInfo =
-                $"--- Thông tin khách hàng ---\n" +
-                $"Tên KH: {customerName}\n" +
-                $"SĐT: {customerPhone}\n" +
-                $"Địa chỉ: {customerAddress}\n" +
-                $"Email: {customerEmail}\n\n";
-
-            string invoiceInfo =
-                $"--- Thông tin hóa đơn ---\n" +
-                $"ID: {detail.ID}\n" +
-                $"Tên SP/DV: {detail.product_Name}\n" +
-                $"Số lượng: {detail.Quantity}\n" +
-                $"Đơn giá: {detail.Price:N0} VNĐ\n" +
-                $"Thành tiền: {totalAmount:N0} VNĐ\n" +
-                $"Thời gian tạo: {createdAt}\n" +
-                $"Quốc gia: {detail.Country}\n" +
-                $"Tình trạng: {detail.Condition}";
-
-            MessageBox.Show(customerInfo + invoiceInfo, "Invoice Detail");
+                //if (dt.Rows.Count == 0)
+                //{
+                //    MessageBox.Show("Không tìm thấy kết quả nào.");
+                //}
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tìm kiếm: " + ex.Message, "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-    }
+        private void btnShowAll_Click(object sender, EventArgs e)
+        {
+            LoadInvoices();
+        }
+
+        // ====================== LÀM MỚI FORM CHI TIẾT ======================
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            txtInvoiceId.Text = "";
+            txtCusId.Text = "";
+            txtTotal.Text = "";
+            txtCreatedAt.Text = "";
+            // Không làm mới lưới, chỉ làm mới form chi tiết
+        }
+
+        // ====================== XEM CHI TIẾT ======================
+        private void btnDetail_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtInvoiceId.Text))
+            {
+                MessageBox.Show("Vui lòng chọn hóa đơn để xem chi tiết!", "Cảnh báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!int.TryParse(txtInvoiceId.Text, out int invoiceId))
+            {
+                MessageBox.Show("ID Hóa đơn không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                var invoice = _invoiceCtrl.GetInvoiceById(invoiceId);
+                if (invoice == null)
+                {
+                    MessageBox.Show("Không tìm thấy hóa đơn.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                List<InvoiceDetail> details = _invoiceCtrl.GetInvoiceDetails(invoiceId);
+
+                // Lấy thông tin Khách hàng
+                var customer = _customerCtrl.GetCustomerById(invoice.Cus_Id);
+
+                List<Pet> petsInDetail = new List<Pet>();
+                // Đảm bảo bạn đang sử dụng kiểu dữ liệu PetModel (class model)
+
+                foreach (var detail in details.Where(d => d.Type == "Pet"))
+                {
+                    // ItemId chính là PetId
+                    DataTable petDt = _petCtrl.GetPetDetail(detail.ItemId);
+
+                    if (petDt != null && petDt.Rows.Count > 0)
+                    {
+                        // Lấy hàng đầu tiên (vì GetPetDetail chỉ trả về 1 Pet)
+                        DataRow row = petDt.Rows[0];
+
+                        // Khởi tạo PetModel từ DataRow và thêm vào danh sách
+                        Pet pet = new Pet
+                        {
+                            PetId = Convert.ToInt32(row["PetId"]),
+                            PetName = row["PetName"].ToString(),
+                            Age = Convert.ToInt32(row["Age"]),
+                            Type = row["Type"].ToString()
+                            // Thêm các thuộc tính khác nếu cần
+                        };
+                        petsInDetail.Add(pet);
+                    }
+                }
+
+
+                // 1. Khởi tạo form chi tiết (bạn phải tự thiết kế form này)
+                FrmInvoiceDetail detailForm = new FrmInvoiceDetail();
+
+                // 2. Truyền dữ liệu sang form chi tiết
+                detailForm.SetInvoiceData(invoice, customer, details, petsInDetail);
+
+                // 3. Hiển thị form
+                detailForm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi xem chi tiết hóa đơn: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        }
 }
