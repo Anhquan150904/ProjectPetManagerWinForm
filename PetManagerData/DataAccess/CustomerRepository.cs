@@ -65,5 +65,67 @@ namespace PetManagerData.DataAccess
             }
             return dt;
         }
+        public Customer GetCustomerByPhone(string phone)
+        {
+            using (SqlConnection conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+                string query = @"SELECT TOP 1 * FROM Customer WHERE Cus_PhoneNumber = @phone";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@phone", phone);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Customer
+                            {
+                                Cus_Id = Convert.ToInt32(reader["Cus_Id"]),
+                                Cus_Name = reader["Cus_Name"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                Cus_PhoneNumber = reader["Cus_PhoneNumber"].ToString(),
+                                Cus_Email = reader["Cus_Email"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+
+            return null; // Không tìm thấy
+        }
+
+        public Customer GetCustomerById(int id)
+        {
+            using (SqlConnection conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+                string query = @"SELECT TOP 1 * FROM Customer WHERE Cus_Id = @id";
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            return new Customer
+                            {
+                                Cus_Id = Convert.ToInt32(reader["Cus_Id"]),
+                                Cus_Name = reader["Cus_Name"].ToString(),
+                                Address = reader["Address"].ToString(),
+                                Cus_PhoneNumber = reader["Cus_PhoneNumber"].ToString(),
+                                Cus_Email = reader["Cus_Email"].ToString()
+                            };
+                        }
+                    }
+                }
+            }
+
+            return null; // Không tìm thấy
+        }
+
     }
 }
