@@ -59,5 +59,10 @@ namespace PetManagerData.Controllers
         {
             return _petRepository.SearchPetsNotSold(searchString);
         }
+
+        public DataTable GetPetDetail(int id)
+        {
+            return _petRepository.GetPetDetail(id);
+        }
     }
 }

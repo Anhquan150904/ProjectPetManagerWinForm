@@ -13,6 +13,8 @@ namespace PetManagerData.Controllers
         public int AddCustomer(Customer cus) => _repo.Add(cus);
 
         public DataTable SearchCusByPhone(string Phone) => _repo.SearchCusByPhone(Phone);
+        public Customer GetCustomerByPhone(string Phone) => _repo.GetCustomerByPhone(Phone);
+        public Customer GetCustomerById(int id) => _repo.GetCustomerById(id);
     }
 
     public class ProductController
@@ -46,7 +48,20 @@ namespace PetManagerData.Controllers
         {
             _repo.AddInvoiceDetail(invoiceId, itemId, type, qty, price);
             if (type == "Product") _productController.UpdateQuantity(itemId, qty);
-            // Pet đã xử lý riêng ở Form (MarkAsSold)
+        }
+        public DataTable GetInvoices()
+        {
+            return _repo.GetAll();
+        }
+
+        public Invoice GetInvoiceById(int id)
+        {
+            return _repo.GetById(id);
+        }
+
+        public List<InvoiceDetail> GetInvoiceDetails(int invoiceId)
+        {
+            return _repo.GetDetails(invoiceId);
         }
     }
 }

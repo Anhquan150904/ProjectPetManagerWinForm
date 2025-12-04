@@ -177,5 +177,28 @@ namespace PetManagerData.DataAccess // DAL
             }
             return dt;
         }
+
+
+        public DataTable GetPetDetail(int id)
+        {
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+                string query = @"SELECT TOP 1 * FROM Pets WHERE PetId = @id"; // Chỉ tìm thú cưng ĐÃ bán
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            return dt;
+        }
     }
 }
