@@ -1,169 +1,153 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PetManagerData.Controllers; // Giả sử có CustomerPetServiceController
+using System;
+using System.Configuration;
 using System.Data;
-using System.Linq;
 using System.Windows.Forms;
-using PetManagerData.Models;
 
 namespace PetManagerWinForm.NghiepVu.QLThuCung
 {
-    public partial class ThuCungCuaKhachHang : Form
+    // Đổi tên form
+    public partial class QLThuCungDichVu : Form
     {
-        public ThuCungCuaKhachHang()
+        // Khởi tạo Controller cho nghiệp vụ mới
+        private CustomerPetServiceController _cpsController;
+
+        public QLThuCungDichVu()
         {
             InitializeComponent();
-            ThuCungCuaKhachHang_Load();
-            AddEvents();
         }
 
-        private List<PetCustomerInfo> pets = new List<PetCustomerInfo>();
-        private int oldPetId;
-
-        private void ThuCungCuaKhachHang_Load()
+        // Hàm làm sạch TextBox/Controls
+        public void RefreshForm()
         {
-            dataGridView1.AutoGenerateColumns = false;
+            txtPetId.Text = "";
+            txtPetName.Text = "";
+            txtPetAge.Text = "";
+            cmbService.DataSource = null; // Hoặc gán lại danh sách dịch vụ nếu cần
+            cmbService.Text = "";
+        }
 
-            pets = new List<PetCustomerInfo>()
+        private void QLThuCungDichVu_Load(object sender, EventArgs e)
+        {
+            try
             {
-                new PetCustomerInfo {
-                    Pet_Id = 1, Pet_Name="Cún Đen", Pet_Type="Dog",
-                    Cus_Id = 10, Cus_Name="Nguyễn Văn A", Cus_Email="a@gmail.com",
-                    Cus_Phone="0909000111", Time="2025-01-01"
-                },
-                new PetCustomerInfo {
-                    Pet_Id = 2, Pet_Name="Mèo Muối", Pet_Type="Cat",
-                    Cus_Id = 11, Cus_Name="Trần Thị B", Cus_Email="b@gmail.com",
-                    Cus_Phone="0909111222", Time="2025-01-02"
-                }
-            };
+                string connStr = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
+                // Khởi tạo BLL/Controller mới
+                _cpsController = new CustomerPetServiceController(connStr);
 
-            dataGridView1.DataSource = pets;
+                // Tải dữ liệu các dịch vụ đang được sử dụng
+                LoadServicesInProgress();
+                // Tải danh sách dịch vụ vào ComboBox
+                LoadServiceComboBox();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không thể tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void AddEvents()
+        // Hàm tải danh sách dịch vụ (để hiển thị/chọn)
+        private void LoadServiceComboBox()
         {
-            dataGridView1.CellClick += dataGridView1_CellClick;
-            btnAdd.Click += btnAdd_Click;
-            btnUpdate.Click += btnUpdate_Click;
-            btnDelete.Click += btnDelete_Click;
-            btnSearch.Click += btnSearch_Click;
-            btn_ShowAll.Click += btn_ShowAll_Click;
-            btnRefresh.Click += btnRefresh_Click;
+            // Giả sử có hàm lấy tất cả dịch vụ từ Controller
+            var dtServices = _cpsController.GetAllServices();
+            cmbService.DataSource = dtServices;
+            cmbService.DisplayMember = "ServiceName"; // Tên cột hiển thị
+            cmbService.ValueMember = "ServiceId";     // Tên cột lấy giá trị
+            cmbService.SelectedIndex = -1; // Không chọn gì ban đầu
         }
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+
+        // Hàm tải dữ liệu dịch vụ đang sử dụng
+        private void LoadServicesInProgress()
+        {
+            // Giả sử Controller có hàm lấy tất cả các dịch vụ đang được sử dụng (Status = 'In Use')
+            var dt = _cpsController.GetServicesInProgress();
+
+            dgvCustomerPets.AutoGenerateColumns = false;
+            dgvCustomerPets.DataSource = dt;
+            // colPetId, colPetName, colPetAge, colServiceName... đã được thiết lập DataPropertyName
+        }
+
+        private void dgvCustomerPets_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            var row = dataGridView1.Rows[e.RowIndex];
+            DataGridViewRow row = dgvCustomerPets.Rows[e.RowIndex];
 
-            txtId.Text = row.Cells["ID_Pet"].Value?.ToString();
-            txtPetName.Text = row.Cells["Pet_Name"].Value?.ToString();
-            txtPetType.Text = row.Cells["Pet_Type"].Value?.ToString();
+            // Hiển thị lên Controls
+            txtPetId.Text = row.Cells["colPetId"].Value?.ToString() ?? "";
+            txtPetName.Text = row.Cells["colPetName"].Value?.ToString() ?? "";
+            txtPetAge.Text = row.Cells["colPetAge"].Value?.ToString() ?? "";
 
-            txtCusID.Text = row.Cells["Cus_ID"].Value?.ToString();
-            txtCus_Name.Text = row.Cells["Cus_Name"].Value?.ToString();
-            txtCusEmail.Text = row.Cells["Cus_Email"].Value?.ToString();
-            txtPhoneNumber.Text = row.Cells["Cus_Phone"].Value?.ToString();
-            txtTime.Text = row.Cells["Time"].Value?.ToString();
-
-            oldPetId = Convert.ToInt32(row.Cells["ID_Pet"].Value);
-        }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            var newPet = new PetCustomerInfo
+            // Gán dịch vụ đang sử dụng lên ComboBox
+            string serviceName = row.Cells["colServiceName"].Value?.ToString();
+            if (!string.IsNullOrEmpty(serviceName))
             {
-                Pet_Id = int.Parse(txtId.Text),
-                Pet_Name = txtPetName.Text,
-                Pet_Type = txtPetType.Text,
-
-                Cus_Id = int.Parse(txtCusID.Text),
-                Cus_Name = txtCus_Name.Text,
-                Cus_Email = txtCusEmail.Text,
-                Cus_Phone = txtPhoneNumber.Text,
-
-                Time = txtTime.Text
-            };
-
-            pets.Add(newPet);
-            ReloadGrid();
+                cmbService.Text = serviceName;
+            }
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            var oldPet = pets.FirstOrDefault(p => p.Pet_Id == oldPetId);
-
-            if (oldPet != null)
-                pets.Remove(oldPet);
-
-            var newPet = new PetCustomerInfo
-            {
-                Pet_Id = int.Parse(txtId.Text),
-                Pet_Name = txtPetName.Text,
-                Pet_Type = txtPetType.Text,
-
-                Cus_Id = int.Parse(txtCusID.Text),
-                Cus_Name = txtCus_Name.Text,
-                Cus_Email = txtCusEmail.Text,
-                Cus_Phone = txtPhoneNumber.Text,
-
-                Time = txtTime.Text
-            };
-
-            pets.Add(newPet);
-            ReloadGrid();
-        }
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            int id = int.Parse(txtId.Text);
-            var petDelete = pets.FirstOrDefault(p => p.Pet_Id == id);
-
-            if (petDelete != null)
-                pets.Remove(petDelete);
-
-            ReloadGrid();
-        }
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string keyword = txtSearch.Text.ToLower();
+            string keyword = txtSearch.Text;
 
-            var result = pets.Where(p =>
-                p.Pet_Name.ToLower().Contains(keyword) ||
-                p.Pet_Type.ToLower().Contains(keyword) ||
-                p.Cus_Name.ToLower().Contains(keyword)
-            ).ToList();
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm (Tên thú cưng hoặc Dịch vụ).", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-            dataGridView1.DataSource = null;
-            dataGridView1.DataSource = result;
-        }
+            try
+            {
+                // Giả sử có hàm tìm kiếm theo tên pet hoặc tên dịch vụ
+                DataTable dt = _cpsController.SearchServicesInProgress(keyword);
 
-        private void btn_ShowAll_Click(object sender, EventArgs e)
-        {
-            ReloadGrid();
+                dgvCustomerPets.DataSource = dt;
+
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("Không tìm thấy kết quả nào.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tìm kiếm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            ClearTextbox();
+            // Làm mới form và tải lại dữ liệu
+            RefreshForm();
+            LoadServicesInProgress();
         }
 
-        private void ReloadGrid()
+        private void btnDoneService_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = null;
-            dataGridView1.DataSource = pets;
-        }
+            if (dgvCustomerPets.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn dịch vụ cần hoàn thành trong danh sách.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-        private void ClearTextbox()
-        {
-            txtId.Clear();
-            txtPetName.Clear();
-            txtPetType.Clear();
-            txtCusID.Clear();
-            txtCus_Name.Clear();
-            txtCusEmail.Clear();
-            txtPhoneNumber.Clear();
-            txtTime.Clear();
+            // Lấy ID của bản ghi CustomerPetService đang được chọn
+            int cpsId = Convert.ToInt32(dgvCustomerPets.SelectedRows[0].Cells["colCPS_Id"].Value);
+
+            if (MessageBox.Show("Xác nhận đã **XONG** dịch vụ này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                try
+                {
+                    // Giả sử Controller có hàm cập nhật trạng thái
+                    _cpsController.MarkServiceDone(cpsId);
+                    MessageBox.Show("Dịch vụ đã được cập nhật hoàn thành!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadServicesInProgress(); // Tải lại danh sách
+                    RefreshForm(); // Làm sạch form nhập
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi cập nhật dịch vụ: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
-
