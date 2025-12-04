@@ -209,7 +209,6 @@
             Name = "FormTrangChu";
             Text = "Trang chủ quản lý thú cưng";
             WindowState = FormWindowState.Maximized;
-            Load += FormTrangChu_Load;
             panelLeft.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
