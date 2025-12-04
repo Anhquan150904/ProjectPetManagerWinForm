@@ -85,3 +85,49 @@ CREATE TABLE InvoiceDetail (
     Status INT DEFAULT 0, -- 0 = chưa hoàn tiền, 1 = đã hoàn tiền
     FOREIGN KEY (InvoiceId) REFERENCES Invoice(InvoiceId)
 );
+
+
+  CREATE TABLE PetCus (
+    Pet_Id INT IDENTITY PRIMARY KEY,
+    Cus_Id INT NOT NULL, -- Khóa ngoại liên kết với bảng Customer (Khách hàng sở hữu)
+    Pet_Name NVARCHAR(100) NOT NULL,
+    Pet_Age INT,
+    Pet_Breed NVARCHAR(100), -- Giống/Loài (Thay thế cho Type trong mẫu)
+    FOREIGN KEY (Cus_Id) REFERENCES Customer(Cus_Id)
+);
+
+CREATE TABLE CustomerPetService (
+    CPS_Id INT IDENTITY PRIMARY KEY,
+    Cus_Id INT NOT NULL, -- Khóa ngoại Khách hàng
+    Pet_Id INT NOT NULL, -- Khóa ngoại Thú cưng
+    ServiceId INT NOT NULL, -- Khóa ngoại Dịch vụ đang sử dụng
+    StartDate DATE NOT NULL DEFAULT GETDATE(), -- Ngày bắt đầu dịch vụ
+    CompletionDate DATE NULL, -- Ngày hoàn thành dịch vụ (NULL nếu chưa xong)
+    Status NVARCHAR(50) NOT NULL DEFAULT 'In Use', -- Trạng thái: 'In Use', 'Done', 'Canceled'
+    
+    FOREIGN KEY (Cus_Id) REFERENCES Customer(Cus_Id),
+    FOREIGN KEY (Pet_Id) REFERENCES PetCus(Pet_Id),
+    FOREIGN KEY (ServiceId) REFERENCES Service(ServiceId),
+    
+    -- Đảm bảo mỗi thú cưng chỉ có thể có một dịch vụ 'In Use' tại một thời điểm (tùy theo logic nghiệp vụ)
+    -- UNIQUE (Pet_Id, ServiceId, Status) - Tùy chọn nếu cần ràng buộc chi tiết hơn
+);
+
+
+INSERT INTO Product (product_Name, Quantity, Price, Country, Condition)
+VALUES
+-- tồn kho nhiều
+(N'Sữa tắm cho chó Poodle', 30, 85000, N'Việt Nam', N'Mới'),
+(N'Thức ăn hạt cho mèo Whiskas 1.2kg', 50, 120000, N'Thái Lan', N'Mới'),
+
+-- tồn kho ít để test cảnh báo
+(N'Vòng cổ chó loại nhỏ', 3, 45000, N'Trung Quốc', N'Mới'),
+(N'Bánh thưởng cho mèo MeoWow', 2, 35000, N'Hàn Quốc', N'Mới'),
+
+-- tồn kho bằng 0 để test chặn
+(N'Áo cho mèo size S', 0, 75000, N'Việt Nam', N'Hết hàng'),
+(N'Ổ nằm cho chó loại lớn', 0, 250000, N'Việt Nam', N'Hết hàng'),
+
+-- tồn kho trung bình
+(N'Bột tắm khô cho mèo 150g', 10, 55000, N'Nhật Bản', N'Mới'),
+(N'Dây dắt chó 1.5m', 8, 65000, N'Việt Nam', N'Mới');
