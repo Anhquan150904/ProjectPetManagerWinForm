@@ -8,22 +8,22 @@ namespace PetManagerData.Models
 {
     public class Invoice
     {
-        public int ID { get; set; }
-        public int Cus_ID { get; set; }
-        public string Product_Service_Name { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
-        public decimal TotalPrice { get; set; }
-        public string Time_to_create { get; set; }
+        public int InvoiceId { get; set; }
+        public int Cus_Id { get; set; }
+        public decimal Total { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
+
 
     public class InvoiceDetail
     {
-        public int ID { get; set; }
-        public string product_Name { get; set; }
+        public int DetailId { get; set; }
+        public int InvoiceId { get; set; }
+        public int ItemId { get; set; }
+        public string Type { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
-        public string Country { get; set; }
-        public string Condition { get; set; }
+        public int Status { get; set; }
     }
+
 }
