@@ -21,6 +21,9 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
         private BindingList<Service> _mockServices;
         private int _nextMockId = 1;
 
+        // track selected row index
+        private int currentRowIndex = -1;
+
         public QuanLyDichVu()
         {
             InitializeComponent();
@@ -56,6 +59,10 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             // Ensure grid click wired
             dgvSer.CellContentClick -= dgvSer_CellContentClick;
             dgvSer.CellContentClick += dgvSer_CellContentClick;
+
+            // wire CellClick so clicking a row populates the form
+            dgvSer.CellClick -= dgvSer_CellClick;
+            dgvSer.CellClick += dgvSer_CellClick;
         }
 
         // Simple in-memory model for mock data
@@ -98,6 +105,37 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                 // Optionally set focus to name for quick editing
                 txtName.Focus();
             }
+        }
+
+        // populate inputs when a row is clicked (works with DataTable or BindingList)
+        private void dgvSer_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0) return;
+
+            currentRowIndex = e.RowIndex;
+
+            // If bound to DataTable, use DataRowView
+            if (dgvSer.Rows[e.RowIndex].DataBoundItem is DataRowView drv)
+            {
+                DataRow row = drv.Row;
+
+                txtId.Text = row.Table.Columns.Contains("ServiceId") ? row["ServiceId"]?.ToString() ?? string.Empty : string.Empty;
+                txtName.Text = row.Table.Columns.Contains("ServiceName") ? row["ServiceName"]?.ToString() ?? string.Empty : string.Empty;
+                txtType.Text = row.Table.Columns.Contains("Type") ? row["Type"]?.ToString() ?? string.Empty : string.Empty;
+                txtAmount.Text = row.Table.Columns.Contains("Amount") ? row["Amount"]?.ToString() ?? string.Empty : string.Empty;
+                txtPrice.Text = row.Table.Columns.Contains("Price") ? row["Price"]?.ToString() ?? string.Empty : string.Empty;
+            }
+            else
+            {
+                var row = dgvSer.Rows[e.RowIndex];
+                txtId.Text = row.Cells["colSerId"].Value?.ToString() ?? string.Empty;
+                txtName.Text = row.Cells["colSerName"].Value?.ToString() ?? string.Empty;
+                txtType.Text = row.Cells["colSerType"].Value?.ToString() ?? string.Empty;
+                txtAmount.Text = row.Cells["colSerAmount"].Value?.ToString() ?? string.Empty;
+                txtPrice.Text = row.Cells["colSerPrice"].Value?.ToString() ?? string.Empty;
+            }
+
+            txtName.Focus();
         }
 
         private void LoadSer()

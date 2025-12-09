@@ -40,11 +40,6 @@
             btnSearch = new Button();
             txtSearch = new TextBox();
             dgvSer = new DataGridView();
-            colSerId = new DataGridViewTextBoxColumn();
-            colSerName = new DataGridViewTextBoxColumn();
-            colSerType = new DataGridViewTextBoxColumn();
-            colSerAmount = new DataGridViewTextBoxColumn();
-            colSerPrice = new DataGridViewTextBoxColumn();
             txtId = new TextBox();
             txtName = new TextBox();
             txtType = new TextBox();
@@ -53,6 +48,11 @@
             btnDelete = new Button();
             btnAdd = new Button();
             btnUpdate = new Button();
+            colSerId = new DataGridViewTextBoxColumn();
+            colSerName = new DataGridViewTextBoxColumn();
+            colSerType = new DataGridViewTextBoxColumn();
+            colSerAmount = new DataGridViewTextBoxColumn();
+            colSerPrice = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)dgvSer).BeginInit();
             SuspendLayout();
             // 
@@ -166,46 +166,6 @@
             dgvSer.TabIndex = 21;
             dgvSer.CellContentClick += dgvSer_CellContentClick;
             // 
-            // colSerId
-            // 
-            colSerId.HeaderText = "ID";
-            colSerId.MinimumWidth = 6;
-            colSerId.Name = "colSerId";
-            colSerId.ReadOnly = true;
-            colSerId.Width = 125;
-            // 
-            // colSerName
-            // 
-            colSerName.HeaderText = "Name";
-            colSerName.MinimumWidth = 6;
-            colSerName.Name = "colSerName";
-            colSerName.ReadOnly = true;
-            colSerName.Width = 125;
-            // 
-            // colSerType
-            // 
-            colSerType.HeaderText = "Type";
-            colSerType.MinimumWidth = 6;
-            colSerType.Name = "colSerType";
-            colSerType.ReadOnly = true;
-            colSerType.Width = 125;
-            // 
-            // colSerAmount
-            // 
-            colSerAmount.HeaderText = "Amount";
-            colSerAmount.MinimumWidth = 6;
-            colSerAmount.Name = "colSerAmount";
-            colSerAmount.ReadOnly = true;
-            colSerAmount.Width = 125;
-            // 
-            // colSerPrice
-            // 
-            colSerPrice.HeaderText = "Price";
-            colSerPrice.MinimumWidth = 6;
-            colSerPrice.Name = "colSerPrice";
-            colSerPrice.ReadOnly = true;
-            colSerPrice.Width = 125;
-            // 
             // txtId
             // 
             txtId.Location = new Point(965, 118);
@@ -266,6 +226,46 @@
             btnUpdate.TabIndex = 28;
             btnUpdate.Text = "Update";
             // 
+            // colSerId
+            // 
+            colSerId.HeaderText = "ID";
+            colSerId.MinimumWidth = 6;
+            colSerId.Name = "colSerId";
+            colSerId.ReadOnly = true;
+            colSerId.Width = 125;
+            // 
+            // colSerName
+            // 
+            colSerName.HeaderText = "Name";
+            colSerName.MinimumWidth = 6;
+            colSerName.Name = "colSerName";
+            colSerName.ReadOnly = true;
+            colSerName.Width = 125;
+            // 
+            // colSerType
+            // 
+            colSerType.HeaderText = "Type";
+            colSerType.MinimumWidth = 6;
+            colSerType.Name = "colSerType";
+            colSerType.ReadOnly = true;
+            colSerType.Width = 125;
+            // 
+            // colSerAmount
+            // 
+            colSerAmount.HeaderText = "Quantity";
+            colSerAmount.MinimumWidth = 6;
+            colSerAmount.Name = "colSerAmount";
+            colSerAmount.ReadOnly = true;
+            colSerAmount.Width = 125;
+            // 
+            // colSerPrice
+            // 
+            colSerPrice.HeaderText = "Price";
+            colSerPrice.MinimumWidth = 6;
+            colSerPrice.Name = "colSerPrice";
+            colSerPrice.ReadOnly = true;
+            colSerPrice.Width = 125;
+            // 
             // QuanLyDichVu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -312,11 +312,6 @@
         private Button btnSearch;
         private TextBox txtSearch;
         private DataGridView dgvSer;
-        private DataGridViewTextBoxColumn colSerId;
-        private DataGridViewTextBoxColumn colSerName;
-        private DataGridViewTextBoxColumn colSerType;
-        private DataGridViewTextBoxColumn colSerAmount;
-        private DataGridViewTextBoxColumn colSerPrice;
         private TextBox txtId;
         private TextBox txtName;
         private TextBox txtType;
@@ -325,5 +320,10 @@
         private Button btnDelete;
         private Button btnAdd;
         private Button btnUpdate;
+        private DataGridViewTextBoxColumn colSerId;
+        private DataGridViewTextBoxColumn colSerName;
+        private DataGridViewTextBoxColumn colSerType;
+        private DataGridViewTextBoxColumn colSerAmount;
+        private DataGridViewTextBoxColumn colSerPrice;
     }
 }
