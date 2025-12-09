@@ -72,7 +72,7 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             newRow["Name"] = textName.Text;
             newRow["Address"] = textAddress.Text;
             newRow["PhoneNumber"] = textPhone.Text;
-            newRow["Sex"] = radioButton1.Checked ? "Nam" : "Nữ"; 
+            newRow["Sex"] = radioButton1.Checked ? "Nam" : "Nữ";
             newRow["Email"] = textEmail.Text;
             newRow["Position"] = textPosition.Text;
             newRow["Status"] = comboBox1.Text;
@@ -85,7 +85,7 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return; 
+            if (e.RowIndex < 0) return;
 
             currentRowIndex = e.RowIndex;
             DataRowView rowView = (DataRowView)dataGridView1.Rows[e.RowIndex].DataBoundItem;
@@ -145,7 +145,7 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
                     checkRow != row)
                 {
                     MessageBox.Show("ID này đã tồn tại ở một nhân viên khác! Vui lòng chọn ID khác.", "Trùng lặp", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return; 
+                    return;
                 }
             }
 
@@ -162,22 +162,59 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             ClearTextbox();
         }
 
+        //private void btnDel_Click(object sender, EventArgs e)
+        //{
+        //    if (currentRowIndex < 0)
+        //    {
+        //        MessageBox.Show("Vui lòng chọn dòng cần xóa.", "Thông báo");
+        //        return;
+        //    }
+
+        //    if (MessageBox.Show("Bạn chắc chắn muốn xóa nhân viên này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+        //    {
+        //        DataRowView rowView = (DataRowView)dataGridView1.Rows[currentRowIndex].DataBoundItem;
+        //        rowView.Row.Delete();
+        //        ClearTextbox();
+        //    }
+        //}
         private void btnDel_Click(object sender, EventArgs e)
         {
+            // 1. Kiểm tra chọn dòng (giữ nguyên logic cũ của bạn)
             if (currentRowIndex < 0)
             {
                 MessageBox.Show("Vui lòng chọn dòng cần xóa.", "Thông báo");
                 return;
             }
 
-            if (MessageBox.Show("Bạn chắc chắn muốn xóa nhân viên này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            // 2. Hộp thoại xác nhận lần 1 (Yes/No)
+            DialogResult result = MessageBox.Show(
+                "Bạn chắc chắn muốn xóa nhân viên này?\nHành động này không thể hoàn tác!",
+                "Cảnh báo xóa",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.Yes)
             {
-                DataRowView rowView = (DataRowView)dataGridView1.Rows[currentRowIndex].DataBoundItem;
-                rowView.Row.Delete(); 
-                ClearTextbox();
+                // 3. Hiện ô nhập chữ "xac nhan" (Gọi hàm tự viết ở dưới)
+                string inputCode = ShowInputDialog("Để xác nhận xóa, vui lòng nhập chính xác cụm từ: 'xac nhan'", "Xác thực hành động");
+
+                // 4. Kiểm tra chuỗi nhập vào
+                if (inputCode == "xac nhan")
+                {
+                    // Thực hiện xóa (Logic cũ của bạn)
+                    DataRowView rowView = (DataRowView)dataGridView1.Rows[currentRowIndex].DataBoundItem;
+                    rowView.Row.Delete();
+
+                    MessageBox.Show("Đã xóa nhân viên thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    ClearTextbox();
+                }
+                else if (!string.IsNullOrEmpty(inputCode)) // Người dùng nhập sai (bỏ qua trường hợp bấm Cancel/X)
+                {
+                    MessageBox.Show("Mã xác nhận không đúng. Hủy bỏ lệnh xóa.", "Lỗi xác thực", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
-
         private void btnReset_Click(object sender, EventArgs e)
         {
             dtNhanVien.DefaultView.RowFilter = "";
@@ -208,15 +245,84 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             radioButton1.Checked = true;
             if (comboBox1.Items.Count > 0)
                 comboBox1.SelectedIndex = 0;
-            currentRowIndex = -1; 
+            currentRowIndex = -1;
+
+            dataGridView1.ClearSelection();
+            dataGridView1.CurrentCell = null;
+            textBox1.Text = "";
             textID.Focus();
         }
-        private void button4_Click(object sender, EventArgs e)
+        private string ShowInputDialog(string text, string caption)
         {
-            Detail detailForm = new Detail();
-            detailForm.ShowDialog();
+            // Tạo Form
+            Form prompt = new Form()
+            {
+                Width = 400,
+                Height = 180,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                Text = caption,
+                StartPosition = FormStartPosition.CenterScreen,
+                MaximizeBox = false,
+                MinimizeBox = false
+            };
+
+            // Tạo Label hướng dẫn
+            Label textLabel = new Label() { Left = 20, Top = 20, Text = text, Width = 350 };
+
+            // Tạo TextBox để nhập
+            TextBox textBox = new TextBox() { Left = 20, Top = 50, Width = 340 };
+
+            // Tạo nút Xác nhận
+            Button confirmation = new Button() { Text = "Xóa", Left = 200, Width = 70, Top = 90, DialogResult = DialogResult.OK };
+            confirmation.BackColor = System.Drawing.Color.Red; // Màu đỏ cho nút xóa để cảnh báo
+            confirmation.ForeColor = System.Drawing.Color.White;
+
+            // Tạo nút Hủy
+            Button cancel = new Button() { Text = "Hủy", Left = 290, Width = 70, Top = 90, DialogResult = DialogResult.Cancel };
+
+            // Sự kiện Click (đóng form)
+            confirmation.Click += (sender, e) => { prompt.Close(); };
+            cancel.Click += (sender, e) => { prompt.Close(); };
+
+            // Add các control vào Form
+            prompt.Controls.Add(textLabel);
+            prompt.Controls.Add(textBox);
+            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(cancel);
+
+            // Thiết lập nút mặc định
+            prompt.AcceptButton = confirmation;
+            prompt.CancelButton = cancel;
+
+            // Hiển thị Form và trả về kết quả
+            return prompt.ShowDialog() == DialogResult.OK ? textBox.Text : "";
+        }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
 
+        private void btnPhanCa_Click(object sender, EventArgs e)
+        {
+            // Truyền danh sách nhân viên sang để xếp ca
+            FormPhanCa frm = new FormPhanCa(dtNhanVien);
+            frm.ShowDialog();
+        }
+
+        // 2. Nút Chấm Công
+        private void btnChamCong_Click(object sender, EventArgs e)
+        {
+            // Truyền danh sách nhân viên để chọn người chấm công
+            FormChamCong frm = new FormChamCong(dtNhanVien);
+            frm.ShowDialog();
+        }
+
+        // 3. Nút Tính Lương
+        private void btnTinhLuong_Click(object sender, EventArgs e)
+        {
+            // Tính lương cần biết danh sách nhân viên + chức vụ (để tính phụ cấp)
+            FormTinhLuong frm = new FormTinhLuong(dtNhanVien);
+            frm.ShowDialog();
+        }
     }
 }
