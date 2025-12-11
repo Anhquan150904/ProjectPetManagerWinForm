@@ -1,145 +1,188 @@
-﻿using PetManagerData.Models;
+﻿using PetManagerData.Controllers; // Nhớ using Controller
+using PetManagerData.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Configuration;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PetManagerWinForm.NghiepVu.QLSanPham
 {
     public partial class QuanLySanPham : Form
     {
-        private List<Product> product = new List<Product>();
-        private int oldProductId;
+        // 1. Khai báo Controller
+        private ProductController2 _controller;
+
+        // Thay chuỗi kết nối của bạn vào đây
+        string strConnect = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
+
         public QuanLySanPham()
         {
             InitializeComponent();
-            ThongTinSanPham_Load();
+
+            // 2. Khởi tạo Controller
+            _controller = new ProductController2(strConnect);
+
+            LoadSanPham();
         }
 
-        private void ThongTinSanPham_Load()
+        private void LoadSanPham()
         {
+            // Cấu hình DataPropertyName để map dữ liệu từ DataTable vào DataGridView
+            colId.DataPropertyName = "ID";
+            colName.DataPropertyName = "Product_Name";
+            colQuantity.DataPropertyName = "Quantity";
+            colPrice.DataPropertyName = "Price";
+            colCountry.DataPropertyName = "Country";
+            colCondition.DataPropertyName = "Condition";
 
-            ID.DataPropertyName = "ID";
-            product_Name.DataPropertyName = "product_Name";
-            Quantity.DataPropertyName = "Quantity";
-            Price.DataPropertyName = "Price";
-            Country.DataPropertyName = "Country";
-            Condition.DataPropertyName = "Condition";
-            dvgProduct.AutoGenerateColumns = false;
+            dgvProduct.AutoGenerateColumns = false;
 
-            // Code khởi tạo form và load dữ liệu sanr phaamr
-
-            product = new List<Product>()
+            // 3. Gọi dữ liệu từ Database thông qua Controller
+            try
             {
-                   new Product { ID = 1, product_Name = "Sản phẩm A", Quantity = 10, Price =150000 ,Country = "USA", Condition = "New 100%"},
-                    new Product { ID = 2, product_Name = "Sản phẩm B", Quantity = 10, Price =150000 ,Country = "USA", Condition = "New 100%"},
-                    new Product { ID = 2, product_Name = "D E F", Quantity = 10, Price =150000 ,Country = "USA", Condition = "New 100%"},
-            };
-            dvgProduct.DataSource = product;
+                DataTable dt = _controller.GetAllProducts();
+                dgvProduct.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message);
+            }
         }
 
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            string keyword = txtSearch.Text.Trim().ToLower();
-
-            var result = product.Where(c =>
-                c.product_Name.ToLower().Contains(keyword) ||
-                c.Country.ToLower().Contains(keyword)
-            ).ToList();
-
-            dvgProduct.DataSource = null;
-            dvgProduct.DataSource = result;
-        }
-
-        private void btn_ShowAll_Click(object sender, EventArgs e)
-        {
-            dvgProduct.DataSource = null;
-            dvgProduct.DataSource = product;
-        }
+        // ------------------- CLICK ROW -------------------------
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0) return;
 
-            var row = dvgProduct.Rows[e.RowIndex];
+            // Lấy dòng hiện tại
+            // Lưu ý: Khi dùng DataSource là DataTable, DataBoundItem là DataRowView
+            DataGridViewRow row = dgvProduct.Rows[e.RowIndex];
 
-            txtId.Text = row.Cells["ID"].Value?.ToString();
-            txtName.Text = row.Cells["product_Name"].Value?.ToString();
-            txtQuantity.Text = row.Cells["Quantity"].Value?.ToString();
-
-            txtCondition.Text = row.Cells["Condition"].Value?.ToString();
-            txtCountry.Text = row.Cells["Country"].Value?.ToString();
-            txtPrice.Text = row.Cells["Price"].Value?.ToString();
-
-            oldProductId = Convert.ToInt32(row.Cells["ID"].Value);
-
+            txtId.Text = row.Cells["colId"].Value?.ToString();
+            txtName.Text = row.Cells["colName"].Value?.ToString();
+            txtQuantity.Text = row.Cells["colQuantity"].Value?.ToString();
+            txtPrice.Text = row.Cells["colPrice"].Value?.ToString();
+            txtCountry.Text = row.Cells["colCountry"].Value?.ToString();
+            txtCondition.Text = row.Cells["colCondition"].Value?.ToString();
         }
 
+        // ------------------- ADD -------------------------
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            var newProduct = new Product
+            try
             {
-                ID = int.Parse(txtId.Text),
-                product_Name = txtName.Text,
-                Price = decimal.Parse(txtPrice.Text),
-                Quantity = int.Parse(txtQuantity.Text),
-                Country = txtCountry.Text,
-                Condition = txtCondition.Text,
-            };
+                var newProduct = new Product
+                {
+                    // ID thường tự tăng trong DB nên không cần truyền vào khi thêm mới
+                    // Nếu DB không tự tăng thì mới cần: ID = int.Parse(txtId.Text),
+                    product_Name = txtName.Text,
+                    Price = decimal.Parse(txtPrice.Text),
+                    Quantity = int.Parse(txtQuantity.Text),
+                    Country = txtCountry.Text,
+                    Condition = txtCondition.Text,
+                };
 
-            product.Add(newProduct);
-            ReloadGrid();
+                if (_controller.AddProduct(newProduct))
+                {
+                    MessageBox.Show("Thêm thành công!");
+                    LoadSanPham(); // Tải lại lưới
+                    btnRefresh_Click(null, null); // Xóa trắng ô nhập
+                }
+                else
+                {
+                    MessageBox.Show("Thêm thất bại!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi nhập liệu: " + ex.Message);
+            }
         }
 
+        // ------------------- UPDATE -------------------------
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            var oldProduct = product.FirstOrDefault(p => p.ID == oldProductId);
+            if (string.IsNullOrEmpty(txtId.Text)) return;
 
-            if (oldProduct != null)
-                product.Remove(oldProduct);
-
-            var newProduct = new Product
+            try
             {
-                ID = int.Parse(txtId.Text),
-                product_Name = txtName.Text,
-                Price = decimal.Parse(txtPrice.Text),
-                Quantity = int.Parse(txtQuantity.Text),
-                Country = txtCountry.Text,
-                Condition = txtCondition.Text,
-            };
+                var updatedProduct = new Product
+                {
+                    ID = int.Parse(txtId.Text), // Cần ID để biết sửa dòng nào
+                    product_Name = txtName.Text,
+                    Price = decimal.Parse(txtPrice.Text),
+                    Quantity = int.Parse(txtQuantity.Text),
+                    Country = txtCountry.Text,
+                    Condition = txtCondition.Text,
+                };
 
-            product.Add(newProduct);
-            ReloadGrid();
+                if (_controller.UpdateProduct(updatedProduct))
+                {
+                    MessageBox.Show("Cập nhật thành công!");
+                    LoadSanPham();
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật thất bại!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message);
+            }
         }
 
+        // ------------------- DELETE -------------------------
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            var oldProduct = product.FirstOrDefault(p => p.ID == oldProductId);
+            if (string.IsNullOrEmpty(txtId.Text))
+            {
+                MessageBox.Show("Vui lòng chọn sản phẩm để xóa");
+                return;
+            }
 
-            if (oldProduct != null)
-                product.Remove(oldProduct);
-            ReloadGrid();
+            if (MessageBox.Show("Bạn có chắc chắn muốn xóa?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                int id = int.Parse(txtId.Text);
+                if (_controller.DeleteProduct(id))
+                {
+                    MessageBox.Show("Xóa thành công!");
+                    LoadSanPham();
+                    btnRefresh_Click(null, null);
+                }
+                else
+                {
+                    MessageBox.Show("Xóa thất bại!");
+                }
+            }
         }
 
+        // ------------------- SEARCH ---------------------
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            string keyword = txtSearch.Text.Trim();
+            DataTable dt = _controller.SearchProducts(keyword);
+            dgvProduct.DataSource = dt;
+        }
+
+        // ------------------- SHOW ALL --------------------------
+        private void btn_ShowAll_Click(object sender, EventArgs e)
+        {
+            LoadSanPham();
+        }
+
+        // ------------------- REFRESH TEXTBOX -------------------
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-
             txtId.Text = "";
             txtName.Text = "";
             txtQuantity.Text = "";
-
-            txtCondition.Text = "";
-            txtCountry.Text = "";
             txtPrice.Text = "";
-        }
-        private void ReloadGrid()
-        {
-            dvgProduct.DataSource = null;
-            dvgProduct.DataSource = product;
+            txtCountry.Text = "";
+            txtCondition.Text = "";
+            txtSearch.Text = "";
         }
     }
 }
