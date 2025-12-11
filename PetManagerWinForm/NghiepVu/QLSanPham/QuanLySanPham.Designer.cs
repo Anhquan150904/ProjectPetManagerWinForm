@@ -2,355 +2,314 @@
 {
     partial class QuanLySanPham
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        private Panel panelLeft;
+        private Panel panelRight;
 
-        #region Windows Form Designer generated code
+        private DataGridView dgvProduct;
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
-            dvgProduct = new DataGridView();
-            ID = new DataGridViewTextBoxColumn();
-            product_Name = new DataGridViewTextBoxColumn();
-            Quantity = new DataGridViewTextBoxColumn();
-            Price = new DataGridViewTextBoxColumn();
-            Country = new DataGridViewTextBoxColumn();
-            Condition = new DataGridViewTextBoxColumn();
-            label7 = new Label();
-            label6 = new Label();
-            label5 = new Label();
-            label4 = new Label();
-            label3 = new Label();
-            btnRefresh = new Button();
-            label2 = new Label();
-            label1 = new Label();
-            btn_ShowAll = new Button();
-            btnSearch = new Button();
-            txtSearch = new TextBox();
-            txtId = new TextBox();
-            txtName = new TextBox();
-            txtQuantity = new TextBox();
-            txtPrice = new TextBox();
-            btnAdd = new Button();
-            btnUpdate = new Button();
-            btnDelete = new Button();
-            label8 = new Label();
-            txtCondition = new TextBox();
-            txtCountry = new TextBox();
-            ((System.ComponentModel.ISupportInitialize)dvgProduct).BeginInit();
-            SuspendLayout();
-            // 
-            // dvgProduct
-            // 
-            dvgProduct.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dvgProduct.Columns.AddRange(new DataGridViewColumn[] { ID, product_Name, Quantity, Price, Country, Condition });
-            dvgProduct.Location = new Point(12, 12);
-            dvgProduct.Name = "dvgProduct";
-            dvgProduct.RowHeadersWidth = 51;
-            dvgProduct.Size = new Size(801, 389);
-            dvgProduct.TabIndex = 0;
-            dvgProduct.CellClick += dataGridView1_CellClick;
-            dvgProduct.CellContentClick += dataGridView1_CellClick;
-            // 
-            // ID
-            // 
-            ID.HeaderText = "ID";
-            ID.MinimumWidth = 6;
-            ID.Name = "ID";
-            ID.Width = 125;
-            // 
-            // product_Name
-            // 
-            product_Name.HeaderText = "Product Name";
-            product_Name.MinimumWidth = 6;
-            product_Name.Name = "product_Name";
-            product_Name.Width = 125;
-            // 
-            // Quantity
-            // 
-            Quantity.HeaderText = "Quantity";
-            Quantity.MinimumWidth = 6;
-            Quantity.Name = "Quantity";
-            Quantity.Width = 125;
-            // 
-            // Price
-            // 
-            Price.HeaderText = "Price";
-            Price.MinimumWidth = 6;
-            Price.Name = "Price";
-            Price.Width = 125;
-            // 
-            // Country
-            // 
-            Country.HeaderText = "Country";
-            Country.MinimumWidth = 6;
-            Country.Name = "Country";
-            Country.Width = 125;
-            // 
-            // Condition
-            // 
-            Condition.HeaderText = "Condition";
-            Condition.MinimumWidth = 6;
-            Condition.Name = "Condition";
-            Condition.Width = 125;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(876, 293);
-            label7.Name = "label7";
-            label7.Size = new Size(63, 20);
-            label7.TabIndex = 40;
-            label7.Text = "Country:";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(895, 253);
-            label6.Name = "label6";
-            label6.Size = new Size(44, 20);
-            label6.TabIndex = 39;
-            label6.Text = "Price:";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(884, 213);
-            label5.Name = "label5";
-            label5.Size = new Size(68, 20);
-            label5.TabIndex = 38;
-            label5.Text = "Quantity:";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(845, 173);
-            label4.Name = "label4";
-            label4.Size = new Size(107, 20);
-            label4.TabIndex = 37;
-            label4.Text = "Product Name:";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(895, 133);
-            label3.Name = "label3";
-            label3.Size = new Size(27, 20);
-            label3.TabIndex = 36;
-            label3.Text = "ID:";
-            // 
-            // btnRefresh
-            // 
-            btnRefresh.Location = new Point(1289, 331);
-            btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(90, 30);
-            btnRefresh.TabIndex = 35;
-            btnRefresh.Text = "Refresh";
-            btnRefresh.Click += btnRefresh_Click;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(819, 107);
-            label2.Name = "label2";
-            label2.Size = new Size(164, 20);
-            label2.TabIndex = 34;
-            label2.Text = "Form để thêm/sửa/xóa:";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(819, 36);
-            label1.Name = "label1";
-            label1.Size = new Size(70, 20);
-            label1.TabIndex = 33;
-            label1.Text = "Tìm kiếm";
-            // 
-            // btn_ShowAll
-            // 
-            btn_ShowAll.Location = new Point(1280, 36);
-            btn_ShowAll.Name = "btn_ShowAll";
-            btn_ShowAll.Size = new Size(90, 42);
-            btn_ShowAll.TabIndex = 32;
-            btn_ShowAll.Text = "ShowAll";
-            btn_ShowAll.Click += btn_ShowAll_Click;
-            // 
-            // btnSearch
-            // 
-            btnSearch.Location = new Point(1158, 31);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(90, 42);
-            btnSearch.TabIndex = 31;
-            btnSearch.Text = "Search";
-            btnSearch.Click += btnSearch_Click;
-            // 
-            // txtSearch
-            // 
-            txtSearch.Location = new Point(908, 31);
-            txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(200, 27);
-            txtSearch.TabIndex = 30;
-            // 
-            // txtId
-            // 
-            txtId.Location = new Point(958, 130);
-            txtId.Name = "txtId";
-            txtId.Size = new Size(200, 27);
-            txtId.TabIndex = 21;
-            // 
-            // txtName
-            // 
-            txtName.Location = new Point(958, 170);
-            txtName.Name = "txtName";
-            txtName.Size = new Size(200, 27);
-            txtName.TabIndex = 22;
-            // 
-            // txtQuantity
-            // 
-            txtQuantity.Location = new Point(958, 210);
-            txtQuantity.Name = "txtQuantity";
-            txtQuantity.Size = new Size(200, 27);
-            txtQuantity.TabIndex = 23;
-            // 
-            // txtPrice
-            // 
-            txtPrice.Location = new Point(958, 250);
-            txtPrice.Name = "txtPrice";
-            txtPrice.Size = new Size(200, 27);
-            txtPrice.TabIndex = 24;
-            // 
-            // btnAdd
-            // 
-            btnAdd.Location = new Point(1179, 293);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(90, 30);
-            btnAdd.TabIndex = 26;
-            btnAdd.Text = "Add";
-            btnAdd.Click += btnAdd_Click;
-            // 
-            // btnUpdate
-            // 
-            btnUpdate.Location = new Point(1289, 293);
-            btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(90, 30);
-            btnUpdate.TabIndex = 27;
-            btnUpdate.Text = "Update";
-            btnUpdate.Click += btnUpdate_Click;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(1179, 333);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(90, 30);
-            btnDelete.TabIndex = 28;
-            btnDelete.Text = "Delete";
-            btnDelete.Click += btnDelete_Click;
-            // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(876, 336);
-            label8.Name = "label8";
-            label8.Size = new Size(77, 20);
-            label8.TabIndex = 42;
-            label8.Text = "Condition:";
-            // 
-            // txtCondition
-            // 
-            txtCondition.Location = new Point(958, 333);
-            txtCondition.Name = "txtCondition";
-            txtCondition.Size = new Size(200, 27);
-            txtCondition.TabIndex = 41;
-            // 
-            // txtCountry
-            // 
-            txtCountry.Location = new Point(958, 293);
-            txtCountry.Name = "txtCountry";
-            txtCountry.Size = new Size(200, 27);
-            txtCountry.TabIndex = 43;
-            // 
-            // QuanLySanPham
-            // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1382, 456);
-            Controls.Add(txtCountry);
-            Controls.Add(label8);
-            Controls.Add(txtCondition);
-            Controls.Add(label7);
-            Controls.Add(label6);
-            Controls.Add(label5);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(btnRefresh);
-            Controls.Add(label2);
-            Controls.Add(label1);
-            Controls.Add(btn_ShowAll);
-            Controls.Add(btnSearch);
-            Controls.Add(txtSearch);
-            Controls.Add(txtId);
-            Controls.Add(txtName);
-            Controls.Add(txtQuantity);
-            Controls.Add(txtPrice);
-            Controls.Add(btnAdd);
-            Controls.Add(btnUpdate);
-            Controls.Add(btnDelete);
-            Controls.Add(dvgProduct);
-            Name = "QuanLySanPham";
-            Text = "QuanLySanPham";
-            ((System.ComponentModel.ISupportInitialize)dvgProduct).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
-        }
-
-        #endregion
-
-        private DataGridView dvgProduct;
-        private DataGridViewTextBoxColumn ID;
-        private DataGridViewTextBoxColumn product_Name;
-        private DataGridViewTextBoxColumn Quantity;
-        private DataGridViewTextBoxColumn Price;
-        private Label label7;
-        private Label label6;
-        private Label label5;
-        private Label label4;
-        private Label label3;
-        private Button btnRefresh;
-        private Label label2;
-        private Label label1;
-        private Button btn_ShowAll;
-        private Button btnSearch;
-        private TextBox txtSearch;
         private TextBox txtId;
         private TextBox txtName;
         private TextBox txtQuantity;
         private TextBox txtPrice;
+        private TextBox txtCountry;
+        private TextBox txtCondition;
+        private TextBox txtSearch;
+
         private Button btnAdd;
         private Button btnUpdate;
         private Button btnDelete;
-        private DataGridViewTextBoxColumn Country;
-        private DataGridViewTextBoxColumn Condition;
-        private Label label8;
-        private TextBox txtCondition;
-        private TextBox txtCountry;
+        private Button btnRefresh;
+        private Button btnSearch;
+        private Button btn_ShowAll;
+
+        private Label lblSearch;
+        private Label lblTitle;
+        private Label lblId;
+        private Label lblName;
+        private Label lblQuantity;
+        private Label lblPrice;
+        private Label lblCountry;
+        private Label lblCondition;
+
+        private DataGridViewTextBoxColumn colId;
+        private DataGridViewTextBoxColumn colName;
+        private DataGridViewTextBoxColumn colQuantity;
+        private DataGridViewTextBoxColumn colPrice;
+        private DataGridViewTextBoxColumn colCountry;
+        private DataGridViewTextBoxColumn colCondition;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+
+            // Khởi tạo các biến
+            panelLeft = new Panel();
+            dgvProduct = new DataGridView();
+            colId = new DataGridViewTextBoxColumn();
+            colName = new DataGridViewTextBoxColumn();
+            colQuantity = new DataGridViewTextBoxColumn();
+            colPrice = new DataGridViewTextBoxColumn();
+            colCountry = new DataGridViewTextBoxColumn();
+            colCondition = new DataGridViewTextBoxColumn();
+            panelRight = new Panel();
+            lblSearch = new Label();
+            txtSearch = new TextBox();
+            btnSearch = new Button();
+            btn_ShowAll = new Button();
+            lblTitle = new Label();
+            lblId = new Label();
+            txtId = new TextBox();
+            lblName = new Label();
+            txtName = new TextBox();
+            lblQuantity = new Label();
+            txtQuantity = new TextBox();
+            lblPrice = new Label();
+            txtPrice = new TextBox();
+            lblCountry = new Label();
+            txtCountry = new TextBox();
+            lblCondition = new Label();
+            txtCondition = new TextBox();
+            btnAdd = new Button();
+            btnUpdate = new Button();
+            btnDelete = new Button();
+            btnRefresh = new Button();
+
+            panelLeft.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvProduct).BeginInit();
+            panelRight.SuspendLayout();
+            SuspendLayout();
+
+            // 
+            // panelLeft
+            // 
+            panelLeft.BackColor = Color.White;
+            panelLeft.Controls.Add(dgvProduct);
+            panelLeft.Dock = DockStyle.Left;
+            panelLeft.Location = new Point(0, 0);
+            panelLeft.Name = "panelLeft";
+            panelLeft.Padding = new Padding(10);
+            panelLeft.Size = new Size(650, 600); // Tăng chiều cao để khớp form
+            panelLeft.TabIndex = 1;
+
+            // 
+            // dgvProduct (Giữ nguyên cấu hình của bạn)
+            // 
+            dgvProduct.AllowUserToAddRows = false;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 240, 240);
+            dgvProduct.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 100, 100);
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            dgvProduct.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dgvProduct.ColumnHeadersHeight = 40;
+            dgvProduct.Columns.AddRange(new DataGridViewColumn[] { colId, colName, colQuantity, colPrice, colCountry, colCondition });
+            dgvProduct.Dock = DockStyle.Fill;
+            dgvProduct.EnableHeadersVisualStyles = false;
+            dgvProduct.GridColor = Color.FromArgb(255, 230, 230);
+            dgvProduct.Location = new Point(10, 10);
+            dgvProduct.Name = "dgvProduct";
+            dgvProduct.ReadOnly = true;
+            dgvProduct.RowHeadersVisible = false;
+            dgvProduct.RowHeadersWidth = 51;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(255, 224, 192);
+            dataGridViewCellStyle3.SelectionForeColor = Color.Black;
+            dgvProduct.RowsDefaultCellStyle = dataGridViewCellStyle3;
+            dgvProduct.RowTemplate.Height = 35;
+            dgvProduct.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgvProduct.Size = new Size(630, 580);
+            dgvProduct.TabIndex = 0;
+            dgvProduct.CellClick += dataGridView1_CellClick;
+
+            // Cấu hình các cột (Giữ nguyên)
+            colId.HeaderText = "ID"; colId.Width = 60; colId.Name = "colId"; colId.ReadOnly = true;
+            colName.HeaderText = "Tên SP"; colName.Width = 150; colName.Name = "colName"; colName.ReadOnly = true;
+            colQuantity.HeaderText = "Số lượng"; colQuantity.Width = 100; colQuantity.Name = "colQuantity"; colQuantity.ReadOnly = true;
+            colPrice.HeaderText = "Giá"; colPrice.Width = 100; colPrice.Name = "colPrice"; colPrice.ReadOnly = true;
+            colCountry.HeaderText = "Xuất xứ"; colCountry.Width = 100; colCountry.Name = "colCountry"; colCountry.ReadOnly = true;
+            colCondition.HeaderText = "Tình trạng"; colCondition.Width = 100; colCondition.Name = "colCondition"; colCondition.ReadOnly = true;
+
+            // 
+            // panelRight
+            // 
+            panelRight.BackColor = Color.FromArgb(255, 230, 230);
+            panelRight.Controls.Add(lblSearch);
+            panelRight.Controls.Add(txtSearch);
+            panelRight.Controls.Add(btnSearch);
+            panelRight.Controls.Add(btn_ShowAll);
+            panelRight.Controls.Add(lblTitle);
+
+            // Add Input controls
+            panelRight.Controls.Add(lblId); panelRight.Controls.Add(txtId);
+            panelRight.Controls.Add(lblName); panelRight.Controls.Add(txtName);
+            panelRight.Controls.Add(lblQuantity); panelRight.Controls.Add(txtQuantity);
+            panelRight.Controls.Add(lblPrice); panelRight.Controls.Add(txtPrice);
+            panelRight.Controls.Add(lblCountry); panelRight.Controls.Add(txtCountry);
+            panelRight.Controls.Add(lblCondition); panelRight.Controls.Add(txtCondition);
+
+            // Add Buttons
+            panelRight.Controls.Add(btnAdd);
+            panelRight.Controls.Add(btnUpdate);
+            panelRight.Controls.Add(btnDelete);
+            panelRight.Controls.Add(btnRefresh);
+
+            panelRight.Dock = DockStyle.Fill;
+            panelRight.Location = new Point(650, 0);
+            panelRight.Name = "panelRight";
+            panelRight.Padding = new Padding(30);
+            panelRight.Size = new Size(450, 600); // Kích thước ảo để design
+            panelRight.TabIndex = 0;
+
+            // --- PHẦN TÌM KIẾM ---
+            // lblSearch
+            lblSearch.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblSearch.Location = new Point(30, 20);
+            lblSearch.Name = "lblSearch";
+            lblSearch.Size = new Size(200, 25);
+            lblSearch.Text = "Tìm kiếm sản phẩm:";
+
+            // txtSearch
+            txtSearch.Location = new Point(30, 50);
+            txtSearch.Name = "txtSearch";
+            txtSearch.Size = new Size(250, 27);
+
+            // btnSearch
+            btnSearch.Location = new Point(290, 48);
+            btnSearch.Size = new Size(80, 30);
+            btnSearch.Text = "Tìm";
+            btnSearch.Click += btnSearch_Click;
+
+            // btn_ShowAll
+            btn_ShowAll.Location = new Point(380, 48);
+            btn_ShowAll.Size = new Size(80, 30);
+            btn_ShowAll.Text = "Tất cả";
+            btn_ShowAll.Click += btn_ShowAll_Click;
+
+            // --- TITLE ---
+            lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            lblTitle.ForeColor = Color.Maroon;
+            lblTitle.Location = new Point(30, 100);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(300, 30);
+            lblTitle.Text = "Thông tin chi tiết";
+
+            // --- CÁC Ô NHẬP LIỆU (Sắp xếp dọc xuống dưới) ---
+            int labelX = 30;
+            int txtX = 140;
+            int startY = 150;
+            int stepY = 40;
+
+            // ID
+            lblId.Text = "Mã SP:"; lblId.Location = new Point(labelX, startY); lblId.AutoSize = true;
+            txtId.Location = new Point(txtX, startY - 3); txtId.Size = new Size(250, 27); txtId.ReadOnly = true; // Thường ID không cho sửa
+
+            // Name
+            lblName.Text = "Tên SP:"; lblName.Location = new Point(labelX, startY + stepY); lblName.AutoSize = true;
+            txtName.Location = new Point(txtX, startY + stepY - 3); txtName.Size = new Size(250, 27);
+
+            // Quantity
+            lblQuantity.Text = "Số lượng:"; lblQuantity.Location = new Point(labelX, startY + stepY * 2); lblQuantity.AutoSize = true;
+            txtQuantity.Location = new Point(txtX, startY + stepY * 2 - 3); txtQuantity.Size = new Size(250, 27);
+
+            // Price
+            lblPrice.Text = "Đơn giá:"; lblPrice.Location = new Point(labelX, startY + stepY * 3); lblPrice.AutoSize = true;
+            txtPrice.Location = new Point(txtX, startY + stepY * 3 - 3); txtPrice.Size = new Size(250, 27);
+
+            // Country
+            lblCountry.Text = "Xuất xứ:"; lblCountry.Location = new Point(labelX, startY + stepY * 4); lblCountry.AutoSize = true;
+            txtCountry.Location = new Point(txtX, startY + stepY * 4 - 3); txtCountry.Size = new Size(250, 27);
+
+            // Condition
+            lblCondition.Text = "Tình trạng:"; lblCondition.Location = new Point(labelX, startY + stepY * 5); lblCondition.AutoSize = true;
+            txtCondition.Location = new Point(txtX, startY + stepY * 5 - 3); txtCondition.Size = new Size(250, 27);
+
+            // --- CÁC NÚT CHỨC NĂNG (Xếp ngang bên dưới) ---
+            int btnY = 420;
+
+            // btnAdd
+            btnAdd.Text = "Thêm";
+            btnAdd.Location = new Point(30, btnY);
+            btnAdd.Size = new Size(90, 40);
+            btnAdd.BackColor = Color.White;
+            btnAdd.Click += btnAdd_Click;
+
+            // btnUpdate
+            btnUpdate.Text = "Sửa";
+            btnUpdate.Location = new Point(130, btnY);
+            btnUpdate.Size = new Size(90, 40);
+            btnUpdate.BackColor = Color.White;
+            btnUpdate.Click += btnUpdate_Click;
+
+            // btnDelete
+            btnDelete.Text = "Xóa";
+            btnDelete.Location = new Point(230, btnY);
+            btnDelete.Size = new Size(90, 40);
+            btnDelete.BackColor = Color.White;
+            btnDelete.Click += btnDelete_Click;
+
+            // btnRefresh
+            btnRefresh.Text = "Làm mới";
+            btnRefresh.Location = new Point(330, btnY);
+            btnRefresh.Size = new Size(90, 40);
+            btnRefresh.BackColor = Color.White;
+            btnRefresh.Click += btnRefresh_Click;
+
+            // 
+            // QuanLySanPham
+            // 
+            // Tăng kích thước Form để chứa đủ PanelLeft (650) + PanelRight (~450)
+            ClientSize = new Size(1150, 600);
+            Controls.Add(panelRight);
+            Controls.Add(panelLeft);
+            Name = "QuanLySanPham";
+            Text = "Quản lý sản phẩm";
+            StartPosition = FormStartPosition.CenterScreen; // Mở form ở giữa màn hình
+            WindowState = FormWindowState.Normal; // Để Normal để thấy đúng kích thước đã set
+
+            panelLeft.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvProduct).EndInit();
+            panelRight.ResumeLayout(false);
+            panelRight.PerformLayout();
+            ResumeLayout(false);
+        }
+
+        // Helpers ---------------------------------------------
+        private void AddLabel(Label lbl, string text, int x, int y)
+        {
+            lbl.Text = text;
+            lbl.Font = new Font("Segoe UI", 11F);
+            lbl.Location = new Point(x, y);
+        }
+
+        private void AddTextBox(TextBox txt, int x, int y)
+        {
+            txt.Location = new Point(x, y);
+            txt.Size = new Size(260, 27);
+        }
+
+        private void StyleButton(Button btn, int x, int y, string? text = null)
+        {
+            if (text != null) btn.Text = text;
+
+            btn.BackColor = Color.FromArgb(255, 210, 210);
+            btn.FlatAppearance.BorderSize = 0;
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btn.ForeColor = Color.DimGray;
+            btn.Location = new Point(x, y);
+            btn.Size = new Size(130, 40);
+        }
     }
 }
