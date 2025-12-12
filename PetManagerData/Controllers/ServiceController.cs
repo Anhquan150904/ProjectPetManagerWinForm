@@ -20,7 +20,7 @@ namespace PetManagerData.Controllers
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                string query = "SELECT * FROM Services";
+                string query = "SELECT ServiceId, ServiceName, Type, Price FROM dbo.Service";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
@@ -37,7 +37,7 @@ namespace PetManagerData.Controllers
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                string query = "DELETE FROM Services WHERE ServiceId = @id";
+                string query = "DELETE FROM dbo.Service WHERE ServiceId = @id";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -53,7 +53,7 @@ namespace PetManagerData.Controllers
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                string query = @"INSERT INTO Services (ServiceName, Type, Price)
+                string query = @"INSERT INTO dbo.Service (ServiceName, Type, Price)
                                  VALUES (@name, @type, @price)";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -73,7 +73,7 @@ namespace PetManagerData.Controllers
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                string query = @"UPDATE Services
+                string query = @"UPDATE dbo.Service
                                  SET ServiceName = @name,
                                      Type = @type,
                                      Price = @price
@@ -99,7 +99,7 @@ namespace PetManagerData.Controllers
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                string query = @"SELECT * FROM Services
+                string query = @"SELECT ServiceId, ServiceName, Type, Price FROM dbo.Service
                                  WHERE (ServiceName LIKE @pattern OR
                                         Type LIKE @pattern OR
                                         CONVERT(NVARCHAR(50), Price) LIKE @pattern)";

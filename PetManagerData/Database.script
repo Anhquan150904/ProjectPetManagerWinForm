@@ -65,6 +65,165 @@ CREATE TABLE Service (
     Price DECIMAL(18,2)
 );
 
+-- Services: table + sample data + stored procedures
+USE PetManager;
+GO
+
+SET XACT_ABORT ON;
+GO
+
+-- Create Service table if not exists
+IF OBJECT_ID('dbo.Service', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.Service
+    (
+        ServiceId INT IDENTITY(1,1) PRIMARY KEY,
+        ServiceName NVARCHAR(100) NOT NULL,
+        Type NVARCHAR(50) NULL,
+        Price DECIMAL(18,2) NOT NULL DEFAULT(0)
+    );
+
+    PRINT 'Created table dbo.Service';
+END
+GO
+
+-- Insert sample data if table empty
+IF EXISTS (SELECT 1 FROM dbo.Service) = 0
+BEGIN
+    INSERT INTO dbo.Service (ServiceName, Type, Price)
+    VALUES
+      (N'Tắm', N'Spa', 300000.00),
+      (N'Cắt tỉa lông', N'Spa', 100000.00),
+      (N'Huấn luyện', N'Behavior', 500000.00);
+
+    PRINT 'Inserted sample Service rows';
+END
+GO
+
+-- Stored procedure: Get all services
+IF OBJECT_ID('dbo.usp_Service_GetAll', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Service_GetAll;
+GO
+CREATE PROCEDURE dbo.usp_Service_GetAll
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT ServiceId, ServiceName, Type, Price
+    FROM dbo.Service
+    ORDER BY ServiceName;
+END
+GO
+
+-- Stored procedure: Get service by id
+IF OBJECT_ID('dbo.usp_Service_GetById', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Service_GetById;
+GO
+CREATE PROCEDURE dbo.usp_Service_GetById
+    @ServiceId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    SELECT ServiceId, ServiceName, Type, Price
+    FROM dbo.Service
+    WHERE ServiceId = @ServiceId;
+END
+GO
+
+-- Stored procedure: Insert service
+IF OBJECT_ID('dbo.usp_Service_Insert', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Service_Insert;
+GO
+CREATE PROCEDURE dbo.usp_Service_Insert
+    @ServiceName NVARCHAR(100),
+    @Type NVARCHAR(50) = NULL,
+    @Price DECIMAL(18,2) = 0
+AS
+BEGIN
+    SET NOCOUNT ON;
+    INSERT INTO dbo.Service (ServiceName, Type, Price)
+    VALUES (@ServiceName, @Type, @Price);
+
+    SELECT CAST(SCOPE_IDENTITY() AS INT) AS NewServiceId;
+END
+GO
+
+-- Stored procedure: Update service
+IF OBJECT_ID('dbo.usp_Service_Update', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Service_Update;
+GO
+CREATE PROCEDURE dbo.usp_Service_Update
+    @ServiceId INT,
+    @ServiceName NVARCHAR(100),
+    @Type NVARCHAR(50) = NULL,
+    @Price DECIMAL(18,2) = 0
+AS
+BEGIN
+    SET NOCOUNT ON;
+    UPDATE dbo.Service
+    SET ServiceName = @ServiceName,
+        Type = @Type,
+        Price = @Price
+    WHERE ServiceId = @ServiceId;
+
+    SELECT @@ROWCOUNT AS RowsAffected;
+END
+GO
+
+-- Stored procedure: Delete service
+IF OBJECT_ID('dbo.usp_Service_Delete', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Service_Delete;
+GO
+CREATE PROCEDURE dbo.usp_Service_Delete
+    @ServiceId INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DELETE FROM dbo.Service WHERE ServiceId = @ServiceId;
+    SELECT @@ROWCOUNT AS RowsAffected;
+END
+GO
+
+-- Stored procedure: Search services (name/type/price)
+IF OBJECT_ID('dbo.usp_Service_Search', 'P') IS NOT NULL
+    DROP PROCEDURE dbo.usp_Service_Search;
+GO
+CREATE PROCEDURE dbo.usp_Service_Search
+    @Query NVARCHAR(200)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @pattern NVARCHAR(210) = N'%' + @Query + N'%';
+
+    SELECT ServiceId, ServiceName, Type, Price
+    FROM dbo.Service
+    WHERE ServiceName LIKE @pattern
+       OR Type LIKE @pattern
+       OR CONVERT(NVARCHAR(50), Price) LIKE @pattern
+    ORDER BY ServiceName;
+END
+GO
+
+-- Tạo bảng ServiceType (nếu chưa có) và dữ liệu mẫu
+USE PetManager;
+GO
+
+IF OBJECT_ID('dbo.ServiceType','U') IS NULL
+BEGIN
+    CREATE TABLE dbo.ServiceType (
+        TypeId INT IDENTITY(1,1) PRIMARY KEY,
+        TypeName NVARCHAR(100) NOT NULL UNIQUE
+    );
+END
+GO
+
+-- (Tùy chọn) chèn dữ liệu mẫu
+IF NOT EXISTS (SELECT 1 FROM dbo.ServiceType)
+BEGIN
+    INSERT INTO dbo.ServiceType (TypeName)
+    VALUES (N'Spa'), (N'Behavior'), (N'Grooming');
+END
+GO
+
 -- Invoice
 CREATE TABLE Invoice (
     InvoiceId INT IDENTITY PRIMARY KEY,
