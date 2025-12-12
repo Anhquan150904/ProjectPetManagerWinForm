@@ -17,7 +17,7 @@
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             groupBox1 = new GroupBox();
             lblPosition = new Label();
             lblName = new Label();
@@ -206,7 +206,7 @@
             btnGioRa.Name = "btnGioRa";
             btnGioRa.Size = new Size(150, 35);
             btnGioRa.TabIndex = 7;
-            btnGioRa.Text = "Ghi giờ ra ngay";
+            btnGioRa.Text = "Check-out";
             btnGioRa.UseVisualStyleBackColor = false;
             // 
             // btnGioVao
@@ -218,7 +218,7 @@
             btnGioVao.Name = "btnGioVao";
             btnGioVao.Size = new Size(150, 35);
             btnGioVao.TabIndex = 6;
-            btnGioVao.Text = "Ghi giờ vào ngay";
+            btnGioVao.Text = "Check-in";
             btnGioVao.UseVisualStyleBackColor = false;
             // 
             // dtpGioRa
@@ -298,14 +298,14 @@
             dataGridViewLichSu.AllowUserToAddRows = false;
             dataGridViewLichSu.AllowUserToDeleteRows = false;
             dataGridViewLichSu.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridViewLichSu.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            dataGridViewCellStyle2.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
+            dataGridViewLichSu.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             dataGridViewLichSu.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewLichSu.Columns.AddRange(new DataGridViewColumn[] { colID, colNgay, colGioVao, colGioRa, colTongGio, colGhiChu });
             dataGridViewLichSu.Location = new Point(20, 30);
