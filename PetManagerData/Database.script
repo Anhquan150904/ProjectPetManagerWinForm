@@ -131,3 +131,377 @@ VALUES
 -- tồn kho trung bình
 (N'Bột tắm khô cho mèo 150g', 10, 55000, N'Nhật Bản', N'Mới'),
 (N'Dây dắt chó 1.5m', 8, 65000, N'Việt Nam', N'Mới');
+
+
+-- Bảng Nhân Viên
+CREATE TABLE NhanVien (
+    ID INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(100) NOT NULL,
+    Address NVARCHAR(200),
+    PhoneNumber VARCHAR(20),
+    Sex NVARCHAR(10),
+    Email VARCHAR(100),
+    Position NVARCHAR(100),
+    Status NVARCHAR(50) DEFAULT N'Đang làm',
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    ModifiedDate DATETIME DEFAULT GETDATE()
+);
+
+-- Bảng Chấm Công
+CREATE TABLE ChamCong (
+    ID INT PRIMARY KEY IDENTITY(1,1),
+    EmployeeID INT NOT NULL,
+    Date DATE NOT NULL,
+    TimeIn TIME,
+    TimeOut TIME,
+    TotalHours DECIMAL(5,2),
+    Note NVARCHAR(500),
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (EmployeeID) REFERENCES NhanVien(ID),
+    CONSTRAINT UC_ChamCong UNIQUE (EmployeeID, Date, TimeIn)
+);
+
+-- Bảng Phân Ca
+CREATE TABLE PhanCa (
+    ID INT PRIMARY KEY IDENTITY(1,1),
+    EmployeeID INT NOT NULL,
+    Date DATE NOT NULL,
+    CaSang BIT DEFAULT 0,
+    CaChieu BIT DEFAULT 0,
+    CaToi BIT DEFAULT 0,
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (EmployeeID) REFERENCES NhanVien(ID),
+    CONSTRAINT UC_PhanCa UNIQUE (EmployeeID, Date)
+);
+
+-- Bảng Tính Lương
+CREATE TABLE TinhLuong (
+    ID INT PRIMARY KEY IDENTITY(1,1),
+    EmployeeID INT NOT NULL,
+    Month INT NOT NULL,
+    Year INT NOT NULL,
+    TotalHours DECIMAL(10,2),
+    HourlyRate DECIMAL(10,2) DEFAULT 25000,
+    BasicSalary DECIMAL(15,2),
+    Allowance DECIMAL(15,2) DEFAULT 0,
+    Bonus DECIMAL(15,2) DEFAULT 0,
+    Penalty DECIMAL(15,2) DEFAULT 0,
+    NetSalary DECIMAL(15,2),
+    CreatedDate DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (EmployeeID) REFERENCES NhanVien(ID),
+    CONSTRAINT UC_TinhLuong UNIQUE (EmployeeID, Month, Year)
+);
+
+-- Insert dữ liệu mẫu
+SET IDENTITY_INSERT NhanVien ON;
+INSERT INTO NhanVien (ID, Name, Address, PhoneNumber, Sex, Email, Position, Status) VALUES
+(1, N'Hải Long', N'Thái Bình', '0123456789', N'Nam', 'long@mail.com', N'Quét rác', N'Đang làm'),
+(2, N'Anh Quân', N'Ninh Bình', '0987654321', N'Nam', 'quan@mail.com', N'Cắt tỉa', N'Đang làm'),
+(3, N'Thiên Khôi', N'Hà Nội', '0123456788', N'Nam', 'khoi@mail.com', N'Tắm', N'Đang làm'),
+(4, N'Tạ Hiền', N'Hà Nội', '09987654322', N'Nữ', 'hien@mail.com', N'Thu ngân', N'Đang làm');
+SET IDENTITY_INSERT NhanVien OFF;
+-- Tạo Stored Procedures
+GO
+
+-- SP: Lấy tất cả nhân viên
+CREATE PROCEDURE sp_GetAllEmployees
+AS
+BEGIN
+    SELECT ID, Name, Address, PhoneNumber, Sex, Email, Position, Status
+    FROM NhanVien
+    ORDER BY ID;
+END
+GO
+
+-- SP: Thêm nhân viên
+CREATE PROCEDURE sp_InsertEmployee
+    @Name NVARCHAR(100),
+    @Address NVARCHAR(200),
+    @PhoneNumber VARCHAR(20),
+    @Sex NVARCHAR(10),
+    @Email VARCHAR(100),
+    @Position NVARCHAR(100),
+    @Status NVARCHAR(50)
+AS
+BEGIN
+    INSERT INTO NhanVien (Name, Address, PhoneNumber, Sex, Email, Position, Status)
+    VALUES (@Name, @Address, @PhoneNumber, @Sex, @Email, @Position, @Status);
+    
+    SELECT SCOPE_IDENTITY() AS NewID;
+END
+GO
+
+-- SP: Cập nhật nhân viên
+CREATE PROCEDURE sp_UpdateEmployee
+    @ID INT,
+    @Name NVARCHAR(100),
+    @Address NVARCHAR(200),
+    @PhoneNumber VARCHAR(20),
+    @Sex NVARCHAR(10),
+    @Email VARCHAR(100),
+    @Position NVARCHAR(100),
+    @Status NVARCHAR(50)
+AS
+BEGIN
+    UPDATE NhanVien
+    SET Name = @Name,
+        Address = @Address,
+        PhoneNumber = @PhoneNumber,
+        Sex = @Sex,
+        Email = @Email,
+        Position = @Position,
+        Status = @Status,
+        ModifiedDate = GETDATE()
+    WHERE ID = @ID;
+END
+GO
+
+-- SP: Xóa nhân viên
+CREATE PROCEDURE sp_DeleteEmployee
+    @ID INT
+AS
+BEGIN
+    DELETE FROM TinhLuong WHERE EmployeeID = @ID;
+    DELETE FROM PhanCa WHERE EmployeeID = @ID;
+    DELETE FROM ChamCong WHERE EmployeeID = @ID;
+    DELETE FROM NhanVien WHERE ID = @ID;
+END
+GO
+
+-- SP: Tìm kiếm nhân viên
+CREATE PROCEDURE sp_SearchEmployees
+    @Keyword NVARCHAR(200)
+AS
+BEGIN
+    SELECT ID, Name, Address, PhoneNumber, Sex, Email, Position, Status
+    FROM NhanVien
+    WHERE Name LIKE '%' + @Keyword + '%'
+       OR Position LIKE '%' + @Keyword + '%'
+       OR CAST(ID AS VARCHAR) LIKE '%' + @Keyword + '%'
+    ORDER BY ID;
+END
+GO
+
+-- SP: Thêm chấm công
+CREATE PROCEDURE sp_InsertAttendance
+    @EmployeeID INT,
+    @Date DATE,
+    @TimeIn TIME,
+    @TimeOut TIME,
+    @TotalHours DECIMAL(5,2),
+    @Note NVARCHAR(500)
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM ChamCong WHERE EmployeeID = @EmployeeID AND Date = @Date AND TimeIn = @TimeIn)
+    BEGIN
+        RAISERROR(N'Đã tồn tại bản ghi chấm công này!', 16, 1);
+        RETURN;
+    END
+    
+    INSERT INTO ChamCong (EmployeeID, Date, TimeIn, TimeOut, TotalHours, Note)
+    VALUES (@EmployeeID, @Date, @TimeIn, @TimeOut, @TotalHours, @Note);
+END
+GO
+
+-- SP: Cập nhật giờ ra
+CREATE PROCEDURE sp_UpdateAttendanceCheckOut
+    @EmployeeID INT,
+    @Date DATE,
+    @TimeOut TIME,
+    @TotalHours DECIMAL(5,2)
+AS
+BEGIN
+    UPDATE ChamCong
+    SET TimeOut = @TimeOut,
+        TotalHours = @TotalHours
+    WHERE EmployeeID = @EmployeeID 
+      AND Date = @Date 
+      AND TimeOut IS NULL;
+END
+GO
+
+-- SP: Lấy lịch sử chấm công
+CREATE PROCEDURE sp_GetAttendanceHistory
+    @EmployeeID INT
+AS
+BEGIN
+    SELECT ID, EmployeeID, Date, TimeIn, TimeOut, TotalHours, Note
+    FROM ChamCong
+    WHERE EmployeeID = @EmployeeID
+    ORDER BY Date DESC, TimeIn DESC;
+END
+GO
+
+-- SP: Lấy chấm công theo tháng
+CREATE PROCEDURE sp_GetAttendanceByMonth
+    @EmployeeID INT,
+    @Month INT,
+    @Year INT
+AS
+BEGIN
+    SELECT ID, EmployeeID, Date, TimeIn, TimeOut, TotalHours, Note
+    FROM ChamCong
+    WHERE EmployeeID = @EmployeeID
+      AND MONTH(Date) = @Month
+      AND YEAR(Date) = @Year
+    ORDER BY Date;
+END
+GO
+
+INSERT INTO ChamCong (EmployeeID, Date, TimeIn, TimeOut, TotalHours, Note)
+VALUES
+(1, '2025-12-10', '08:00', '16:00', 8.00, N'Làm đủ ca'),
+(1, '2025-12-11', '13:00', '18:30', 5.50, N'Ca chiều'),
+
+(2, '2025-12-10', '08:00', '17:00', 9.00, N'Tăng ca 1 giờ'),
+(2, '2025-12-11', '12:30', '20:00', 7.50, N'Ca chiều + tối'),
+
+(3, '2025-12-10', '07:30', '14:00', 6.50, N'Làm sớm'),
+
+(4, '2025-12-10', '12:00', '18:00', 6.00, N'Ca chiều');
+
+
+-- SP: Thêm/Cập nhật phân ca
+CREATE PROCEDURE sp_UpsertShift
+    @EmployeeID INT,
+    @Date DATE,
+    @CaSang BIT,
+    @CaChieu BIT,
+    @CaToi BIT
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM PhanCa WHERE EmployeeID = @EmployeeID AND Date = @Date)
+    BEGIN
+        UPDATE PhanCa
+        SET CaSang = @CaSang,
+            CaChieu = @CaChieu,
+            CaToi = @CaToi
+        WHERE EmployeeID = @EmployeeID AND Date = @Date;
+    END
+    ELSE
+    BEGIN
+        INSERT INTO PhanCa (EmployeeID, Date, CaSang, CaChieu, CaToi)
+        VALUES (@EmployeeID, @Date, @CaSang, @CaChieu, @CaToi);
+    END
+END
+GO
+
+-- SP: Lấy lịch phân ca
+CREATE PROCEDURE sp_GetShiftSchedule
+    @EmployeeID INT
+AS
+BEGIN
+    SELECT ID, EmployeeID, Date, CaSang, CaChieu, CaToi
+    FROM PhanCa
+    WHERE EmployeeID = @EmployeeID
+    ORDER BY Date DESC;
+END
+GO
+
+-- SP: Xóa phân ca
+CREATE PROCEDURE sp_DeleteShift
+    @ID INT
+AS
+BEGIN
+    DELETE FROM PhanCa WHERE ID = @ID;
+END
+GO
+
+INSERT INTO PhanCa (EmployeeID, Date, CaSang, CaChieu, CaToi)
+VALUES
+(1, '2025-12-10', 1, 0, 0),
+(1, '2025-12-11', 0, 1, 0),
+(2, '2025-12-10', 1, 1, 0),
+(2, '2025-12-11', 0, 1, 1),
+(3, '2025-12-10', 1, 0, 1),
+(4, '2025-12-10', 0, 1, 0);
+
+
+-- SP: Tính lương
+CREATE PROCEDURE sp_CalculateSalary
+    @EmployeeID INT,
+    @Month INT,
+    @Year INT,
+    @Bonus DECIMAL(15,2) = 0,
+    @Penalty DECIMAL(15,2) = 0
+AS
+BEGIN
+    DECLARE @TotalHours DECIMAL(10,2);
+    DECLARE @BasicSalary DECIMAL(15,2);
+    DECLARE @Allowance DECIMAL(15,2);
+    DECLARE @NetSalary DECIMAL(15,2);
+    DECLARE @HourlyRate DECIMAL(10,2) = 25000;
+    
+    -- Tính tổng giờ làm trong tháng
+    SELECT @TotalHours = ISNULL(SUM(TotalHours), 0)
+    FROM ChamCong
+    WHERE EmployeeID = @EmployeeID
+      AND MONTH(Date) = @Month
+      AND YEAR(Date) = @Year;
+    
+    -- Tính lương cơ bản
+    SET @BasicSalary = @TotalHours * @HourlyRate;
+    
+    -- Tính phụ cấp theo vị trí
+    SELECT @Allowance = CASE 
+        WHEN Position LIKE N'%Quản lý%' THEN 500000
+        WHEN Position LIKE N'%Thu ngân%' THEN 200000
+        ELSE 0
+    END
+    FROM NhanVien
+    WHERE ID = @EmployeeID;
+    
+    -- Tính lương thực lãnh
+    SET @NetSalary = @BasicSalary + @Allowance + @Bonus - @Penalty;
+    
+    -- Xóa bản ghi cũ nếu có
+    DELETE FROM TinhLuong 
+    WHERE EmployeeID = @EmployeeID AND Month = @Month AND Year = @Year;
+    
+    -- Insert bản ghi mới
+    INSERT INTO TinhLuong (EmployeeID, Month, Year, TotalHours, HourlyRate, 
+                           BasicSalary, Allowance, Bonus, Penalty, NetSalary)
+    VALUES (@EmployeeID, @Month, @Year, @TotalHours, @HourlyRate, 
+            @BasicSalary, @Allowance, @Bonus, @Penalty, @NetSalary);
+    
+    -- Trả về kết quả
+    SELECT @TotalHours AS TotalHours,
+           @HourlyRate AS HourlyRate,
+           @BasicSalary AS BasicSalary,
+           @Allowance AS Allowance,
+           @Bonus AS Bonus,
+           @Penalty AS Penalty,
+           @NetSalary AS NetSalary;
+END
+GO
+
+-- Tạo thủ tục Xóa chấm công
+CREATE PROCEDURE sp_DeleteAttendance
+    @EmployeeID INT,
+    @Date DATE
+AS
+BEGIN
+    DELETE FROM ChamCong 
+    WHERE EmployeeID = @EmployeeID AND CAST(Date AS DATE) = @Date
+END
+GO
+
+-- Tạo thủ tục Cập nhật đầy đủ (Dùng cho nút Lưu)
+CREATE PROCEDURE sp_UpdateAttendanceFull
+    @EmployeeID INT,
+    @Date DATE,
+    @TimeIn TIME,
+    @TimeOut TIME,
+    @TotalHours DECIMAL(18, 2),
+    @Note NVARCHAR(255)
+AS
+BEGIN
+    UPDATE ChamCong
+    SET 
+        TimeIn = @TimeIn,
+        TimeOut = @TimeOut,
+        TotalHours = @TotalHours,
+        Note = @Note
+    WHERE EmployeeID = @EmployeeID AND CAST(Date AS DATE) = @Date
+END
+GO
