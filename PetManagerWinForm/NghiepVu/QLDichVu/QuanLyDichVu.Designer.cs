@@ -45,11 +45,14 @@
             colSerPrice = new DataGridViewTextBoxColumn();
             txtId = new TextBox();
             txtName = new TextBox();
-            txtType = new TextBox();
+            cmbType = new ComboBox();
+            btnAddType = new Button();
             btnDelete = new Button();
             btnAdd = new Button();
             btnUpdate = new Button();
             txtPrice = new TextBox();
+            btnUpdateType = new Button();
+            btnDeleteType = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvSer).BeginInit();
             SuspendLayout();
             // 
@@ -200,12 +203,24 @@
             txtName.Size = new Size(200, 23);
             txtName.TabIndex = 23;
             // 
-            // txtType
+            // cmbType
             // 
-            txtType.Location = new Point(965, 198);
-            txtType.Name = "txtType";
-            txtType.Size = new Size(200, 23);
-            txtType.TabIndex = 24;
+            cmbType.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbType.FormattingEnabled = true;
+            cmbType.Location = new Point(965, 197);
+            cmbType.Name = "cmbType";
+            cmbType.Size = new Size(200, 23);
+            cmbType.TabIndex = 24;
+            // 
+            // btnAddType
+            // 
+            btnAddType.Location = new Point(1186, 197);
+            btnAddType.Name = "btnAddType";
+            btnAddType.Size = new Size(30, 23);
+            btnAddType.TabIndex = 25;
+            btnAddType.Text = "+";
+            btnAddType.UseVisualStyleBackColor = true;
+            btnAddType.Click += btnAddType_Click;
             // 
             // btnDelete
             // 
@@ -238,6 +253,26 @@
             txtPrice.Size = new Size(200, 23);
             txtPrice.TabIndex = 26;
             // 
+            // btnUpdateType
+            // 
+            btnUpdateType.Location = new Point(1228, 197);
+            btnUpdateType.Name = "btnUpdateType";
+            btnUpdateType.Size = new Size(60, 23);
+            btnUpdateType.TabIndex = 26;
+            btnUpdateType.Text = "Edit";
+            btnUpdateType.UseVisualStyleBackColor = true;
+            btnUpdateType.Click += btnUpdateType_Click;
+            // 
+            // btnDeleteType
+            // 
+            btnDeleteType.Location = new Point(1296, 197);
+            btnDeleteType.Name = "btnDeleteType";
+            btnDeleteType.Size = new Size(60, 23);
+            btnDeleteType.TabIndex = 27;
+            btnDeleteType.Text = "Delete";
+            btnDeleteType.UseVisualStyleBackColor = true;
+            btnDeleteType.Click += btnDeleteType_Click;
+            // 
             // QuanLyDichVu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -256,7 +291,10 @@
             Controls.Add(dgvSer);
             Controls.Add(txtId);
             Controls.Add(txtName);
-            Controls.Add(txtType);
+            Controls.Add(cmbType);
+            Controls.Add(btnAddType);
+            Controls.Add(btnUpdateType);
+            Controls.Add(btnDeleteType);
             Controls.Add(txtPrice);
             Controls.Add(btnDelete);
             Controls.Add(btnAdd);
@@ -283,7 +321,8 @@
         private DataGridView dgvSer;
         private TextBox txtId;
         private TextBox txtName;
-        private TextBox txtType;
+        private ComboBox cmbType;
+        private Button btnAddType;
         private Button btnDelete;
         private Button btnAdd;
         private Button btnUpdate;
@@ -292,5 +331,7 @@
         private DataGridViewTextBoxColumn colSerType;
         private DataGridViewTextBoxColumn colSerPrice;
         private TextBox txtPrice;
+        private Button btnUpdateType;
+        private Button btnDeleteType;
     }
 }
