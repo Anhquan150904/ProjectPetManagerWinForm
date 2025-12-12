@@ -34,7 +34,7 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             {
                 var dt = _typeController.GetTypes();
 
-                // convert to enumerable and optionally filter by name (case-insensitive)
+                // Chuyển sang enumerable và có thể lọc theo tên (không phân biệt hoa thường)
                 var rows = dt.AsEnumerable()
                              .Select(r => new { TypeId = Convert.ToInt32(r["TypeId"]), TypeName = r["TypeName"]?.ToString() ?? string.Empty })
                              .Where(x => string.IsNullOrEmpty(filter) || x.TypeName.IndexOf(filter ?? string.Empty, StringComparison.OrdinalIgnoreCase) >= 0)
@@ -52,12 +52,12 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                     dtDisplay.Rows.Add(ord++, item.TypeId, item.TypeName);
                 }
 
-                // prevent auto-generating columns (avoids duplicates)
+                // Không để tự động tạo cột (tránh tạo trùng)
                 dgvTypes.AutoGenerateColumns = false;
                 dgvTypes.DataSource = dtDisplay;
 
-                // map columns (use existing column names from Designer)
-                // colTypeId will show ordinal index
+                // ánh xạ cột (dùng tên cột đã có trong Designer)
+                // colTypeId sẽ hiển thị số thứ tự
                 if (dgvTypes.Columns.Contains("colTypeId"))
                 {
                     dgvTypes.Columns["colTypeId"].DataPropertyName = "Ordinal";
@@ -84,7 +84,7 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             if (dgvTypes.SelectedRows.Count > 0)
             {
                 var row = (DataRowView)dgvTypes.SelectedRows[0].DataBoundItem;
-                // the bound row contains Ordinal, TypeId, TypeName
+                // hàng bind chứa Ordinal, TypeId, TypeName
                 txtTypeName.Text = row["TypeName"].ToString();
             }
             else
@@ -112,10 +112,10 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             if (id > 0)
             {
                 MessageBox.Show("Thêm loại thành công.");
-                // raise event to notify parent
+                // phát sự kiện để thông báo cho parent
                 TypeSaved?.Invoke(this, new TypeSavedEventArgs(id));
                 LoadTypes();
-                // select new
+                // chọn mục mới
                 try { dgvTypes.CurrentCell = dgvTypes.Rows.Cast<DataGridViewRow>().First(r => r.Cells["TypeId"].Value.ToString() == id.ToString()).Cells[0]; } catch { }
             }
             else
@@ -136,7 +136,7 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             if (ok)
             {
                 MessageBox.Show("Cập nhật thành công.");
-                // raise event to notify parent (id remains same)
+                // phát sự kiện để thông báo cho parent (id không đổi)
                 TypeSaved?.Invoke(this, new TypeSavedEventArgs(id));
                 LoadTypes();
             }
