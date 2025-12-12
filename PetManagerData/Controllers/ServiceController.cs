@@ -20,7 +20,7 @@ namespace PetManagerData.Controllers
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                string query = "SELECT * FROM Services";
+                string query = "SELECT ServiceId, ServiceName, Type, Price FROM dbo.Service";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 using (SqlDataAdapter da = new SqlDataAdapter(cmd))
@@ -37,7 +37,7 @@ namespace PetManagerData.Controllers
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                string query = "DELETE FROM Services WHERE ServiceId = @id";
+                string query = "DELETE FROM dbo.Service WHERE ServiceId = @id";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -47,19 +47,19 @@ namespace PetManagerData.Controllers
             }
         }
 
-        public bool AddService(string name, string type, int amount, decimal price)
+        // Add service without Amount column
+        public bool AddService(string name, string type, decimal price)
         {
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                string query = @"INSERT INTO Services (ServiceName, Type, Amount, Price)
-                                 VALUES (@name, @type, @amount, @price)";
+                string query = @"INSERT INTO dbo.Service (ServiceName, Type, Price)
+                                 VALUES (@name, @type, @price)";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@name", name ?? string.Empty);
                     cmd.Parameters.AddWithValue("@type", type ?? string.Empty);
-                    cmd.Parameters.AddWithValue("@amount", amount);
                     cmd.Parameters.AddWithValue("@price", price);
 
                     return cmd.ExecuteNonQuery() > 0;
@@ -67,15 +67,15 @@ namespace PetManagerData.Controllers
             }
         }
 
-        public bool UpdateService(int id, string name, string type, int amount, decimal price)
+        // Update service without Amount column
+        public bool UpdateService(int id, string name, string type, decimal price)
         {
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                string query = @"UPDATE Services
+                string query = @"UPDATE dbo.Service
                                  SET ServiceName = @name,
                                      Type = @type,
-                                     Amount = @amount,
                                      Price = @price
                                  WHERE ServiceId = @id";
 
@@ -84,7 +84,6 @@ namespace PetManagerData.Controllers
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@name", name ?? string.Empty);
                     cmd.Parameters.AddWithValue("@type", type ?? string.Empty);
-                    cmd.Parameters.AddWithValue("@amount", amount);
                     cmd.Parameters.AddWithValue("@price", price);
 
                     return cmd.ExecuteNonQuery() > 0;
@@ -100,7 +99,7 @@ namespace PetManagerData.Controllers
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                string query = @"SELECT * FROM Services
+                string query = @"SELECT ServiceId, ServiceName, Type, Price FROM dbo.Service
                                  WHERE (ServiceName LIKE @pattern OR
                                         Type LIKE @pattern OR
                                         CONVERT(NVARCHAR(50), Price) LIKE @pattern)";
@@ -116,6 +115,33 @@ namespace PetManagerData.Controllers
             }
 
             return dt;
+        }
+
+        // Check if a service name already exists. If excludeId is provided, exclude that id (useful during update)
+        public bool ServiceNameExists(string name, int? excludeId = null)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return false;
+
+            using (SqlConnection conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+                string query = "SELECT COUNT(1) FROM dbo.Service WHERE LOWER(RTRIM(LTRIM(ServiceName))) = LOWER(RTRIM(LTRIM(@name)))";
+                if (excludeId.HasValue)
+                {
+                    query += " AND ServiceId <> @excludeId";
+                }
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@name", name);
+                    if (excludeId.HasValue)
+                        cmd.Parameters.AddWithValue("@excludeId", excludeId.Value);
+
+                    var result = cmd.ExecuteScalar();
+                    if (result == null || result == DBNull.Value) return false;
+                    return Convert.ToInt32(result) > 0;
+                }
+            }
         }
 
         // Additional methods can be added later as needed
