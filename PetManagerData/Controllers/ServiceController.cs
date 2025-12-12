@@ -117,6 +117,33 @@ namespace PetManagerData.Controllers
             return dt;
         }
 
+        // Check if a service name already exists. If excludeId is provided, exclude that id (useful during update)
+        public bool ServiceNameExists(string name, int? excludeId = null)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return false;
+
+            using (SqlConnection conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+                string query = "SELECT COUNT(1) FROM dbo.Service WHERE LOWER(RTRIM(LTRIM(ServiceName))) = LOWER(RTRIM(LTRIM(@name)))";
+                if (excludeId.HasValue)
+                {
+                    query += " AND ServiceId <> @excludeId";
+                }
+
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@name", name);
+                    if (excludeId.HasValue)
+                        cmd.Parameters.AddWithValue("@excludeId", excludeId.Value);
+
+                    var result = cmd.ExecuteScalar();
+                    if (result == null || result == DBNull.Value) return false;
+                    return Convert.ToInt32(result) > 0;
+                }
+            }
+        }
+
         // Additional methods can be added later as needed
     }
 }

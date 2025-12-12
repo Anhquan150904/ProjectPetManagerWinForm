@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PetManagerData.Controllers;
+using System.Globalization;
 
 namespace PetManagerWinForm.NghiepVu.QLDichVu
 {
@@ -53,7 +54,7 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                 }
             }
 
-            // Wire events
+            // Kết nối các sự kiện
             btnAdd.Click += btnAdd_Click;
             btnUpdate.Click += btnUpdate_Click;
             btnDelete.Click += btnDelete_Click;
@@ -70,7 +71,7 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             dgvSer.CellClick -= dgvSer_CellClick;
             dgvSer.CellClick += dgvSer_CellClick;
 
-            // context menu for type ComboBox: Edit / Delete
+            // Menu ngữ cảnh cho ComboBox loại: Sửa / Xóa
             var cms = new ContextMenuStrip();
             var miEdit = new ToolStripMenuItem("Edit");
             var miDelete = new ToolStripMenuItem("Delete");
@@ -80,7 +81,7 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             cmbType.ContextMenuStrip = cms;
         }
 
-        // Simple in-memory model for mock data
+        // Mô hình đơn giản lưu trong bộ nhớ cho chế độ mock
         private class Service
         {
             public int ServiceId { get; set; }
@@ -104,9 +105,9 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             if (_typeController == null) return;
             try
             {
-                var dt = _typeController.GetTypes(); // already ordered by TypeName
+                var dt = _typeController.GetTypes(); // đã được sắp theo TypeName
 
-                // Build display table with numbering
+                // Tạo bảng hiển thị kèm số thứ tự
                 var dtDisplay = new DataTable();
                 dtDisplay.Columns.Add("TypeId", typeof(int));
                 dtDisplay.Columns.Add("TypeName", typeof(string));
@@ -140,12 +141,12 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
 
         private void btnAddType_Click(object? sender, EventArgs e)
         {
-            // Open the dedicated Type management form so user can Add/Edit/Delete types
+            // Mở form quản lý Loại để người dùng thêm/sửa/xóa loại
             try
             {
                 using (var frm = new Type())
                 {
-                    // subscribe to event to get created/updated TypeId
+                    // đăng ký sự kiện để nhận TypeId vừa tạo/cập nhật
                     _lastSavedTypeId = 0;
                     EventHandler<PetManagerWinForm.NghiepVu.QLDichVu.TypeSavedEventArgs> handler = (s, ev) =>
                     {
@@ -158,7 +159,7 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
 
                     frm.TypeSaved -= handler;
 
-                    // After the Type form closes, reload types to reflect changes
+                    // Sau khi đóng form Loại, load lại danh sách loại để cập nhật
                     LoadTypes();
 
                     if (_lastSavedTypeId > 0)
@@ -179,10 +180,10 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             if (cmbType.SelectedItem == null || cmbType.SelectedValue == null) return;
             if (!int.TryParse(cmbType.SelectedValue.ToString(), out int typeId)) return;
 
-            // If the ComboBox is bound to a DataTable (LoadTypes), the SelectedItem will be a DataRowView
-            // where the actual type name is stored in the "TypeName" column. Use that instead of
-            // the DisplayMember which contains numbering (e.g., "1. Name"). For mock mode the SelectedItem
-            // may be a plain string so fall back to cmbType.Text.
+            // Khi ComboBox được bind tới DataTable (LoadTypes), SelectedItem là DataRowView
+            // và tên loại thực tế nằm ở cột "TypeName". Do đó dùng cột này thay vì
+            // DisplayMember (vì DisplayMember chứa số thứ tự). Ở chế độ mock SelectedItem
+            // có thể chỉ là string nên fallback về cmbType.Text.
             string current = cmbType.Text;
             if (cmbType.SelectedItem is DataRowView drv && drv.Row.Table.Columns.Contains("TypeName"))
             {
@@ -269,25 +270,53 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
 
         private void LoadSer()
         {
+            var viComparer = StringComparer.Create(new CultureInfo("vi-VN"), ignoreCase: true);
+
             if (_useMock)
             {
                 dgvSer.AutoGenerateColumns = false;
-                dgvSer.DataSource = new BindingSource(_mockServices, null);
+                var sorted = _mockServices.OrderBy(x => x.ServiceName, viComparer).ToList();
+                var binding = new BindingList<Service>(sorted);
+                dgvSer.DataSource = new BindingSource(binding, null);
                 colSerId.DataPropertyName = "ServiceId";
                 colSerName.DataPropertyName = "ServiceName";
                 colSerType.DataPropertyName = "Type";
                 colSerPrice.DataPropertyName = "Price";
+
+                // populate STT
+                for (int i = 0; i < dgvSer.Rows.Count; i++)
+                {
+                    dgvSer.Rows[i].Cells["colIndex"].Value = (i + 1).ToString();
+                }
+
                 return;
             }
 
             if (_serviceController == null) return;
             var dt = _serviceController.GetServices();
             dgvSer.AutoGenerateColumns = false;
-            dgvSer.DataSource = dt;
+
+            // Sort DataTable by ServiceName using Vietnamese comparer
+            DataTable dtSorted = dt.Clone();
+            var orderedRows = dt.AsEnumerable()
+                                 .OrderBy(r => r.Field<string>("ServiceName"), viComparer);
+
+            foreach (var r in orderedRows)
+            {
+                dtSorted.ImportRow(r);
+            }
+
+            dgvSer.DataSource = dtSorted;
             colSerId.DataPropertyName = "ServiceId";
             colSerName.DataPropertyName = "ServiceName";
             colSerType.DataPropertyName = "Type";
             colSerPrice.DataPropertyName = "Price";
+
+            // populate STT
+            for (int i = 0; i < dgvSer.Rows.Count; i++)
+            {
+                dgvSer.Rows[i].Cells["colIndex"].Value = (i + 1).ToString();
+            }
         }
 
         public void Refresh()
@@ -316,14 +345,38 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
 
                 string name = txtName.Text.Trim();
                 string type = cmbType.Text.Trim();
-                if (!decimal.TryParse(txtPrice.Text.Trim(), out decimal price)) price = 0m;
+                if (!decimal.TryParse(txtPrice.Text.Trim(), NumberStyles.Number, CultureInfo.CurrentCulture, out decimal price))
+                {
+                    MessageBox.Show("Định dạng giá không hợp lệ. Vui lòng nhập một số hợp lệ.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    MessageBox.Show("Vui lòng nhập tên dịch vụ.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Check duplicates in mock
                 if (_useMock)
                 {
+                    if (_mockServices.Any(x => string.Equals(x.ServiceName?.Trim(), name, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        MessageBox.Show("Tên dịch vụ đã tồn tại (mock).", "Trùng tên", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     var svc = new Service { ServiceId = _nextMockId++, ServiceName = name, Type = type, Price = price };
                     _mockServices.Add(svc);
                     MessageBox.Show("Thêm thành công (mock)");
                     LoadSer();
+                    return;
+                }
+
+                // For real DB, check via controller
+                if (_serviceController.ServiceNameExists(name))
+                {
+                    MessageBox.Show("Tên dịch vụ đã tồn tại. Vui lòng chọn tên khác.", "Trùng tên", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -355,10 +408,27 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
 
                 string name = txtName.Text.Trim();
                 string type = cmbType.Text.Trim();
-                if (!decimal.TryParse(txtPrice.Text.Trim(), out decimal price)) price = 0m;
+                if (!decimal.TryParse(txtPrice.Text.Trim(), NumberStyles.Number, CultureInfo.CurrentCulture, out decimal price))
+                {
+                    MessageBox.Show("Định dạng giá không hợp lệ. Vui lòng nhập một số hợp lệ.", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(name))
+                {
+                    MessageBox.Show("Vui lòng nhập tên dịch vụ.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
 
                 if (_useMock)
                 {
+                    // Check duplicates excluding current id
+                    if (_mockServices.Any(x => x.ServiceId != id && string.Equals(x.ServiceName?.Trim(), name, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        MessageBox.Show("Tên dịch vụ đã tồn tại (mock).", "Trùng tên", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+
                     var item = _mockServices.FirstOrDefault(x => x.ServiceId == id);
                     if (item != null)
                     {
@@ -374,6 +444,13 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                         MessageBox.Show("Không tìm thấy dịch vụ (mock)");
                     }
 
+                    return;
+                }
+
+                // For DB, check duplicate excluding current id
+                if (_serviceController.ServiceNameExists(name, id))
+                {
+                    MessageBox.Show("Tên dịch vụ đã tồn tại. Vui lòng chọn tên khác.", "Trùng tên", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -397,29 +474,64 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                     return;
                 }
 
-                if (!int.TryParse(txtId.Text.Trim(), out int id) || id <= 0)
+                // Try to get id from txtId, otherwise from selected row in grid
+                int id = 0;
+                if (!int.TryParse(txtId.Text.Trim(), out id) || id <= 0)
+                {
+                    if (dgvSer.SelectedRows.Count > 0)
+                    {
+                        var cellVal = dgvSer.SelectedRows[0].Cells["colSerId"].Value;
+                        if (cellVal != null && int.TryParse(cellVal.ToString(), out int parsed))
+                        {
+                            id = parsed;
+                        }
+                    }
+                }
+
+                if (id <= 0)
                 {
                     MessageBox.Show("Vui lòng chọn dịch vụ cần xóa từ lưới.");
                     return;
                 }
 
-                var confirm = MessageBox.Show($"Bạn có chắc muốn xóa dịch vụ ID {id}?", "Xác nhận", MessageBoxButtons.YesNo);
+                // Get display name for confirmation if available
+                string displayName = txtName.Text;
+                if (string.IsNullOrWhiteSpace(displayName) && dgvSer.SelectedRows.Count > 0)
+                {
+                    displayName = dgvSer.SelectedRows[0].Cells["colSerName"].Value?.ToString() ?? string.Empty;
+                }
+
+                var confirmText = string.IsNullOrWhiteSpace(displayName)
+                    ? $"Bạn có chắc muốn xóa dịch vụ ID {id}?"
+                    : $"Bạn có chắc muốn xóa dịch vụ '{displayName}' (ID {id})?";
+
+                var confirm = MessageBox.Show(confirmText, "Xác nhận", MessageBoxButtons.YesNo);
                 if (confirm == DialogResult.Yes)
                 {
                     if (_useMock)
                     {
                         var item = _mockServices.FirstOrDefault(x => x.ServiceId == id);
-                        if (item != null) _mockServices.Remove(item);
-                        MessageBox.Show("Xóa thành công");
+                        if (item != null)
+                        {
+                            _mockServices.Remove(item);
+                        }
+                        MessageBox.Show("Xóa thành công (mock)");
                         LoadSer();
                         Refresh();
                         return;
                     }
 
                     bool success = _serviceController.DeleteService(id);
-                    MessageBox.Show(success ? "Xóa thành công" : "Xóa thất bại");
-                    if (success) LoadSer();
-                    Refresh();
+                    if (success)
+                    {
+                        MessageBox.Show("Xóa thành công");
+                        LoadSer();
+                        Refresh();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa thất bại (có thể đang được sử dụng hoặc ID không tồn tại).", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception ex)
