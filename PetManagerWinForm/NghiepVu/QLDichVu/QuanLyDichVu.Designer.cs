@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             label7 = new Label();
-            label6 = new Label();
             label5 = new Label();
             label4 = new Label();
             label3 = new Label();
@@ -40,40 +39,28 @@
             btnSearch = new Button();
             txtSearch = new TextBox();
             dgvSer = new DataGridView();
-            txtId = new TextBox();
-            txtName = new TextBox();
-            txtType = new TextBox();
-            txtAmount = new TextBox();
-            txtPrice = new TextBox();
-            btnDelete = new Button();
-            btnAdd = new Button();
-            btnUpdate = new Button();
             colSerId = new DataGridViewTextBoxColumn();
             colSerName = new DataGridViewTextBoxColumn();
             colSerType = new DataGridViewTextBoxColumn();
-            colSerAmount = new DataGridViewTextBoxColumn();
             colSerPrice = new DataGridViewTextBoxColumn();
+            txtId = new TextBox();
+            txtName = new TextBox();
+            txtType = new TextBox();
+            btnDelete = new Button();
+            btnAdd = new Button();
+            btnUpdate = new Button();
+            txtPrice = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dgvSer).BeginInit();
             SuspendLayout();
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(902, 281);
+            label7.Location = new Point(902, 246);
             label7.Name = "label7";
             label7.Size = new Size(36, 15);
             label7.TabIndex = 41;
             label7.Text = "Price:";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(902, 241);
-            label6.Name = "label6";
-            label6.Size = new Size(54, 15);
-            label6.TabIndex = 40;
-            label6.Text = "Amount:";
-            label6.TextAlign = ContentAlignment.TopCenter;
             // 
             // label5
             // 
@@ -156,7 +143,7 @@
             // 
             dgvSer.AllowUserToAddRows = false;
             dgvSer.ColumnHeadersHeight = 29;
-            dgvSer.Columns.AddRange(new DataGridViewColumn[] { colSerId, colSerName, colSerType, colSerAmount, colSerPrice });
+            dgvSer.Columns.AddRange(new DataGridViewColumn[] { colSerId, colSerName, colSerType, colSerPrice });
             dgvSer.Location = new Point(12, 12);
             dgvSer.Name = "dgvSer";
             dgvSer.ReadOnly = true;
@@ -165,66 +152,6 @@
             dgvSer.Size = new Size(678, 471);
             dgvSer.TabIndex = 21;
             dgvSer.CellContentClick += dgvSer_CellContentClick;
-            // 
-            // txtId
-            // 
-            txtId.Location = new Point(965, 118);
-            txtId.Name = "txtId";
-            txtId.ReadOnly = true;
-            txtId.Size = new Size(200, 23);
-            txtId.TabIndex = 22;
-            // 
-            // txtName
-            // 
-            txtName.Location = new Point(965, 158);
-            txtName.Name = "txtName";
-            txtName.Size = new Size(200, 23);
-            txtName.TabIndex = 23;
-            // 
-            // txtType
-            // 
-            txtType.Location = new Point(965, 198);
-            txtType.Name = "txtType";
-            txtType.Size = new Size(200, 23);
-            txtType.TabIndex = 24;
-            // 
-            // txtAmount
-            // 
-            txtAmount.Location = new Point(965, 238);
-            txtAmount.Name = "txtAmount";
-            txtAmount.Size = new Size(200, 23);
-            txtAmount.TabIndex = 25;
-            // 
-            // txtPrice
-            // 
-            txtPrice.Location = new Point(965, 278);
-            txtPrice.Name = "txtPrice";
-            txtPrice.Size = new Size(200, 23);
-            txtPrice.TabIndex = 26;
-            // 
-            // btnDelete
-            // 
-            btnDelete.Location = new Point(1186, 276);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(90, 30);
-            btnDelete.TabIndex = 29;
-            btnDelete.Text = "Delete";
-            // 
-            // btnAdd
-            // 
-            btnAdd.Location = new Point(1186, 236);
-            btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(90, 30);
-            btnAdd.TabIndex = 27;
-            btnAdd.Text = "Add";
-            // 
-            // btnUpdate
-            // 
-            btnUpdate.Location = new Point(1296, 236);
-            btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(90, 30);
-            btnUpdate.TabIndex = 28;
-            btnUpdate.Text = "Update";
             // 
             // colSerId
             // 
@@ -250,14 +177,6 @@
             colSerType.ReadOnly = true;
             colSerType.Width = 125;
             // 
-            // colSerAmount
-            // 
-            colSerAmount.HeaderText = "Quantity";
-            colSerAmount.MinimumWidth = 6;
-            colSerAmount.Name = "colSerAmount";
-            colSerAmount.ReadOnly = true;
-            colSerAmount.Width = 125;
-            // 
             // colSerPrice
             // 
             colSerPrice.HeaderText = "Price";
@@ -266,13 +185,65 @@
             colSerPrice.ReadOnly = true;
             colSerPrice.Width = 125;
             // 
+            // txtId
+            // 
+            txtId.Location = new Point(965, 118);
+            txtId.Name = "txtId";
+            txtId.ReadOnly = true;
+            txtId.Size = new Size(200, 23);
+            txtId.TabIndex = 22;
+            // 
+            // txtName
+            // 
+            txtName.Location = new Point(965, 158);
+            txtName.Name = "txtName";
+            txtName.Size = new Size(200, 23);
+            txtName.TabIndex = 23;
+            // 
+            // txtType
+            // 
+            txtType.Location = new Point(965, 198);
+            txtType.Name = "txtType";
+            txtType.Size = new Size(200, 23);
+            txtType.TabIndex = 24;
+            // 
+            // btnDelete
+            // 
+            btnDelete.Location = new Point(1186, 276);
+            btnDelete.Name = "btnDelete";
+            btnDelete.Size = new Size(90, 30);
+            btnDelete.TabIndex = 29;
+            btnDelete.Text = "Delete";
+            // 
+            // btnAdd
+            // 
+            btnAdd.Location = new Point(1186, 236);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(90, 30);
+            btnAdd.TabIndex = 27;
+            btnAdd.Text = "Add";
+            // 
+            // btnUpdate
+            // 
+            btnUpdate.Location = new Point(1296, 236);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(90, 30);
+            btnUpdate.TabIndex = 28;
+            btnUpdate.Text = "Update";
+            // 
+            // txtPrice
+            // 
+            txtPrice.Location = new Point(965, 238);
+            txtPrice.Name = "txtPrice";
+            txtPrice.Size = new Size(200, 23);
+            txtPrice.TabIndex = 26;
+            // 
             // QuanLyDichVu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1416, 499);
             Controls.Add(label7);
-            Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -286,7 +257,6 @@
             Controls.Add(txtId);
             Controls.Add(txtName);
             Controls.Add(txtType);
-            Controls.Add(txtAmount);
             Controls.Add(txtPrice);
             Controls.Add(btnDelete);
             Controls.Add(btnAdd);
@@ -301,7 +271,6 @@
         #endregion
 
         private Label label7;
-        private Label label6;
         private Label label5;
         private Label label4;
         private Label label3;
@@ -315,15 +284,13 @@
         private TextBox txtId;
         private TextBox txtName;
         private TextBox txtType;
-        private TextBox txtAmount;
-        private TextBox txtPrice;
         private Button btnDelete;
         private Button btnAdd;
         private Button btnUpdate;
         private DataGridViewTextBoxColumn colSerId;
         private DataGridViewTextBoxColumn colSerName;
         private DataGridViewTextBoxColumn colSerType;
-        private DataGridViewTextBoxColumn colSerAmount;
         private DataGridViewTextBoxColumn colSerPrice;
+        private TextBox txtPrice;
     }
 }

@@ -47,19 +47,19 @@ namespace PetManagerData.Controllers
             }
         }
 
-        public bool AddService(string name, string type, int amount, decimal price)
+        // Add service without Amount column
+        public bool AddService(string name, string type, decimal price)
         {
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                string query = @"INSERT INTO Services (ServiceName, Type, Amount, Price)
-                                 VALUES (@name, @type, @amount, @price)";
+                string query = @"INSERT INTO Services (ServiceName, Type, Price)
+                                 VALUES (@name, @type, @price)";
 
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@name", name ?? string.Empty);
                     cmd.Parameters.AddWithValue("@type", type ?? string.Empty);
-                    cmd.Parameters.AddWithValue("@amount", amount);
                     cmd.Parameters.AddWithValue("@price", price);
 
                     return cmd.ExecuteNonQuery() > 0;
@@ -67,7 +67,8 @@ namespace PetManagerData.Controllers
             }
         }
 
-        public bool UpdateService(int id, string name, string type, int amount, decimal price)
+        // Update service without Amount column
+        public bool UpdateService(int id, string name, string type, decimal price)
         {
             using (SqlConnection conn = new SqlConnection(_connStr))
             {
@@ -75,7 +76,6 @@ namespace PetManagerData.Controllers
                 string query = @"UPDATE Services
                                  SET ServiceName = @name,
                                      Type = @type,
-                                     Amount = @amount,
                                      Price = @price
                                  WHERE ServiceId = @id";
 
@@ -84,7 +84,6 @@ namespace PetManagerData.Controllers
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@name", name ?? string.Empty);
                     cmd.Parameters.AddWithValue("@type", type ?? string.Empty);
-                    cmd.Parameters.AddWithValue("@amount", amount);
                     cmd.Parameters.AddWithValue("@price", price);
 
                     return cmd.ExecuteNonQuery() > 0;

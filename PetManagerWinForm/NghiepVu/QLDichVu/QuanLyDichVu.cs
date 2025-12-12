@@ -71,7 +71,7 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             public int ServiceId { get; set; }
             public string ServiceName { get; set; } = string.Empty;
             public string Type { get; set; } = string.Empty;
-            public int Amount { get; set; }
+            // Amount removed
             public decimal Price { get; set; }
         }
 
@@ -79,9 +79,9 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
         {
             _mockServices = new BindingList<Service>
             {
-                new Service { ServiceId = _nextMockId++, ServiceName = "Tắm", Type = "Spa", Amount = 10, Price = 300000 },
-                new Service { ServiceId = _nextMockId++, ServiceName = "Cắt tỉa lông", Type = "Spa", Amount = 20, Price = 100000 },
-                new Service { ServiceId = _nextMockId++, ServiceName = "Huấn luyện", Type = "Behavior", Amount = 5, Price = 500000 }
+                new Service { ServiceId = _nextMockId++, ServiceName = "Tắm", Type = "Spa", Price = 300000m },
+                new Service { ServiceId = _nextMockId++, ServiceName = "Cắt tỉa lông", Type = "Spa", Price = 100000m },
+                new Service { ServiceId = _nextMockId++, ServiceName = "Huấn luyện", Type = "Behavior", Price = 500000m }
             };
         }
 
@@ -99,7 +99,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                 txtId.Text = row.Cells["colSerId"].Value?.ToString() ?? string.Empty;
                 txtName.Text = row.Cells["colSerName"].Value?.ToString() ?? string.Empty;
                 txtType.Text = row.Cells["colSerType"].Value?.ToString() ?? string.Empty;
-                txtAmount.Text = row.Cells["colSerAmount"].Value?.ToString() ?? string.Empty;
                 txtPrice.Text = row.Cells["colSerPrice"].Value?.ToString() ?? string.Empty;
 
                 // Optionally set focus to name for quick editing
@@ -122,7 +121,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                 txtId.Text = row.Table.Columns.Contains("ServiceId") ? row["ServiceId"]?.ToString() ?? string.Empty : string.Empty;
                 txtName.Text = row.Table.Columns.Contains("ServiceName") ? row["ServiceName"]?.ToString() ?? string.Empty : string.Empty;
                 txtType.Text = row.Table.Columns.Contains("Type") ? row["Type"]?.ToString() ?? string.Empty : string.Empty;
-                txtAmount.Text = row.Table.Columns.Contains("Amount") ? row["Amount"]?.ToString() ?? string.Empty : string.Empty;
                 txtPrice.Text = row.Table.Columns.Contains("Price") ? row["Price"]?.ToString() ?? string.Empty : string.Empty;
             }
             else
@@ -131,7 +129,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                 txtId.Text = row.Cells["colSerId"].Value?.ToString() ?? string.Empty;
                 txtName.Text = row.Cells["colSerName"].Value?.ToString() ?? string.Empty;
                 txtType.Text = row.Cells["colSerType"].Value?.ToString() ?? string.Empty;
-                txtAmount.Text = row.Cells["colSerAmount"].Value?.ToString() ?? string.Empty;
                 txtPrice.Text = row.Cells["colSerPrice"].Value?.ToString() ?? string.Empty;
             }
 
@@ -149,7 +146,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                 colSerId.DataPropertyName = "ServiceId";
                 colSerName.DataPropertyName = "ServiceName";
                 colSerType.DataPropertyName = "Type";
-                colSerAmount.DataPropertyName = "Amount";
                 colSerPrice.DataPropertyName = "Price";
 
                 return;
@@ -166,7 +162,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             colSerId.DataPropertyName = "ServiceId";
             colSerName.DataPropertyName = "ServiceName";
             colSerType.DataPropertyName = "Type";
-            colSerAmount.DataPropertyName = "Amount";
             colSerPrice.DataPropertyName = "Price";
         }
 
@@ -175,7 +170,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             txtId.Text = "";
             txtName.Text = "";
             txtPrice.Text = "";
-            txtAmount.Text = "";
             txtType.Text = "";
         }
 
@@ -197,19 +191,18 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
 
                 string name = txtName.Text.Trim();
                 string type = txtType.Text.Trim();
-                if (!int.TryParse(txtAmount.Text.Trim(), out int amount)) amount = 0;
                 if (!decimal.TryParse(txtPrice.Text.Trim(), out decimal price)) price = 0m;
 
                 if (_useMock)
                 {
-                    var svc = new Service { ServiceId = _nextMockId++, ServiceName = name, Type = type, Amount = amount, Price = price };
+                    var svc = new Service { ServiceId = _nextMockId++, ServiceName = name, Type = type, Price = price };
                     _mockServices.Add(svc);
                     MessageBox.Show("Thêm thành công (mock)");
                     LoadSer();
                     return;
                 }
 
-                bool success = _serviceController.AddService(name, type, amount, price);
+                bool success = _serviceController.AddService(name, type, price);
                 MessageBox.Show(success ? "Thêm thành công" : "Thêm thất bại");
                 if (success) LoadSer();
             }
@@ -237,7 +230,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
 
                 string name = txtName.Text.Trim();
                 string type = txtType.Text.Trim();
-                if (!int.TryParse(txtAmount.Text.Trim(), out int amount)) amount = 0;
                 if (!decimal.TryParse(txtPrice.Text.Trim(), out decimal price)) price = 0m;
 
                 if (_useMock)
@@ -247,7 +239,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                     {
                         item.ServiceName = name;
                         item.Type = type;
-                        item.Amount = amount;
                         item.Price = price;
                         // refresh binding
                         dgvSer.Refresh();
@@ -261,7 +252,7 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                     return;
                 }
 
-                bool success = _serviceController.UpdateService(id, name, type, amount, price);
+                bool success = _serviceController.UpdateService(id, name, type, price);
                 MessageBox.Show(success ? "Cập nhật thành công" : "Cập nhật thất bại");
                 if (success) LoadSer();
             }
@@ -331,19 +322,19 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                 dgvSer.DataSource = new BindingSource(new BindingList<Service>(filtered), null);
 
                 return;
-            }
+             }
 
-            if (_serviceController == null) return;
-            string q2 = txtSearch.Text.Trim();
-            if (string.IsNullOrEmpty(q2))
-            {
-                LoadSer();
-                return;
-            }
+             if (_serviceController == null) return;
+             string q2 = txtSearch.Text.Trim();
+             if (string.IsNullOrEmpty(q2))
+             {
+                 LoadSer();
+                 return;
+             }
 
-            var dt = _serviceController.SearchServices(q2);
-            dgvSer.DataSource = dt;
-        }
+             var dt = _serviceController.SearchServices(q2);
+             dgvSer.DataSource = dt;
+         }
 
         private void btn_ShowAll_Click(object? sender, EventArgs e)
         {
