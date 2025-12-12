@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable disable
+using PetManagerData.Controllers;
+using System;
 using System.Data;
 using System.Security.Claims;
 using System.Windows.Forms;
@@ -11,7 +13,7 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
     {
         private int currentRowIndex = -1;
         private DataTable dtNhanVien = new DataTable();
-
+        private DataRow selectedEmployee = null;
         public QuanLyNhanVien()
         {
             InitializeComponent();
@@ -45,6 +47,8 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             dtNhanVien.Rows.Add(3, "Thiên Khôi", "Hà Nội", "0123456788", "Nam", "khoi@mail.com", "Tắm", "Đang làm");
             dtNhanVien.Rows.Add(4, "Tạ Hiền", "Hà Nội", "09987654322", "Nữ", "hien@mail.com", "Thu ngân", "Đang làm");
             dataGridView1.DataSource = dtNhanVien;
+
+            DisableEmployeeActionButtons();
 
         }
 
@@ -91,6 +95,7 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             DataRowView rowView = (DataRowView)dataGridView1.Rows[e.RowIndex].DataBoundItem;
             DataRow row = rowView.Row;
 
+            selectedEmployee = row;
 
             textID.Text = row["ID"].ToString();
             textName.Text = row["Name"].ToString();
@@ -119,6 +124,7 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             //textEmail.Text = row.Cells["clmEmail"].Value?.ToString();
             //textPosition.Text = row.Cells["clmPosition"].Value?.ToString();
             //textPosition.Text = row.Cells["clmPosition"].Value?.ToString();
+            EnableEmployeeActionButtons();
         }
 
         private void btnUpt_Click(object sender, EventArgs e)
@@ -246,11 +252,14 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             if (comboBox1.Items.Count > 0)
                 comboBox1.SelectedIndex = 0;
             currentRowIndex = -1;
-
+            selectedEmployee = null;
             dataGridView1.ClearSelection();
             dataGridView1.CurrentCell = null;
             textBox1.Text = "";
             textID.Focus();
+            DisableEmployeeActionButtons();
+            dataGridView1.ClearSelection();
+            dataGridView1.CurrentCell = null;
         }
         private string ShowInputDialog(string text, string caption)
         {
@@ -304,25 +313,89 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
 
         private void btnPhanCa_Click(object sender, EventArgs e)
         {
-            // Truyền danh sách nhân viên sang để xếp ca
-            FormPhanCa frm = new FormPhanCa(dtNhanVien);
+            // Kiểm tra xem textID có dữ liệu không (tức là đã chọn nhân viên chưa)
+            if (string.IsNullOrEmpty(textID.Text))
+            {
+                MessageBox.Show("Vui lòng chọn nhân viên từ danh sách trước!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // [ĐÃ SỬA] Khởi tạo FormPhanCa không cần truyền DataTable
+            FormPhanCa frm = new FormPhanCa();
+
+            // Truyền thông tin nhân viên đang chọn sang các biến Public của FormPhanCa
+            frm.ID_Nhan = textID.Text;
+            frm.Ten_Nhan = textName.Text;
+            frm.ViTri_Nhan = textPosition.Text;
+
+            // Hiển thị form
             frm.ShowDialog();
         }
-
         // 2. Nút Chấm Công
         private void btnChamCong_Click(object sender, EventArgs e)
         {
-            // Truyền danh sách nhân viên để chọn người chấm công
-            FormChamCong frm = new FormChamCong(dtNhanVien);
+            // 1. Kiểm tra đã chọn nhân viên chưa
+            if (string.IsNullOrEmpty(textID.Text))
+            {
+                MessageBox.Show("Vui lòng chọn nhân viên từ danh sách trước!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Khởi tạo FormChamCong (Không truyền DataTable nữa)
+            FormChamCong frm = new FormChamCong();
+
+            // 3. Truyền dữ liệu sang các biến Public
+            frm.ID_Nhan = textID.Text;
+            frm.Ten_Nhan = textName.Text;
+            frm.ViTri_Nhan = textPosition.Text;
+
+            // 4. Hiển thị Form
             frm.ShowDialog();
         }
 
         // 3. Nút Tính Lương
         private void btnTinhLuong_Click(object sender, EventArgs e)
         {
-            // Tính lương cần biết danh sách nhân viên + chức vụ (để tính phụ cấp)
-            FormTinhLuong frm = new FormTinhLuong(dtNhanVien);
+            // 1. Kiểm tra đã chọn nhân viên chưa
+            if (string.IsNullOrEmpty(textID.Text))
+            {
+                MessageBox.Show("Vui lòng chọn nhân viên từ danh sách trước!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // 2. Khởi tạo FormTinhLuong (Không truyền DataTable)
+            FormTinhLuong frm = new FormTinhLuong();
+
+            // 3. Truyền dữ liệu
+            frm.ID_Nhan = textID.Text;
+            frm.Ten_Nhan = textName.Text;
+            frm.ViTri_Nhan = textPosition.Text;
+
+            // 4. Hiển thị form
             frm.ShowDialog();
         }
+        private void EnableEmployeeActionButtons()
+        {
+            btnPhanCa.Enabled = true;
+            btnChamCong.Enabled = true;
+            btnTinhLuong.Enabled = true;
+
+            // Đổi màu để thấy rõ button đã active
+            btnPhanCa.BackColor = System.Drawing.SystemColors.Control;
+            btnChamCong.BackColor = System.Drawing.SystemColors.Control;
+            btnTinhLuong.BackColor = System.Drawing.SystemColors.Control;
+        }
+        private void DisableEmployeeActionButtons()
+        {
+            btnPhanCa.Enabled = false;
+            btnChamCong.Enabled = false;
+            btnTinhLuong.Enabled = false;
+
+            // Đổi màu xám để thấy rõ button bị disable
+            btnPhanCa.BackColor = System.Drawing.Color.LightGray;
+            btnChamCong.BackColor = System.Drawing.Color.LightGray;
+            btnTinhLuong.BackColor = System.Drawing.Color.LightGray;
+        }
+
     }
 }
