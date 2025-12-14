@@ -67,6 +67,7 @@
             btnTinhLuong = new Button();
             btnChamCong = new Button();
             btnPhanCa = new Button();
+            panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -174,6 +175,7 @@
             // label1
             // 
             label1.AutoSize = true;
+            label1.BackColor = Color.FromArgb(255, 192, 192);
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.Location = new Point(1172, 141);
             label1.Name = "label1";
@@ -185,6 +187,7 @@
             // label2
             // 
             label2.AutoSize = true;
+            label2.BackColor = Color.FromArgb(255, 192, 192);
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.Location = new Point(1172, 204);
             label2.Name = "label2";
@@ -204,6 +207,7 @@
             // label3
             // 
             label3.AutoSize = true;
+            label3.BackColor = Color.FromArgb(255, 192, 192);
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.Location = new Point(1172, 267);
             label3.Name = "label3";
@@ -223,6 +227,7 @@
             // label4
             // 
             label4.AutoSize = true;
+            label4.BackColor = Color.FromArgb(255, 192, 192);
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.Location = new Point(1172, 330);
             label4.Name = "label4";
@@ -242,6 +247,7 @@
             // label5
             // 
             label5.AutoSize = true;
+            label5.BackColor = Color.FromArgb(255, 192, 192);
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.Location = new Point(1172, 392);
             label5.Name = "label5";
@@ -253,6 +259,7 @@
             // label6
             // 
             label6.AutoSize = true;
+            label6.BackColor = Color.FromArgb(255, 192, 192);
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.Location = new Point(1172, 452);
             label6.Name = "label6";
@@ -272,6 +279,7 @@
             // label7
             // 
             label7.AutoSize = true;
+            label7.BackColor = Color.FromArgb(255, 192, 192);
             label7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label7.Location = new Point(1172, 515);
             label7.Name = "label7";
@@ -334,6 +342,7 @@
             // label8
             // 
             label8.AutoSize = true;
+            label8.BackColor = Color.FromArgb(255, 192, 192);
             label8.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.Location = new Point(1172, 51);
             label8.Name = "label8";
@@ -357,6 +366,7 @@
             // radioButton1
             // 
             radioButton1.AutoSize = true;
+            radioButton1.BackColor = Color.FromArgb(255, 192, 192);
             radioButton1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             radioButton1.Location = new Point(1275, 390);
             radioButton1.Name = "radioButton1";
@@ -364,11 +374,12 @@
             radioButton1.TabIndex = 22;
             radioButton1.TabStop = true;
             radioButton1.Text = "Nam";
-            radioButton1.UseVisualStyleBackColor = true;
+            radioButton1.UseVisualStyleBackColor = false;
             // 
             // radioButton2
             // 
             radioButton2.AutoSize = true;
+            radioButton2.BackColor = Color.FromArgb(255, 192, 192);
             radioButton2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             radioButton2.Location = new Point(1384, 390);
             radioButton2.Name = "radioButton2";
@@ -376,7 +387,7 @@
             radioButton2.TabIndex = 23;
             radioButton2.TabStop = true;
             radioButton2.Text = "Nữ";
-            radioButton2.UseVisualStyleBackColor = true;
+            radioButton2.UseVisualStyleBackColor = false;
             // 
             // button6
             // 
@@ -402,6 +413,7 @@
             // label9
             // 
             label9.AutoSize = true;
+            label9.BackColor = Color.FromArgb(255, 192, 192);
             label9.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.Location = new Point(1172, 578);
             label9.Name = "label9";
@@ -442,6 +454,14 @@
             btnPhanCa.UseVisualStyleBackColor = true;
             btnPhanCa.Click += btnPhanCa_Click;
             // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(255, 192, 192);
+            panel1.Location = new Point(1146, -9);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(440, 1019);
+            panel1.TabIndex = 30;
+            // 
             // QuanLyNhanVien
             // 
             AutoScaleMode = AutoScaleMode.None;
@@ -474,6 +494,7 @@
             Controls.Add(label1);
             Controls.Add(textID);
             Controls.Add(dataGridView1);
+            Controls.Add(panel1);
             Name = "QuanLyNhanVien";
             Text = "Quan Ly Nhan Vien";
             Load += QuanLyNhanVien_Load;
@@ -521,5 +542,6 @@
         private Button btnTinhLuong;
         private Button btnChamCong;
         private Button btnPhanCa;
+        private Panel panel1;
     }
 }
