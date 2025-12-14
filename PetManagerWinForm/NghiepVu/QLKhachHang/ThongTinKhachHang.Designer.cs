@@ -148,7 +148,7 @@
             colCusName.MinimumWidth = 6;
             colCusName.Name = "colCusName";
             colCusName.ReadOnly = true;
-            colCusName.Width = 180;
+            colCusName.Width = 150;
             // 
             // colAddress
             // 
@@ -156,7 +156,7 @@
             colAddress.MinimumWidth = 6;
             colAddress.Name = "colAddress";
             colAddress.ReadOnly = true;
-            colAddress.Width = 220;
+            colAddress.Width = 150;
             // 
             // colPhoneNumber
             // 
