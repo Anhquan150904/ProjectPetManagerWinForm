@@ -18,7 +18,6 @@
         private Button btnDelete;
         private Button btnFind;
         private Button btnShowAll;
-        private Button btnTransHis;
         private Button btnRefresh;
 
         // DataGridView columns
@@ -81,7 +80,6 @@
             btnAdd = new Button();
             btnUpdate = new Button();
             btnDelete = new Button();
-            btnTransHis = new Button();
             btnRefresh = new Button();
             panelLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
@@ -200,7 +198,6 @@
             panelRight.Controls.Add(btnAdd);
             panelRight.Controls.Add(btnUpdate);
             panelRight.Controls.Add(btnDelete);
-            panelRight.Controls.Add(btnTransHis);
             panelRight.Controls.Add(btnRefresh);
             panelRight.Dock = DockStyle.Fill;
             panelRight.Location = new Point(700, 0);
@@ -405,21 +402,6 @@
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
-            // 
-            // btnTransHis
-            // 
-            btnTransHis.BackColor = Color.FromArgb(255, 210, 210);
-            btnTransHis.FlatAppearance.BorderSize = 0;
-            btnTransHis.FlatStyle = FlatStyle.Flat;
-            btnTransHis.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnTransHis.ForeColor = Color.DimGray;
-            btnTransHis.Location = new Point(350, 82);
-            btnTransHis.Name = "btnTransHis";
-            btnTransHis.Size = new Size(220, 30);
-            btnTransHis.TabIndex = 19;
-            btnTransHis.Text = "Lịch sử giao dịch";
-            btnTransHis.UseVisualStyleBackColor = false;
-            btnTransHis.Click += btnTransHis_Click;
             // 
             // btnRefresh
             // 
