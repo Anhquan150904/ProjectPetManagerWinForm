@@ -49,6 +49,10 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
         private void dgvCustomers_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0) {
+                // Lấy dòng hiện tại đang chọn (đối tượng Customer)
+                // Cách an toàn hơn là lấy từ list gốc hoặc ép kiểu DataBoundItem
+                // Tuy nhiên, để sửa nhanh theo code cũ của bạn, ta truy cập qua tên cột Design:
+
                 DataGridViewRow row = dgvCustomers.Rows[e.RowIndex];
 
                 txtId.Text = row.Cells[colCusId.Index].Value?.ToString();
@@ -66,6 +70,7 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
                 return;
             }
 
+            // 3. Tạo đối tượng mới với ID vừa tính
             Customer newCus = new Customer {
                 // Không gán ID, SQL tự tăng
                 Cus_Name = txtName.Text,
