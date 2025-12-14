@@ -1,4 +1,7 @@
-﻿namespace PetManagerWinForm.NghiepVu.QLSanPham
+﻿using System.Drawing;
+using System.Windows.Forms;
+
+namespace PetManagerWinForm.NghiepVu.QLSanPham
 {
     partial class QuanLySanPham
     {
@@ -99,13 +102,18 @@
             panelLeft.Location = new Point(0, 0);
             panelLeft.Name = "panelLeft";
             panelLeft.Padding = new Padding(10);
-            panelLeft.Size = new Size(650, 600); // Tăng chiều cao để khớp form
+            panelLeft.Size = new Size(650, 600);
             panelLeft.TabIndex = 1;
 
             // 
-            // dgvProduct (Giữ nguyên cấu hình của bạn)
+            // dgvProduct
             // 
             dgvProduct.AllowUserToAddRows = false;
+
+            // --- CẤU HÌNH TỰ ĐỘNG GIÃN CỘT ---
+            dgvProduct.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            // ---------------------------------
+
             dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 240, 240);
             dgvProduct.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
@@ -133,13 +141,44 @@
             dgvProduct.TabIndex = 0;
             dgvProduct.CellClick += dataGridView1_CellClick;
 
-            // Cấu hình các cột (Giữ nguyên)
-            colId.HeaderText = "ID"; colId.Width = 60; colId.Name = "colId"; colId.ReadOnly = true;
-            colName.HeaderText = "Tên SP"; colName.Width = 150; colName.Name = "colName"; colName.ReadOnly = true;
-            colQuantity.HeaderText = "Số lượng"; colQuantity.Width = 100; colQuantity.Name = "colQuantity"; colQuantity.ReadOnly = true;
-            colPrice.HeaderText = "Giá"; colPrice.Width = 100; colPrice.Name = "colPrice"; colPrice.ReadOnly = true;
-            colCountry.HeaderText = "Xuất xứ"; colCountry.Width = 100; colCountry.Name = "colCountry"; colCountry.ReadOnly = true;
-            colCondition.HeaderText = "Tình trạng"; colCondition.Width = 100; colCondition.Name = "colCondition"; colCondition.ReadOnly = true;
+            // 
+            // Cấu hình các cột (Sử dụng FillWeight thay vì Width)
+            // 
+            // colId
+            colId.HeaderText = "ID";
+            colId.Name = "colId";
+            colId.ReadOnly = true;
+            colId.FillWeight = 10F; // 10%
+
+            // colName
+            colName.HeaderText = "Tên SP";
+            colName.Name = "colName";
+            colName.ReadOnly = true;
+            colName.FillWeight = 30F; // 30% (Rộng nhất)
+
+            // colQuantity
+            colQuantity.HeaderText = "Số lượng";
+            colQuantity.Name = "colQuantity";
+            colQuantity.ReadOnly = true;
+            colQuantity.FillWeight = 15F;
+
+            // colPrice
+            colPrice.HeaderText = "Giá";
+            colPrice.Name = "colPrice";
+            colPrice.ReadOnly = true;
+            colPrice.FillWeight = 15F;
+
+            // colCountry
+            colCountry.HeaderText = "Xuất xứ";
+            colCountry.Name = "colCountry";
+            colCountry.ReadOnly = true;
+            colCountry.FillWeight = 15F;
+
+            // colCondition
+            colCondition.HeaderText = "Tình trạng";
+            colCondition.Name = "colCondition";
+            colCondition.ReadOnly = true;
+            colCondition.FillWeight = 15F;
 
             // 
             // panelRight
@@ -169,7 +208,7 @@
             panelRight.Location = new Point(650, 0);
             panelRight.Name = "panelRight";
             panelRight.Padding = new Padding(30);
-            panelRight.Size = new Size(450, 600); // Kích thước ảo để design
+            panelRight.Size = new Size(450, 600);
             panelRight.TabIndex = 0;
 
             // --- PHẦN TÌM KIẾM ---
@@ -205,7 +244,7 @@
             lblTitle.Size = new Size(300, 30);
             lblTitle.Text = "Thông tin chi tiết";
 
-            // --- CÁC Ô NHẬP LIỆU (Sắp xếp dọc xuống dưới) ---
+            // --- CÁC Ô NHẬP LIỆU ---
             int labelX = 30;
             int txtX = 140;
             int startY = 150;
@@ -213,7 +252,7 @@
 
             // ID
             lblId.Text = "Mã SP:"; lblId.Location = new Point(labelX, startY); lblId.AutoSize = true;
-            txtId.Location = new Point(txtX, startY - 3); txtId.Size = new Size(250, 27); txtId.ReadOnly = true; // Thường ID không cho sửa
+            txtId.Location = new Point(txtX, startY - 3); txtId.Size = new Size(250, 27); txtId.ReadOnly = true;
 
             // Name
             lblName.Text = "Tên SP:"; lblName.Location = new Point(labelX, startY + stepY); lblName.AutoSize = true;
@@ -235,7 +274,7 @@
             lblCondition.Text = "Tình trạng:"; lblCondition.Location = new Point(labelX, startY + stepY * 5); lblCondition.AutoSize = true;
             txtCondition.Location = new Point(txtX, startY + stepY * 5 - 3); txtCondition.Size = new Size(250, 27);
 
-            // --- CÁC NÚT CHỨC NĂNG (Xếp ngang bên dưới) ---
+            // --- CÁC NÚT CHỨC NĂNG ---
             int btnY = 420;
 
             // btnAdd
@@ -269,47 +308,19 @@
             // 
             // QuanLySanPham
             // 
-            // Tăng kích thước Form để chứa đủ PanelLeft (650) + PanelRight (~450)
             ClientSize = new Size(1150, 600);
             Controls.Add(panelRight);
             Controls.Add(panelLeft);
             Name = "QuanLySanPham";
             Text = "Quản lý sản phẩm";
-            StartPosition = FormStartPosition.CenterScreen; // Mở form ở giữa màn hình
-            WindowState = FormWindowState.Normal; // Để Normal để thấy đúng kích thước đã set
+            StartPosition = FormStartPosition.CenterScreen;
+            WindowState = FormWindowState.Normal;
 
             panelLeft.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvProduct).EndInit();
             panelRight.ResumeLayout(false);
             panelRight.PerformLayout();
             ResumeLayout(false);
-        }
-
-        // Helpers ---------------------------------------------
-        private void AddLabel(Label lbl, string text, int x, int y)
-        {
-            lbl.Text = text;
-            lbl.Font = new Font("Segoe UI", 11F);
-            lbl.Location = new Point(x, y);
-        }
-
-        private void AddTextBox(TextBox txt, int x, int y)
-        {
-            txt.Location = new Point(x, y);
-            txt.Size = new Size(260, 27);
-        }
-
-        private void StyleButton(Button btn, int x, int y, string? text = null)
-        {
-            if (text != null) btn.Text = text;
-
-            btn.BackColor = Color.FromArgb(255, 210, 210);
-            btn.FlatAppearance.BorderSize = 0;
-            btn.FlatStyle = FlatStyle.Flat;
-            btn.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btn.ForeColor = Color.DimGray;
-            btn.Location = new Point(x, y);
-            btn.Size = new Size(130, 40);
         }
     }
 }
