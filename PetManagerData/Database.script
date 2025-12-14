@@ -132,7 +132,6 @@ VALUES
 (N'Bột tắm khô cho mèo 150g', 10, 55000, N'Nhật Bản', N'Mới'),
 (N'Dây dắt chó 1.5m', 8, 65000, N'Việt Nam', N'Mới');
 
-
 -- Bảng Nhân Viên
 CREATE TABLE NhanVien (
     ID INT PRIMARY KEY IDENTITY(1,1),
@@ -146,7 +145,7 @@ CREATE TABLE NhanVien (
     CreatedDate DATETIME DEFAULT GETDATE(),
     ModifiedDate DATETIME DEFAULT GETDATE()
 );
-
+GO
 -- Bảng Chấm Công
 CREATE TABLE ChamCong (
     ID INT PRIMARY KEY IDENTITY(1,1),
@@ -173,7 +172,7 @@ CREATE TABLE PhanCa (
     FOREIGN KEY (EmployeeID) REFERENCES NhanVien(ID),
     CONSTRAINT UC_PhanCa UNIQUE (EmployeeID, Date)
 );
-
+GO
 -- Bảng Tính Lương
 CREATE TABLE TinhLuong (
     ID INT PRIMARY KEY IDENTITY(1,1),
@@ -191,7 +190,7 @@ CREATE TABLE TinhLuong (
     FOREIGN KEY (EmployeeID) REFERENCES NhanVien(ID),
     CONSTRAINT UC_TinhLuong UNIQUE (EmployeeID, Month, Year)
 );
-
+GO
 -- Insert dữ liệu mẫu
 SET IDENTITY_INSERT NhanVien ON;
 INSERT INTO NhanVien (ID, Name, Address, PhoneNumber, Sex, Email, Position, Status) VALUES
@@ -359,7 +358,7 @@ VALUES
 (3, '2025-12-10', '07:30', '14:00', 6.50, N'Làm sớm'),
 
 (4, '2025-12-10', '12:00', '18:00', 6.00, N'Ca chiều');
-
+GO
 
 -- SP: Thêm/Cập nhật phân ca
 CREATE PROCEDURE sp_UpsertShift
@@ -415,7 +414,7 @@ VALUES
 (2, '2025-12-11', 0, 1, 1),
 (3, '2025-12-10', 1, 0, 1),
 (4, '2025-12-10', 0, 1, 0);
-
+GO
 
 -- SP: Tính lương
 CREATE PROCEDURE sp_CalculateSalary
