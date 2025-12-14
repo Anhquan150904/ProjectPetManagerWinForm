@@ -1,9 +1,8 @@
-﻿using System;
+﻿#nullable disable
+using PetManagerData.DataAccess;
+using System;
 using System.Data;
-using System.Security.Claims;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace PetManagerWinForm.NghiepVu.QLNhanVien
 {
@@ -11,6 +10,7 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
     {
         private int currentRowIndex = -1;
         private DataTable dtNhanVien = new DataTable();
+        private DataRow selectedEmployee = null;
 
         public QuanLyNhanVien()
         {
@@ -31,66 +31,73 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             clmPosition.DataPropertyName = "Position";
             clmStatus.DataPropertyName = "Status";
 
-            dtNhanVien.Columns.Add("ID", typeof(int));
-            dtNhanVien.Columns.Add("Name", typeof(string));
-            dtNhanVien.Columns.Add("Address", typeof(string));
-            dtNhanVien.Columns.Add("PhoneNumber", typeof(string));
-            dtNhanVien.Columns.Add("Sex", typeof(string));
-            dtNhanVien.Columns.Add("Email", typeof(string));
-            dtNhanVien.Columns.Add("Position", typeof(string));
-            dtNhanVien.Columns.Add("Status", typeof(string));
+            textID.ReadOnly = true;
+            textID.BackColor = System.Drawing.SystemColors.Control;
 
-            dtNhanVien.Rows.Add(1, "Hải Long", "Thái Bình", "0123456789", "Nam", "long@mail.com", "Quét rác", "Đang làm");
-            dtNhanVien.Rows.Add(2, "Anh Quân", "Ninh Bình", "0987654321", "Nam", "quan@mail.com", "Cắt tỉa", "Đang làm");
-            dtNhanVien.Rows.Add(3, "Thiên Khôi", "Hà Nội", "0123456788", "Nam", "khoi@mail.com", "Tắm", "Đang làm");
-            dtNhanVien.Rows.Add(4, "Tạ Hiền", "Hà Nội", "09987654322", "Nữ", "hien@mail.com", "Thu ngân", "Đang làm");
-            dataGridView1.DataSource = dtNhanVien;
+            LoadEmployees();
+            DisableEmployeeActionButtons();
+        }
 
+        private void LoadEmployees()
+        {
+            try
+            {
+                dtNhanVien = EmployeeDataAccess.GetAllEmployees();
+                dataGridView1.DataSource = dtNhanVien;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(textID.Text, out int id))
+            try
             {
-                MessageBox.Show("ID phải là số nguyên.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                textID.Focus();
-                return;
-            }
-
-            foreach (DataRow checkRow in dtNhanVien.Rows)
-            {
-                if (checkRow.RowState != DataRowState.Deleted && Convert.ToInt32(checkRow["ID"]) == id)
+                // Validate
+                if (string.IsNullOrWhiteSpace(textName.Text))
                 {
-                    MessageBox.Show("ID này đã tồn tại! Vui lòng nhập ID khác hoặc bấm Reset.", "Trùng lặp", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Vui lòng nhập tên nhân viên.", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    textName.Focus();
                     return;
                 }
+
+                // Thêm vào database
+                int newId = EmployeeDataAccess.InsertEmployee(
+                    textName.Text,
+                    textAddress.Text,
+                    textPhone.Text,
+                    radioButton1.Checked ? "Nam" : "Nữ",
+                    textEmail.Text,
+                    textPosition.Text,
+                    comboBox1.Text
+                );
+
+                MessageBox.Show($"Thêm thành công! ID: {newId}", "Thành công",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                LoadEmployees();
+                ClearTextbox();
             }
-
-
-            DataRow newRow = dtNhanVien.NewRow();
-            newRow["ID"] = id;
-            newRow["Name"] = textName.Text;
-            newRow["Address"] = textAddress.Text;
-            newRow["PhoneNumber"] = textPhone.Text;
-            newRow["Sex"] = radioButton1.Checked ? "Nam" : "Nữ"; 
-            newRow["Email"] = textEmail.Text;
-            newRow["Position"] = textPosition.Text;
-            newRow["Status"] = comboBox1.Text;
-
-            dtNhanVien.Rows.Add(newRow);
-
-            MessageBox.Show("Thêm thành công!");
-            ClearTextbox();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi thêm nhân viên: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0) return; 
+            if (e.RowIndex < 0) return;
 
             currentRowIndex = e.RowIndex;
             DataRowView rowView = (DataRowView)dataGridView1.Rows[e.RowIndex].DataBoundItem;
             DataRow row = rowView.Row;
 
+            selectedEmployee = row;
 
             textID.Text = row["ID"].ToString();
             textName.Text = row["Name"].ToString();
@@ -103,100 +110,134 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
 
             textEmail.Text = row["Email"].ToString();
             textPosition.Text = row["Position"].ToString();
-
             comboBox1.Text = row["Status"] != DBNull.Value ? row["Status"].ToString() : "Chưa xác định";
-            //DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
-            //textID.Text = row.Cells["clmId"].Value?.ToString();
-            //textName.Text = row.Cells["clmName"].Value?.ToString();
-            //textAddress.Text = row.Cells["clmAddress"].Value?.ToString();
-            //textPhone.Text = row.Cells["clmPhone"].Value?.ToString();
-
-            //string sex = row.Cells["clmSex"].Value?.ToString();
-            //if (sex == "Nam") radioButton1.Checked = true;
-            //else radioButton2.Checked = true;
-
-            //textEmail.Text = row.Cells["clmEmail"].Value?.ToString();
-            //textPosition.Text = row.Cells["clmPosition"].Value?.ToString();
-            //textPosition.Text = row.Cells["clmPosition"].Value?.ToString();
+            EnableEmployeeActionButtons();
         }
 
         private void btnUpt_Click(object sender, EventArgs e)
         {
-            if (currentRowIndex < 0)
+            try
             {
-                MessageBox.Show("Vui lòng chọn dòng cần sửa trên lưới.", "Thông báo");
-                return;
-            }
-            if (!int.TryParse(textID.Text, out int id))
-            {
-                MessageBox.Show("ID phải là số nguyên.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            DataRowView rowView = (DataRowView)dataGridView1.Rows[currentRowIndex].DataBoundItem;
-            DataRow row = rowView.Row;
-
-            foreach (DataRow checkRow in dtNhanVien.Rows)
-            {
-
-                if (checkRow.RowState != DataRowState.Deleted &&
-                    Convert.ToInt32(checkRow["ID"]) == id &&
-                    checkRow != row)
+                if (currentRowIndex < 0 || string.IsNullOrEmpty(textID.Text))
                 {
-                    MessageBox.Show("ID này đã tồn tại ở một nhân viên khác! Vui lòng chọn ID khác.", "Trùng lặp", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return; 
+                    MessageBox.Show("Vui lòng chọn nhân viên cần sửa.", "Thông báo");
+                    return;
                 }
+
+                if (!int.TryParse(textID.Text, out int id))
+                {
+                    MessageBox.Show("ID không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Cập nhật database
+                EmployeeDataAccess.UpdateEmployee(
+                    id,
+                    textName.Text,
+                    textAddress.Text,
+                    textPhone.Text,
+                    radioButton1.Checked ? "Nam" : "Nữ",
+                    textEmail.Text,
+                    textPosition.Text,
+                    comboBox1.Text
+                );
+
+                MessageBox.Show("Cập nhật thành công!", "Thành công",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                LoadEmployees();
+                ClearTextbox();
             }
-
-            row["ID"] = id;
-            row["Name"] = textName.Text;
-            row["Address"] = textAddress.Text;
-            row["PhoneNumber"] = textPhone.Text;
-            row["Sex"] = radioButton1.Checked ? "Nam" : "Nữ";
-            row["Email"] = textEmail.Text;
-            row["Position"] = textPosition.Text;
-            row["Status"] = comboBox1.Text;
-
-            MessageBox.Show("Cập nhật thành công!");
-            ClearTextbox();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi cập nhật: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnDel_Click(object sender, EventArgs e)
         {
-            if (currentRowIndex < 0)
+            try
             {
-                MessageBox.Show("Vui lòng chọn dòng cần xóa.", "Thông báo");
-                return;
-            }
+                if (currentRowIndex < 0 || string.IsNullOrEmpty(textID.Text))
+                {
+                    MessageBox.Show("Vui lòng chọn nhân viên cần xóa.", "Thông báo");
+                    return;
+                }
 
-            if (MessageBox.Show("Bạn chắc chắn muốn xóa nhân viên này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                DialogResult result = MessageBox.Show(
+                    "Bạn chắc chắn muốn xóa nhân viên này?\nHành động này không thể hoàn tác!",
+                    "Cảnh báo xóa",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Yes)
+                {
+                    string inputCode = ShowInputDialog(
+                        "Để xác nhận xóa, vui lòng nhập chính xác cụm từ: 'xac nhan'",
+                        "Xác thực hành động");
+
+                    if (inputCode == "xac nhan")
+                    {
+                        int id = int.Parse(textID.Text);
+                        EmployeeDataAccess.DeleteEmployee(id);
+
+                        MessageBox.Show("Đã xóa nhân viên thành công!", "Thông báo",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        LoadEmployees();
+                        ClearTextbox();
+                    }
+                    else if (!string.IsNullOrEmpty(inputCode))
+                    {
+                        MessageBox.Show("Mã xác nhận không đúng. Hủy bỏ lệnh xóa.", "Lỗi xác thực",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
             {
-                DataRowView rowView = (DataRowView)dataGridView1.Rows[currentRowIndex].DataBoundItem;
-                rowView.Row.Delete(); 
-                ClearTextbox();
+                MessageBox.Show($"Lỗi khi xóa: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            dtNhanVien.DefaultView.RowFilter = "";
+            LoadEmployees();
             ClearTextbox();
         }
+
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            string keyword = textBox1.Text.Trim();
-
-            if (string.IsNullOrEmpty(keyword))
+            try
             {
-                MessageBox.Show("Vui lòng nhập từ khóa để tìm kiếm.", "Thông báo");
-                return;
+                string keyword = textBox1.Text.Trim();
+
+                if (string.IsNullOrEmpty(keyword))
+                {
+                    MessageBox.Show("Vui lòng nhập từ khóa để tìm kiếm.", "Thông báo");
+                    return;
+                }
+
+                dtNhanVien = EmployeeDataAccess.SearchEmployees(keyword);
+                dataGridView1.DataSource = dtNhanVien;
+
+                if (dtNhanVien.Rows.Count == 0)
+                {
+                    MessageBox.Show("Không tìm thấy kết quả nào!", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-
-            string filter = string.Format("Name LIKE '%{0}%' OR Position LIKE '%{0}%' OR Convert(ID, 'System.String') LIKE '%{0}%'", keyword);
-
-            dtNhanVien.DefaultView.RowFilter = filter;
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tìm kiếm: {ex.Message}", "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
         private void ClearTextbox()
         {
             textID.Text = "";
@@ -208,15 +249,127 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             radioButton1.Checked = true;
             if (comboBox1.Items.Count > 0)
                 comboBox1.SelectedIndex = 0;
-            currentRowIndex = -1; 
+            currentRowIndex = -1;
+            selectedEmployee = null;
+            dataGridView1.ClearSelection();
+            dataGridView1.CurrentCell = null;
+            textBox1.Text = "";
             textID.Focus();
+            DisableEmployeeActionButtons();
         }
-        private void button4_Click(object sender, EventArgs e)
+
+        private string ShowInputDialog(string text, string caption)
         {
-            Detail detailForm = new Detail();
-            detailForm.ShowDialog();
+            Form prompt = new Form()
+            {
+                Width = 400,
+                Height = 180,
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                Text = caption,
+                StartPosition = FormStartPosition.CenterScreen,
+                MaximizeBox = false,
+                MinimizeBox = false
+            };
 
+            Label textLabel = new Label() { Left = 20, Top = 20, Text = text, Width = 350 };
+            TextBox textBox = new TextBox() { Left = 20, Top = 50, Width = 340 };
+            Button confirmation = new Button() { Text = "Xóa", Left = 200, Width = 70, Top = 90, DialogResult = DialogResult.OK };
+            confirmation.BackColor = System.Drawing.Color.Red;
+            confirmation.ForeColor = System.Drawing.Color.White;
+            Button cancel = new Button() { Text = "Hủy", Left = 290, Width = 70, Top = 90, DialogResult = DialogResult.Cancel };
+
+            confirmation.Click += (sender, e) => { prompt.Close(); };
+            cancel.Click += (sender, e) => { prompt.Close(); };
+
+            prompt.Controls.Add(textLabel);
+            prompt.Controls.Add(textBox);
+            prompt.Controls.Add(confirmation);
+            prompt.Controls.Add(cancel);
+            prompt.AcceptButton = confirmation;
+            prompt.CancelButton = cancel;
+
+            return prompt.ShowDialog() == DialogResult.OK ? textBox.Text : "";
         }
 
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+
+        private void btnPhanCa_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textID.Text))
+            {
+                MessageBox.Show("Vui lòng chọn nhân viên từ danh sách trước!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            FormPhanCa frm = new FormPhanCa
+            {
+                ID_Nhan = textID.Text,
+                Ten_Nhan = textName.Text,
+                ViTri_Nhan = textPosition.Text
+            };
+
+            frm.ShowDialog();
+        }
+
+        private void btnChamCong_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textID.Text))
+            {
+                MessageBox.Show("Vui lòng chọn nhân viên từ danh sách trước!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            FormChamCong frm = new FormChamCong
+            {
+                ID_Nhan = textID.Text,
+                Ten_Nhan = textName.Text,
+                ViTri_Nhan = textPosition.Text
+            };
+
+            frm.ShowDialog();
+        }
+
+        private void btnTinhLuong_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textID.Text))
+            {
+                MessageBox.Show("Vui lòng chọn nhân viên từ danh sách trước!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            FormTinhLuong frm = new FormTinhLuong
+            {
+                ID_Nhan = textID.Text,
+                Ten_Nhan = textName.Text,
+                ViTri_Nhan = textPosition.Text
+            };
+
+            frm.ShowDialog();
+        }
+
+        private void EnableEmployeeActionButtons()
+        {
+            btnPhanCa.Enabled = true;
+            btnChamCong.Enabled = true;
+            btnTinhLuong.Enabled = true;
+
+            btnPhanCa.BackColor = System.Drawing.SystemColors.Control;
+            btnChamCong.BackColor = System.Drawing.SystemColors.Control;
+            btnTinhLuong.BackColor = System.Drawing.SystemColors.Control;
+        }
+
+        private void DisableEmployeeActionButtons()
+        {
+            btnPhanCa.Enabled = false;
+            btnChamCong.Enabled = false;
+            btnTinhLuong.Enabled = false;
+
+            btnPhanCa.BackColor = System.Drawing.Color.LightGray;
+            btnChamCong.BackColor = System.Drawing.Color.LightGray;
+            btnTinhLuong.BackColor = System.Drawing.Color.LightGray;
+        }
     }
 }
