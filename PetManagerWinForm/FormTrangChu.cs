@@ -32,8 +32,7 @@ namespace PetManagerWinForm
         private void SetActiveButton(Button btn)
         {
             // Nếu có nút cũ -> reset màu
-            if (currentButton != null)
-            {
+            if (currentButton != null) {
                 currentButton.BackColor = Color.FromArgb(255, 224, 192);
             }
 
@@ -96,5 +95,6 @@ namespace PetManagerWinForm
             LoadForm(new FrmThanhToan());
         }
 
+     
     }
 }
