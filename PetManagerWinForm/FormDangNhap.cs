@@ -14,7 +14,7 @@ namespace PetManagerWinForm
             string connStr = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
             DangNhapController dangNhap = new DangNhapController(connStr);
 
-            if(txtUser.Text == "" || txtPassword.Text == "")
+            if (txtUser.Text == "" || txtPassword.Text == "")
             {
                 MessageBox.Show("Tài khoản mật khẩu không được để trống!");
             }
@@ -35,6 +35,11 @@ namespace PetManagerWinForm
                     MessageBox.Show("Sai tài khoản hoặc mật khẩu!");
                 }
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
