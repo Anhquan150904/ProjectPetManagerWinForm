@@ -1,73 +1,106 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.Configuration; // Cần thêm Reference: System.Configuration
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using PetManagerData.DataAccess;
 using PetManagerData.Models;
 
 namespace PetManagerWinForm.NghiepVu.QLKhachHang
 {
     public partial class ThongTinKhachHang : Form
     {
+        private CustomerRepository _repo;
+
         public ThongTinKhachHang()
         {
             InitializeComponent();
+
+            // Đọc chuỗi kết nối từ App.Config
+            string strConn = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
+            _repo = new CustomerRepository(strConn);
+
             this.Load += ThongTinKhachHang_Load;
-
         }
-
-        private List<Customer> cus = new List<Customer>();
-        private int idoldcus;
 
         private void ThongTinKhachHang_Load(object sender, EventArgs e)
         {
-            cus = new List<Customer>()
-            {
-        new Customer { Cus_Id = 1, Cus_Name = "Khách Hàng A", Address = "Hcm", Cus_Email ="ssss@gmail.com" ,Cus_PhoneNumber = "9999999999999"},
-        new Customer { Cus_Id = 2, Cus_Name = "Lò Văn Việt", Address = "hhh", Cus_Email ="hhhh" ,Cus_PhoneNumber = "hhh"},
-        new Customer {Cus_Id = 3, Cus_Name = "Vẹt Xanh", Address = "hhh", Cus_Email = "hhh", Cus_PhoneNumber = "hh"}
-    };
-            dgvCustomers.DataSource = cus;
+            dgvCustomers.AutoGenerateColumns = false;
+
+            // Map tên cột trong SQL với cột trên GridView
+            colCusId.DataPropertyName = "Cus_Id";
+            colCusName.DataPropertyName = "Cus_Name";
+            colAddress.DataPropertyName = "Address";
+            colPhoneNumber.DataPropertyName = "Cus_PhoneNumber";
+            colEmail.DataPropertyName = "Cus_Email";
+
+            LoadData();
         }
 
-        private void RefreshGrid()
+        private void LoadData()
         {
-            dgvCustomers.DataSource = null;
-            dgvCustomers.DataSource = cus;
+            try {
+                // Lấy DataTable từ SQL đổ vào Grid
+                dgvCustomers.DataSource = _repo.GetAll();
+            } catch (Exception ex) {
+                MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message);
+            }
         }
 
         private void dgvCustomers_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0) {
+                // Lấy dòng hiện tại đang chọn (đối tượng Customer)
+                // Cách an toàn hơn là lấy từ list gốc hoặc ép kiểu DataBoundItem
+                // Tuy nhiên, để sửa nhanh theo code cũ của bạn, ta truy cập qua tên cột Design:
+
                 DataGridViewRow row = dgvCustomers.Rows[e.RowIndex];
 
-                txtId.Text = row.Cells["Cus_Id"].Value.ToString();
-                txtName.Text = row.Cells["Cus_Name"].Value.ToString();
-                txtAddress.Text = row.Cells["Address"].Value.ToString();
-                txtPhoneNumber.Text = row.Cells["Cus_PhoneNumber"].Value.ToString();
-                txtEmail.Text = row.Cells["Cus_Email"].Value.ToString();
-
-                idoldcus = int.Parse(txtId.Text);
-
-                MessageBox.Show("Đã chọn ID gốc = " + idoldcus);
+                txtId.Text = row.Cells[colCusId.Index].Value?.ToString();
+                txtName.Text = row.Cells[colCusName.Index].Value?.ToString();
+                txtAddress.Text = row.Cells[colAddress.Index].Value?.ToString();
+                txtPhoneNumber.Text = row.Cells[colPhoneNumber.Index].Value?.ToString();
+                txtEmail.Text = row.Cells[colEmail.Index].Value?.ToString();
             }
         }
 
-
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            int id = int.Parse(txtId.Text);
-
-            if (cus.Any(c => c.Cus_Id == id)) {
-                MessageBox.Show("ID đã tồn tại, không thể thêm.");
+            if (string.IsNullOrWhiteSpace(txtName.Text)) {
+                MessageBox.Show("Vui lòng nhập tên khách hàng.");
                 return;
             }
 
+            // 3. Tạo đối tượng mới với ID vừa tính
             Customer newCus = new Customer {
+                // Không gán ID, SQL tự tăng
+                Cus_Name = txtName.Text,
+                Address = txtAddress.Text,
+                Cus_Email = txtEmail.Text,
+                Cus_PhoneNumber = txtPhoneNumber.Text
+            };
+
+            try {
+                int newId = _repo.Add(newCus);
+                if (newId > 0) {
+                    MessageBox.Show($"Thêm thành công! ID mới: {newId}");
+                    LoadData();
+                    RefreshInput();
+                } else {
+                    MessageBox.Show("Thêm thất bại.");
+                }
+            } catch (Exception ex) {
+                MessageBox.Show("Lỗi: " + ex.Message);
+            }
+        }
+
+        private void btnUpdate_Click(object sender, EventArgs e)
+        {
+            if (!int.TryParse(txtId.Text, out int id)) {
+                MessageBox.Show("Vui lòng chọn khách hàng để sửa.");
+                return;
+            }
+
+            Customer cusUpdate = new Customer {
                 Cus_Id = id,
                 Cus_Name = txtName.Text,
                 Address = txtAddress.Text,
@@ -75,105 +108,81 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
                 Cus_PhoneNumber = txtPhoneNumber.Text
             };
 
-            cus.Add(newCus);
-            RefreshGrid();
+            try {
+                if (_repo.Update(cusUpdate)) {
+                    MessageBox.Show("Cập nhật thành công!");
+                    LoadData();
+                    RefreshInput();
+                } else {
+                    MessageBox.Show("Cập nhật thất bại.");
+                }
+            } catch (Exception ex) {
+                MessageBox.Show("Lỗi: " + ex.Message);
+            }
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
         {
-
-            int id = int.Parse(txtId.Text);
-            Customer cusUpdate = cus.FirstOrDefault(c => c.Cus_Id == id);
-
-            if (cusUpdate == null) {
-                MessageBox.Show("Không tìm thấy khách để cập nhật.");
+            if (!int.TryParse(txtId.Text, out int id)) {
+                MessageBox.Show("Vui lòng chọn khách hàng để xóa.");
                 return;
             }
 
-           
-            cusUpdate.Cus_Name = txtName.Text;
-            cusUpdate.Address = txtAddress.Text;
-            cusUpdate.Cus_Email = txtEmail.Text;
-            cusUpdate.Cus_PhoneNumber = txtPhoneNumber.Text;
-
-            RefreshGrid();
-            MessageBox.Show("Cập nhật thành công!");
+            if (MessageBox.Show("Bạn có chắc muốn xóa?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                try {
+                    if (_repo.Delete(id)) {
+                        MessageBox.Show("Đã xóa!");
+                        LoadData();
+                        RefreshInput();
+                    } else {
+                        MessageBox.Show("Xóa thất bại.");
+                    }
+                } catch (Exception ex) {
+                    MessageBox.Show("Lỗi xóa: " + ex.Message);
+                }
+            }
         }
 
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            string keyword = txtSearch.Text.Trim();
+            if (string.IsNullOrEmpty(keyword)) {
+                LoadData(); // Nếu ô tìm kiếm rỗng thì load lại tất cả
+                return;
+            }
 
+            try {
+                dgvCustomers.DataSource = _repo.Search(keyword);
+            } catch (Exception ex) {
+                MessageBox.Show("Lỗi tìm kiếm: " + ex.Message);
+            }
+        }
 
-        public void Refresh()
+        private void btnShowAll_Click(object sender, EventArgs e)
+        {
+            RefreshInput();
+            LoadData();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshInput();
+        }
+
+        // Đổi tên hàm Refresh của bạn thành RefreshInput để tránh nhầm với hàm hệ thống
+        public void RefreshInput()
         {
             txtId.Text = "";
             txtName.Text = "";
             txtAddress.Text = "";
             txtPhoneNumber.Text = "";
             txtEmail.Text = "";
-        }
-
-        private void btnDelete_Click(object sender, EventArgs e)
-        {
-            int id = int.Parse(txtId.Text);
-            var cusDelete = cus.FirstOrDefault(c => c.Cus_Id == id);
-
-            if (cusDelete == null) {
-                MessageBox.Show("Không tìm thấy khách để xóa.");
-                return;
-            }
-
-            cus.Remove(cusDelete);
-            RefreshGrid();
-        }
-
-        private void btnFind_Click(object sender, EventArgs e)
-        {
-   
-            string keyword = txtSearch.Text.Trim().ToLower();
-
-            if (string.IsNullOrEmpty(keyword)) {
-                MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm!");
-                return;
-            }
-
-
-            List<Customer> result = new List<Customer>();
-
-   
-            foreach (Customer c in cus) {
-                string idStr = c.Cus_Id.ToString().ToLower();
-                string nameStr = c.Cus_Name.ToLower();
-                string phoneStr = c.Cus_PhoneNumber.ToLower();
-
-                bool idMatch = idStr.Contains(keyword);
-                bool nameMatch = nameStr.Contains(keyword);
-                bool phoneMatch = phoneStr.Contains(keyword);
-
-                if (idMatch || nameMatch || phoneMatch) {
-                    result.Add(c);
-                }
-            }
-
-            dgvCustomers.DataSource = null;
-            dgvCustomers.DataSource = result;
-
-            MessageBox.Show($"Tìm thấy {result.Count} kết quả.");
-        }
-
-
-        private void btnRefresh_Click(object sender, EventArgs e)
-        {
-            Refresh();
-        }
-
-        private void btnShowAll_Click(object sender, EventArgs e)
-        {
-            dgvCustomers.DataSource = null;
-            dgvCustomers.DataSource = cus;
+            txtSearch.Text = "";
         }
 
         private void btnTransHis_Click(object sender, EventArgs e)
         {
-
+            // Code xử lý lịch sử
         }
     }
 }
