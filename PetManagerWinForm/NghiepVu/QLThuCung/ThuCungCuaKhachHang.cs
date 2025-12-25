@@ -29,8 +29,7 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
 
         private void QLThuCungDichVu_Load(object sender, EventArgs e)
         {
-            try
-            {
+            try {
                 string connStr = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
                 // Khởi tạo BLL/Controller mới
                 _cpsController = new CustomerPetServiceController(connStr);
@@ -39,9 +38,7 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
                 LoadServicesInProgress();
                 // Tải danh sách dịch vụ vào ComboBox
                 LoadServiceComboBox();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MessageBox.Show("Không thể tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -81,8 +78,7 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
 
             // Gán dịch vụ đang sử dụng lên ComboBox
             string serviceName = row.Cells["colServiceName"].Value?.ToString();
-            if (!string.IsNullOrEmpty(serviceName))
-            {
+            if (!string.IsNullOrEmpty(serviceName)) {
                 cmbService.Text = serviceName;
             }
         }
@@ -91,26 +87,21 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
         {
             string keyword = txtSearch.Text;
 
-            if (string.IsNullOrWhiteSpace(keyword))
-            {
+            if (string.IsNullOrWhiteSpace(keyword)) {
                 MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm (Tên thú cưng hoặc Dịch vụ).", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            try
-            {
+            try {
                 // Giả sử có hàm tìm kiếm theo tên pet hoặc tên dịch vụ
                 DataTable dt = _cpsController.SearchServicesInProgress(keyword);
 
                 dgvCustomerPets.DataSource = dt;
 
-                if (dt.Rows.Count == 0)
-                {
+                if (dt.Rows.Count == 0) {
                     MessageBox.Show("Không tìm thấy kết quả nào.");
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MessageBox.Show("Lỗi khi tìm kiếm: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -124,8 +115,7 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
 
         private void btnDoneService_Click(object sender, EventArgs e)
         {
-            if (dgvCustomerPets.SelectedRows.Count == 0)
-            {
+            if (dgvCustomerPets.SelectedRows.Count == 0) {
                 MessageBox.Show("Vui lòng chọn dịch vụ cần hoàn thành trong danh sách.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
@@ -133,21 +123,22 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
             // Lấy ID của bản ghi CustomerPetService đang được chọn
             int cpsId = Convert.ToInt32(dgvCustomerPets.SelectedRows[0].Cells["colCPS_Id"].Value);
 
-            if (MessageBox.Show("Xác nhận đã **XONG** dịch vụ này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                try
-                {
+            if (MessageBox.Show("Xác nhận đã **XONG** dịch vụ này?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+                try {
                     // Giả sử Controller có hàm cập nhật trạng thái
                     _cpsController.MarkServiceDone(cpsId);
                     MessageBox.Show("Dịch vụ đã được cập nhật hoàn thành!", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     LoadServicesInProgress(); // Tải lại danh sách
                     RefreshForm(); // Làm sạch form nhập
-                }
-                catch (Exception ex)
-                {
+                } catch (Exception ex) {
                     MessageBox.Show("Lỗi khi cập nhật dịch vụ: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void cmbService_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
