@@ -46,6 +46,11 @@ CREATE TABLE Customer (
     Cus_PhoneNumber NVARCHAR(20),
     Cus_Email NVARCHAR(50)
 );
+GO
+
+INSERT INTO Customer (Cus_Name, Address, Cus_PhoneNumber, Cus_Email)
+VALUES 
+(N'Long Đại Đế', N'Thái Bình', '0123456789', 'longdaide@gmail.com')
 
 -- Product
 CREATE TABLE Product (

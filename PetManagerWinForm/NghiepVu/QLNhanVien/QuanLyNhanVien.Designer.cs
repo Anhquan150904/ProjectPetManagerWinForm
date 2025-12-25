@@ -74,38 +74,46 @@
             // dataGridView1
             // 
             dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = Color.White;
+            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle1.SelectionForeColor = Color.White;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.ColumnHeadersHeight = 40;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { clmID, clmName, clmAddress, clmPhone, clmSex, clmEmail, clmPosition, clmStatus });
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.BackColor = Color.White;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = Color.FromArgb(44, 62, 80);
+            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(41, 128, 185);
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.GridColor = Color.FromArgb(189, 195, 199);
             dataGridView1.Location = new Point(12, 12);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(41, 128, 185);
+            dataGridViewCellStyle3.SelectionForeColor = Color.White;
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowTemplate.Height = 35;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(1128, 978);
+            dataGridView1.Size = new Size(1125, 978);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -128,7 +136,7 @@
             clmAddress.HeaderText = "Địa chỉ";
             clmAddress.Name = "clmAddress";
             clmAddress.ReadOnly = true;
-            clmAddress.Width = 180;
+            clmAddress.Width = 200;
             // 
             // clmPhone
             // 
@@ -148,7 +156,7 @@
             clmEmail.HeaderText = "Email";
             clmEmail.Name = "clmEmail";
             clmEmail.ReadOnly = true;
-            clmEmail.Width = 150;
+            clmEmail.Width = 170;
             // 
             // clmPosition
             // 
@@ -175,7 +183,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.BackColor = Color.FromArgb(255, 192, 192);
+            label1.BackColor = Color.FromArgb(236, 240, 241);
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.Location = new Point(1172, 141);
             label1.Name = "label1";
@@ -187,7 +195,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.BackColor = Color.FromArgb(255, 192, 192);
+            label2.BackColor = Color.FromArgb(236, 240, 241);
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.Location = new Point(1172, 204);
             label2.Name = "label2";
@@ -207,7 +215,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.BackColor = Color.FromArgb(255, 192, 192);
+            label3.BackColor = Color.FromArgb(236, 240, 241);
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label3.Location = new Point(1172, 267);
             label3.Name = "label3";
@@ -227,7 +235,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.BackColor = Color.FromArgb(255, 192, 192);
+            label4.BackColor = Color.FromArgb(236, 240, 241);
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.Location = new Point(1172, 330);
             label4.Name = "label4";
@@ -247,7 +255,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.BackColor = Color.FromArgb(255, 192, 192);
+            label5.BackColor = Color.FromArgb(236, 240, 241);
             label5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label5.Location = new Point(1172, 392);
             label5.Name = "label5";
@@ -259,7 +267,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.BackColor = Color.FromArgb(255, 192, 192);
+            label6.BackColor = Color.FromArgb(236, 240, 241);
             label6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label6.Location = new Point(1172, 452);
             label6.Name = "label6";
@@ -279,7 +287,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.BackColor = Color.FromArgb(255, 192, 192);
+            label7.BackColor = Color.FromArgb(236, 240, 241);
             label7.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label7.Location = new Point(1172, 515);
             label7.Name = "label7";
@@ -298,31 +306,41 @@
             // 
             // button1
             // 
-            button1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button1.BackColor = Color.FromArgb(46, 204, 113);
+            button1.FlatAppearance.BorderSize = 0;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button1.ForeColor = Color.White;
             button1.Location = new Point(1172, 645);
             button1.Name = "button1";
             button1.Size = new Size(102, 29);
             button1.TabIndex = 15;
             button1.Text = "Thêm";
-            button1.UseVisualStyleBackColor = true;
+            button1.UseVisualStyleBackColor = false;
             button1.Click += btnAdd_Click;
             // 
             // button2
             // 
-            button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button2.BackColor = Color.FromArgb(52, 152, 219);
+            button2.FlatAppearance.BorderSize = 0;
+            button2.FlatStyle = FlatStyle.Flat;
+            button2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button2.ForeColor = Color.White;
             button2.Location = new Point(1298, 645);
             button2.Name = "button2";
             button2.Size = new Size(102, 29);
             button2.TabIndex = 16;
             button2.Text = "Cập nhật";
-            button2.UseVisualStyleBackColor = true;
+            button2.UseVisualStyleBackColor = false;
             button2.Click += btnUpt_Click;
             // 
             // button3
             // 
-            button3.BackColor = Color.Red;
-            button3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            button3.ForeColor = SystemColors.Control;
+            button3.BackColor = Color.FromArgb(231, 76, 60);
+            button3.FlatAppearance.BorderSize = 0;
+            button3.FlatStyle = FlatStyle.Flat;
+            button3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button3.ForeColor = Color.White;
             button3.Location = new Point(1451, 575);
             button3.Name = "button3";
             button3.Size = new Size(75, 29);
@@ -342,7 +360,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.BackColor = Color.FromArgb(255, 192, 192);
+            label8.BackColor = Color.FromArgb(236, 240, 241);
             label8.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label8.Location = new Point(1172, 51);
             label8.Name = "label8";
@@ -352,9 +370,11 @@
             // 
             // button5
             // 
-            button5.BackColor = SystemColors.Control;
-            button5.FlatStyle = FlatStyle.Popup;
-            button5.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button5.BackColor = Color.FromArgb(52, 73, 94);
+            button5.FlatAppearance.BorderSize = 0;
+            button5.FlatStyle = FlatStyle.Flat;
+            button5.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button5.ForeColor = Color.White;
             button5.Location = new Point(1472, 75);
             button5.Name = "button5";
             button5.Size = new Size(54, 29);
@@ -366,7 +386,7 @@
             // radioButton1
             // 
             radioButton1.AutoSize = true;
-            radioButton1.BackColor = Color.FromArgb(255, 192, 192);
+            radioButton1.BackColor = Color.FromArgb(236, 240, 241);
             radioButton1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             radioButton1.Location = new Point(1275, 390);
             radioButton1.Name = "radioButton1";
@@ -379,7 +399,7 @@
             // radioButton2
             // 
             radioButton2.AutoSize = true;
-            radioButton2.BackColor = Color.FromArgb(255, 192, 192);
+            radioButton2.BackColor = Color.FromArgb(236, 240, 241);
             radioButton2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             radioButton2.Location = new Point(1384, 390);
             radioButton2.Name = "radioButton2";
@@ -391,13 +411,17 @@
             // 
             // button6
             // 
-            button6.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            button6.BackColor = Color.FromArgb(149, 165, 166);
+            button6.FlatAppearance.BorderSize = 0;
+            button6.FlatStyle = FlatStyle.Flat;
+            button6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            button6.ForeColor = Color.White;
             button6.Location = new Point(1424, 645);
             button6.Name = "button6";
             button6.Size = new Size(102, 29);
             button6.TabIndex = 24;
             button6.Text = "Làm mới";
-            button6.UseVisualStyleBackColor = true;
+            button6.UseVisualStyleBackColor = false;
             button6.Click += btnReset_Click;
             // 
             // comboBox1
@@ -413,7 +437,7 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.BackColor = Color.FromArgb(255, 192, 192);
+            label9.BackColor = Color.FromArgb(236, 240, 241);
             label9.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label9.Location = new Point(1172, 578);
             label9.Name = "label9";
@@ -423,40 +447,52 @@
             // 
             // btnTinhLuong
             // 
-            btnTinhLuong.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnTinhLuong.BackColor = Color.FromArgb(155, 89, 182);
+            btnTinhLuong.FlatAppearance.BorderSize = 0;
+            btnTinhLuong.FlatStyle = FlatStyle.Flat;
+            btnTinhLuong.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnTinhLuong.ForeColor = Color.White;
             btnTinhLuong.Location = new Point(1424, 705);
             btnTinhLuong.Name = "btnTinhLuong";
             btnTinhLuong.Size = new Size(102, 29);
             btnTinhLuong.TabIndex = 29;
             btnTinhLuong.Text = "Tính lương";
-            btnTinhLuong.UseVisualStyleBackColor = true;
+            btnTinhLuong.UseVisualStyleBackColor = false;
             btnTinhLuong.Click += btnTinhLuong_Click;
             // 
             // btnChamCong
             // 
-            btnChamCong.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnChamCong.BackColor = Color.FromArgb(230, 126, 34);
+            btnChamCong.FlatAppearance.BorderSize = 0;
+            btnChamCong.FlatStyle = FlatStyle.Flat;
+            btnChamCong.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnChamCong.ForeColor = Color.White;
             btnChamCong.Location = new Point(1298, 705);
             btnChamCong.Name = "btnChamCong";
             btnChamCong.Size = new Size(102, 29);
             btnChamCong.TabIndex = 28;
             btnChamCong.Text = "Chấm công";
-            btnChamCong.UseVisualStyleBackColor = true;
+            btnChamCong.UseVisualStyleBackColor = false;
             btnChamCong.Click += btnChamCong_Click;
             // 
             // btnPhanCa
             // 
-            btnPhanCa.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            btnPhanCa.BackColor = Color.FromArgb(22, 160, 133);
+            btnPhanCa.FlatAppearance.BorderSize = 0;
+            btnPhanCa.FlatStyle = FlatStyle.Flat;
+            btnPhanCa.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnPhanCa.ForeColor = Color.White;
             btnPhanCa.Location = new Point(1172, 705);
             btnPhanCa.Name = "btnPhanCa";
             btnPhanCa.Size = new Size(102, 29);
             btnPhanCa.TabIndex = 27;
             btnPhanCa.Text = "Phân ca";
-            btnPhanCa.UseVisualStyleBackColor = true;
+            btnPhanCa.UseVisualStyleBackColor = false;
             btnPhanCa.Click += btnPhanCa_Click;
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(255, 192, 192);
+            panel1.BackColor = Color.FromArgb(236, 240, 241);
             panel1.Location = new Point(1146, -9);
             panel1.Name = "panel1";
             panel1.Size = new Size(440, 1019);
@@ -531,6 +567,10 @@
         private Button button6;
         private ComboBox comboBox1;
         private Label label9;
+        private Button btnTinhLuong;
+        private Button btnChamCong;
+        private Button btnPhanCa;
+        private Panel panel1;
         private DataGridViewTextBoxColumn clmID;
         private DataGridViewTextBoxColumn clmName;
         private DataGridViewTextBoxColumn clmAddress;
@@ -539,9 +579,5 @@
         private DataGridViewTextBoxColumn clmEmail;
         private DataGridViewTextBoxColumn clmPosition;
         private DataGridViewTextBoxColumn clmStatus;
-        private Button btnTinhLuong;
-        private Button btnChamCong;
-        private Button btnPhanCa;
-        private Panel panel1;
     }
 }

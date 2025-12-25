@@ -53,7 +53,6 @@
             colGioRa = new DataGridViewTextBoxColumn();
             colTongGio = new DataGridViewTextBoxColumn();
             colThanhTien = new DataGridViewTextBoxColumn();
-            btnXuatBaoCao = new Button();
             btnDong = new Button();
             label8 = new Label();
             groupBox1.SuspendLayout();
@@ -442,16 +441,6 @@
             colThanhTien.Name = "colThanhTien";
             colThanhTien.ReadOnly = true;
             // 
-            // btnXuatBaoCao
-            // 
-            btnXuatBaoCao.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnXuatBaoCao.Location = new Point(828, 725);
-            btnXuatBaoCao.Name = "btnXuatBaoCao";
-            btnXuatBaoCao.Size = new Size(120, 40);
-            btnXuatBaoCao.TabIndex = 4;
-            btnXuatBaoCao.Text = "Xuất Excel";
-            btnXuatBaoCao.UseVisualStyleBackColor = true;
-            // 
             // btnDong
             // 
             btnDong.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -480,7 +469,6 @@
             ClientSize = new Size(1100, 775);
             Controls.Add(label8);
             Controls.Add(btnDong);
-            Controls.Add(btnXuatBaoCao);
             Controls.Add(groupBox4);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
@@ -540,7 +528,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colGioRa;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTongGio;
         private System.Windows.Forms.DataGridViewTextBoxColumn colThanhTien;
-        private System.Windows.Forms.Button btnXuatBaoCao;
         private System.Windows.Forms.Button btnDong;
         private System.Windows.Forms.Label label8;
     }
