@@ -12,8 +12,10 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
 {
     public partial class ThuCungCuaKhangHang : Form
     {
+
         public ThuCungCuaKhangHang()
         {
+
             InitializeComponent();
         }
         // 1. Sự kiện khi click vào một dòng trong bảng
@@ -59,6 +61,11 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
         }
 
         private void panelRight_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void dgvPets_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

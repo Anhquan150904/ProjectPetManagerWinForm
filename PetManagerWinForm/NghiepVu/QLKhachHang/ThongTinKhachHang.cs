@@ -181,7 +181,14 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
         }
         private void btnThucungcuakhanghang_Click(object sender, EventArgs e)
         {
-
+            if (string.IsNullOrEmpty(txtId.Text))
+            {
+                MessageBox.Show("Vui lòng chọn khách hàng từ danh sách trước!", "Thông báo",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            ThuCungCuaKhangHang frm = new ThuCungCuaKhangHang();
+            frm.ShowDialog();
         }
     }
 }
