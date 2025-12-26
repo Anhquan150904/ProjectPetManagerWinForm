@@ -12,6 +12,11 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
         private DataTable dtNhanVien = new DataTable();
         private DataRow selectedEmployee = null;
 
+        // Lưu màu gốc của các button
+        private Color btnPhanCaColor = Color.FromArgb(22, 160, 133);
+        private Color btnChamCongColor = Color.FromArgb(230, 126, 34);
+        private Color btnTinhLuongColor = Color.FromArgb(155, 89, 182);
+
         public QuanLyNhanVien()
         {
             InitializeComponent();
@@ -356,9 +361,14 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             btnChamCong.Enabled = true;
             btnTinhLuong.Enabled = true;
 
-            btnPhanCa.BackColor = System.Drawing.SystemColors.Control;
-            btnChamCong.BackColor = System.Drawing.SystemColors.Control;
-            btnTinhLuong.BackColor = System.Drawing.SystemColors.Control;
+            // Giữ màu gốc khi enable
+            btnPhanCa.BackColor = btnPhanCaColor;
+            btnChamCong.BackColor = btnChamCongColor;
+            btnTinhLuong.BackColor = btnTinhLuongColor;
+
+            btnPhanCa.ForeColor = Color.White;
+            btnChamCong.ForeColor = Color.White;
+            btnTinhLuong.ForeColor = Color.White;
         }
 
         private void DisableEmployeeActionButtons()
@@ -367,9 +377,27 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             btnChamCong.Enabled = false;
             btnTinhLuong.Enabled = false;
 
-            btnPhanCa.BackColor = System.Drawing.Color.LightGray;
-            btnChamCong.BackColor = System.Drawing.Color.LightGray;
-            btnTinhLuong.BackColor = System.Drawing.Color.LightGray;
+            // Làm tối màu khi disable (opacity 50%)
+            btnPhanCa.BackColor = Color.FromArgb(
+                btnPhanCaColor.R / 2 + 127,
+                btnPhanCaColor.G / 2 + 127,
+                btnPhanCaColor.B / 2 + 127
+            );
+            btnChamCong.BackColor = Color.FromArgb(
+                btnChamCongColor.R / 2 + 127,
+                btnChamCongColor.G / 2 + 127,
+                btnChamCongColor.B / 2 + 127
+            );
+            btnTinhLuong.BackColor = Color.FromArgb(
+                btnTinhLuongColor.R / 2 + 127,
+                btnTinhLuongColor.G / 2 + 127,
+                btnTinhLuongColor.B / 2 + 127
+            );
+
+            // Chữ màu xám nhạt khi disable
+            btnPhanCa.ForeColor = Color.FromArgb(200, 200, 200);
+            btnChamCong.ForeColor = Color.FromArgb(200, 200, 200);
+            btnTinhLuong.ForeColor = Color.FromArgb(200, 200, 200);
         }
     }
 }
