@@ -96,7 +96,7 @@ namespace PetManagerWinForm.NghiepVu
                     var row = (DataRowView)dgv.SelectedRows[0].DataBoundItem;
                     _selectedPetId = Convert.ToInt32(row["Pet_Id"]);
                     _selectedPetName = row["Pet_Name"].ToString();
-                    try { lblSelectedPet.Text = _selectedPetName; } catch { }
+                    try { txtChoosePet.Text = _selectedPetName; } catch { }
                     frm.DialogResult = DialogResult.OK;
                     frm.Close();
                 };
