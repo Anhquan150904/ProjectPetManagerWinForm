@@ -53,11 +53,7 @@ namespace PetManagerWinForm
             LoadForm(new ThuCungDaBan());
         }
 
-        private void btnThuCungKhachHang_Click(object sender, EventArgs e)
-        {
-            SetActiveButton((Button)sender);
-            LoadForm(new QLThuCungDichVu());
-        }
+
 
         private void btnKhachHang_Click(object sender, EventArgs e)
         {
