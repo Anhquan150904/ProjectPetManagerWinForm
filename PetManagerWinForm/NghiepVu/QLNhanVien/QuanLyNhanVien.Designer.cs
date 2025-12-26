@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             dataGridView1 = new DataGridView();
             clmID = new DataGridViewTextBoxColumn();
             clmName = new DataGridViewTextBoxColumn();
@@ -69,6 +69,7 @@
             btnPhanCa = new Button();
             panel1 = new Panel();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
             // 
             // dataGridView1
@@ -77,39 +78,39 @@
             dataGridView1.BackgroundColor = Color.White;
             dataGridView1.BorderStyle = BorderStyle.None;
             dataGridView1.CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle1.ForeColor = Color.White;
-            dataGridViewCellStyle1.SelectionBackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle1.SelectionForeColor = Color.White;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle4.SelectionForeColor = Color.White;
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             dataGridView1.ColumnHeadersHeight = 40;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             dataGridView1.Columns.AddRange(new DataGridViewColumn[] { clmID, clmName, clmAddress, clmPhone, clmSex, clmEmail, clmPosition, clmStatus });
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = Color.White;
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle2.ForeColor = Color.FromArgb(44, 62, 80);
-            dataGridViewCellStyle2.SelectionBackColor = Color.FromArgb(41, 128, 185);
-            dataGridViewCellStyle2.SelectionForeColor = Color.White;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = Color.White;
+            dataGridViewCellStyle5.Font = new Font("Segoe UI", 11F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle5.ForeColor = Color.FromArgb(44, 62, 80);
+            dataGridViewCellStyle5.SelectionBackColor = Color.FromArgb(41, 128, 185);
+            dataGridViewCellStyle5.SelectionForeColor = Color.White;
+            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle5;
             dataGridView1.EnableHeadersVisualStyles = false;
             dataGridView1.GridColor = Color.FromArgb(189, 195, 199);
             dataGridView1.Location = new Point(12, 12);
             dataGridView1.MultiSelect = false;
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(52, 73, 94);
-            dataGridViewCellStyle3.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            dataGridViewCellStyle3.SelectionBackColor = Color.FromArgb(41, 128, 185);
-            dataGridViewCellStyle3.SelectionForeColor = Color.White;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(52, 73, 94);
+            dataGridViewCellStyle6.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle6.ForeColor = Color.White;
+            dataGridViewCellStyle6.SelectionBackColor = Color.FromArgb(41, 128, 185);
+            dataGridViewCellStyle6.SelectionForeColor = Color.White;
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.RowTemplate.Height = 35;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -311,9 +312,9 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.White;
-            button1.Location = new Point(1172, 645);
+            button1.Location = new Point(26, 654);
             button1.Name = "button1";
-            button1.Size = new Size(102, 29);
+            button1.Size = new Size(112, 29);
             button1.TabIndex = 15;
             button1.Text = "Thêm";
             button1.UseVisualStyleBackColor = false;
@@ -326,9 +327,9 @@
             button2.FlatStyle = FlatStyle.Flat;
             button2.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button2.ForeColor = Color.White;
-            button2.Location = new Point(1298, 645);
+            button2.Location = new Point(147, 654);
             button2.Name = "button2";
-            button2.Size = new Size(102, 29);
+            button2.Size = new Size(112, 29);
             button2.TabIndex = 16;
             button2.Text = "Cập nhật";
             button2.UseVisualStyleBackColor = false;
@@ -416,9 +417,9 @@
             button6.FlatStyle = FlatStyle.Flat;
             button6.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button6.ForeColor = Color.White;
-            button6.Location = new Point(1424, 645);
+            button6.Location = new Point(268, 654);
             button6.Name = "button6";
-            button6.Size = new Size(102, 29);
+            button6.Size = new Size(112, 29);
             button6.TabIndex = 24;
             button6.Text = "Làm mới";
             button6.UseVisualStyleBackColor = false;
@@ -452,9 +453,9 @@
             btnTinhLuong.FlatStyle = FlatStyle.Flat;
             btnTinhLuong.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnTinhLuong.ForeColor = Color.White;
-            btnTinhLuong.Location = new Point(1424, 705);
+            btnTinhLuong.Location = new Point(268, 714);
             btnTinhLuong.Name = "btnTinhLuong";
-            btnTinhLuong.Size = new Size(102, 29);
+            btnTinhLuong.Size = new Size(112, 29);
             btnTinhLuong.TabIndex = 29;
             btnTinhLuong.Text = "Tính lương";
             btnTinhLuong.UseVisualStyleBackColor = false;
@@ -467,9 +468,9 @@
             btnChamCong.FlatStyle = FlatStyle.Flat;
             btnChamCong.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnChamCong.ForeColor = Color.White;
-            btnChamCong.Location = new Point(1298, 705);
+            btnChamCong.Location = new Point(147, 714);
             btnChamCong.Name = "btnChamCong";
-            btnChamCong.Size = new Size(102, 29);
+            btnChamCong.Size = new Size(112, 29);
             btnChamCong.TabIndex = 28;
             btnChamCong.Text = "Chấm công";
             btnChamCong.UseVisualStyleBackColor = false;
@@ -482,9 +483,9 @@
             btnPhanCa.FlatStyle = FlatStyle.Flat;
             btnPhanCa.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnPhanCa.ForeColor = Color.White;
-            btnPhanCa.Location = new Point(1172, 705);
+            btnPhanCa.Location = new Point(26, 714);
             btnPhanCa.Name = "btnPhanCa";
-            btnPhanCa.Size = new Size(102, 29);
+            btnPhanCa.Size = new Size(112, 29);
             btnPhanCa.TabIndex = 27;
             btnPhanCa.Text = "Phân ca";
             btnPhanCa.UseVisualStyleBackColor = false;
@@ -493,6 +494,12 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(236, 240, 241);
+            panel1.Controls.Add(btnTinhLuong);
+            panel1.Controls.Add(button1);
+            panel1.Controls.Add(btnChamCong);
+            panel1.Controls.Add(button6);
+            panel1.Controls.Add(btnPhanCa);
+            panel1.Controls.Add(button2);
             panel1.Location = new Point(1146, -9);
             panel1.Name = "panel1";
             panel1.Size = new Size(440, 1019);
@@ -502,20 +509,14 @@
             // 
             AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(1538, 1002);
-            Controls.Add(btnTinhLuong);
-            Controls.Add(btnChamCong);
-            Controls.Add(btnPhanCa);
             Controls.Add(label9);
             Controls.Add(comboBox1);
-            Controls.Add(button6);
             Controls.Add(radioButton2);
             Controls.Add(radioButton1);
             Controls.Add(button5);
             Controls.Add(label8);
             Controls.Add(textBox1);
             Controls.Add(button3);
-            Controls.Add(button2);
-            Controls.Add(button1);
             Controls.Add(label7);
             Controls.Add(textPosition);
             Controls.Add(label6);
@@ -535,6 +536,7 @@
             Text = "Quan Ly Nhan Vien";
             Load += QuanLyNhanVien_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
 
