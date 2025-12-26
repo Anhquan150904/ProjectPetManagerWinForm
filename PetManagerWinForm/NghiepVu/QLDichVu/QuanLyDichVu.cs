@@ -280,6 +280,7 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                 colSerType.DataPropertyName = "Type";
                 colSerPrice.DataPropertyName = "Price";
 
+                ConfigureDgvSizing();
                 return;
             }
 
@@ -303,6 +304,62 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             colSerType.DataPropertyName = "Type";
             colSerPrice.DataPropertyName = "Price";
 
+            ConfigureDgvSizing();
+
+        }
+
+        // Configure DataGridView sizing after binding data so columns size to content
+        private void ConfigureDgvSizing()
+        {
+            try
+            {
+                if (dgvSer.Columns.Count == 0) return;
+
+                // First, autosize based on cell contents
+                dgvSer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+                // Make the main name column fill remaining space
+                if (dgvSer.Columns.Contains("colSerName"))
+                {
+                    dgvSer.Columns["colSerName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                    dgvSer.Columns["colSerName"].FillWeight = 50F;
+                }
+
+                // Keep ID narrow
+                if (dgvSer.Columns.Contains("colSerId"))
+                {
+                    dgvSer.Columns["colSerId"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    dgvSer.Columns["colSerId"].FillWeight = 8F;
+                }
+
+                // Type and Price moderate
+                if (dgvSer.Columns.Contains("colSerType"))
+                {
+                    dgvSer.Columns["colSerType"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    dgvSer.Columns["colSerType"].FillWeight = 20F;
+                }
+                if (dgvSer.Columns.Contains("colSerPrice"))
+                {
+                    dgvSer.Columns["colSerPrice"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    dgvSer.Columns["colSerPrice"].FillWeight = 22F;
+                }
+
+                // Force layout to calculate widths
+                dgvSer.PerformLayout();
+                int totalColsWidth = dgvSer.Columns.GetColumnsWidth(DataGridViewElementStates.Visible);
+
+                // If total width smaller than grid, switch to Fill to remove gap
+                if (totalColsWidth < dgvSer.ClientSize.Width)
+                {
+                    dgvSer.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                    if (dgvSer.Columns.Contains("colSerName"))
+                        dgvSer.Columns["colSerName"].FillWeight = 50F;
+                }
+            }
+            catch
+            {
+                // ignore sizing errors
+            }
         }
 
         public void Refresh()
@@ -544,6 +601,8 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
 
                 dgvSer.DataSource = new BindingSource(new BindingList<Service>(filtered), null);
 
+                ConfigureDgvSizing();
+
                 return;
              }
 
@@ -557,6 +616,8 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
 
              var dt = _serviceController.SearchServices(q2);
              dgvSer.DataSource = dt;
+
+             ConfigureDgvSizing();
          }
 
         private void btn_ShowAll_Click(object? sender, EventArgs e)

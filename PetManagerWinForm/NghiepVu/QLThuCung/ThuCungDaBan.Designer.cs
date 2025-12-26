@@ -14,7 +14,6 @@
         private TextBox txtType;
         private TextBox txtAge;
         private TextBox txtPrice;
-        private Button btnCancelSold;
         private DataGridViewTextBoxColumn colPetId;
         private DataGridViewTextBoxColumn colPetName;
         private DataGridViewTextBoxColumn colPetType;
@@ -86,7 +85,6 @@
             txtAge = new TextBox();
             label7 = new Label();
             txtPrice = new TextBox();
-            btnCancelSold = new Button();
             btnRefresh = new Button();
             panelLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPets).BeginInit();
@@ -99,9 +97,10 @@
             panelLeft.Controls.Add(dgvPets);
             panelLeft.Dock = DockStyle.Left;
             panelLeft.Location = new Point(0, 0);
+            panelLeft.Margin = new Padding(3, 2, 3, 2);
             panelLeft.Name = "panelLeft";
-            panelLeft.Padding = new Padding(10);
-            panelLeft.Size = new Size(650, 1033);
+            panelLeft.Padding = new Padding(9, 8, 9, 8);
+            panelLeft.Size = new Size(569, 775);
             panelLeft.TabIndex = 0;
             // 
             // dgvPets
@@ -124,7 +123,8 @@
             dgvPets.Dock = DockStyle.Fill;
             dgvPets.EnableHeadersVisualStyles = false;
             dgvPets.GridColor = Color.FromArgb(255, 230, 230);
-            dgvPets.Location = new Point(10, 10);
+            dgvPets.Location = new Point(9, 8);
+            dgvPets.Margin = new Padding(3, 2, 3, 2);
             dgvPets.Name = "dgvPets";
             dgvPets.ReadOnly = true;
             dgvPets.RowHeadersVisible = false;
@@ -137,7 +137,7 @@
             dgvPets.RowsDefaultCellStyle = dataGridViewCellStyle5;
             dgvPets.RowTemplate.Height = 35;
             dgvPets.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPets.Size = new Size(630, 1013);
+            dgvPets.Size = new Size(551, 759);
             dgvPets.TabIndex = 0;
             dgvPets.CellClick += dgvPets_CellClick;
             // 
@@ -204,30 +204,31 @@
             panelRight.Controls.Add(txtAge);
             panelRight.Controls.Add(label7);
             panelRight.Controls.Add(txtPrice);
-            panelRight.Controls.Add(btnCancelSold);
             panelRight.Controls.Add(btnRefresh);
             panelRight.Dock = DockStyle.Fill;
-            panelRight.Location = new Point(650, 0);
+            panelRight.Location = new Point(569, 0);
+            panelRight.Margin = new Padding(3, 2, 3, 2);
             panelRight.Name = "panelRight";
-            panelRight.Padding = new Padding(30);
-            panelRight.Size = new Size(1252, 1033);
+            panelRight.Padding = new Padding(26, 22, 26, 22);
+            panelRight.Size = new Size(1095, 775);
             panelRight.TabIndex = 1;
             // 
             // lblSearch
             // 
             lblSearch.AutoSize = true;
             lblSearch.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblSearch.Location = new Point(20, 20);
+            lblSearch.Location = new Point(18, 15);
             lblSearch.Name = "lblSearch";
-            lblSearch.Size = new Size(208, 25);
+            lblSearch.Size = new Size(165, 20);
             lblSearch.TabIndex = 0;
             lblSearch.Text = "Tìm theo tên hoặc giá:";
             // 
             // txtSearch
             // 
-            txtSearch.Location = new Point(20, 55);
+            txtSearch.Location = new Point(18, 41);
+            txtSearch.Margin = new Padding(3, 2, 3, 2);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(280, 27);
+            txtSearch.Size = new Size(246, 23);
             txtSearch.TabIndex = 10;
             // 
             // btnSearch
@@ -237,9 +238,10 @@
             btnSearch.FlatStyle = FlatStyle.Flat;
             btnSearch.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnSearch.ForeColor = Color.DimGray;
-            btnSearch.Location = new Point(320, 50);
+            btnSearch.Location = new Point(280, 38);
+            btnSearch.Margin = new Padding(3, 2, 3, 2);
             btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(130, 40);
+            btnSearch.Size = new Size(114, 30);
             btnSearch.TabIndex = 11;
             btnSearch.Text = "Tìm kiếm";
             btnSearch.UseVisualStyleBackColor = false;
@@ -252,9 +254,10 @@
             btn_ShowAll.FlatStyle = FlatStyle.Flat;
             btn_ShowAll.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btn_ShowAll.ForeColor = Color.DimGray;
-            btn_ShowAll.Location = new Point(455, 50);
+            btn_ShowAll.Location = new Point(398, 38);
+            btn_ShowAll.Margin = new Padding(3, 2, 3, 2);
             btn_ShowAll.Name = "btn_ShowAll";
-            btn_ShowAll.Size = new Size(130, 40);
+            btn_ShowAll.Size = new Size(114, 30);
             btn_ShowAll.TabIndex = 12;
             btn_ShowAll.Text = "Tất cả";
             btn_ShowAll.UseVisualStyleBackColor = false;
@@ -264,9 +267,9 @@
             // 
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblTitle.Location = new Point(20, 115);
+            lblTitle.Location = new Point(18, 86);
             lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(348, 32);
+            lblTitle.Size = new Size(272, 25);
             lblTitle.TabIndex = 13;
             lblTitle.Text = "Thông tin thú cưng (Đã bán):";
             // 
@@ -274,105 +277,96 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 11F);
-            label3.Location = new Point(20, 163);
+            label3.Location = new Point(18, 122);
             label3.Name = "label3";
-            label3.Size = new Size(34, 25);
+            label3.Size = new Size(27, 20);
             label3.TabIndex = 14;
             label3.Text = "ID:";
             // 
             // txtId
             // 
-            txtId.Location = new Point(150, 160);
+            txtId.Location = new Point(131, 120);
+            txtId.Margin = new Padding(3, 2, 3, 2);
             txtId.Name = "txtId";
             txtId.ReadOnly = true;
-            txtId.Size = new Size(280, 27);
+            txtId.Size = new Size(246, 23);
             txtId.TabIndex = 1;
             // 
             // label4
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 11F);
-            label4.Location = new Point(20, 213);
+            label4.Location = new Point(18, 160);
             label4.Name = "label4";
-            label4.Size = new Size(45, 25);
+            label4.Size = new Size(35, 20);
             label4.TabIndex = 15;
             label4.Text = "Tên:";
             // 
             // txtName
             // 
-            txtName.Location = new Point(150, 210);
+            txtName.Location = new Point(131, 158);
+            txtName.Margin = new Padding(3, 2, 3, 2);
             txtName.Name = "txtName";
             txtName.ReadOnly = true;
-            txtName.Size = new Size(280, 27);
+            txtName.Size = new Size(246, 23);
             txtName.TabIndex = 2;
             // 
             // label5
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 11F);
-            label5.Location = new Point(20, 263);
+            label5.Location = new Point(18, 197);
             label5.Name = "label5";
-            label5.Size = new Size(67, 25);
+            label5.Size = new Size(52, 20);
             label5.TabIndex = 16;
             label5.Text = "Giống:";
             // 
             // txtType
             // 
-            txtType.Location = new Point(150, 260);
+            txtType.Location = new Point(131, 195);
+            txtType.Margin = new Padding(3, 2, 3, 2);
             txtType.Name = "txtType";
             txtType.ReadOnly = true;
-            txtType.Size = new Size(280, 27);
+            txtType.Size = new Size(246, 23);
             txtType.TabIndex = 3;
             // 
             // label6
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 11F);
-            label6.Location = new Point(20, 313);
+            label6.Location = new Point(18, 235);
             label6.Name = "label6";
-            label6.Size = new Size(53, 25);
+            label6.Size = new Size(41, 20);
             label6.TabIndex = 17;
             label6.Text = "Tuổi:";
             // 
             // txtAge
             // 
-            txtAge.Location = new Point(150, 310);
+            txtAge.Location = new Point(131, 232);
+            txtAge.Margin = new Padding(3, 2, 3, 2);
             txtAge.Name = "txtAge";
             txtAge.ReadOnly = true;
-            txtAge.Size = new Size(280, 27);
+            txtAge.Size = new Size(246, 23);
             txtAge.TabIndex = 4;
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 11F);
-            label7.Location = new Point(20, 363);
+            label7.Location = new Point(18, 272);
             label7.Name = "label7";
-            label7.Size = new Size(44, 25);
+            label7.Size = new Size(34, 20);
             label7.TabIndex = 18;
             label7.Text = "Giá:";
             // 
             // txtPrice
             // 
-            txtPrice.Location = new Point(150, 360);
+            txtPrice.Location = new Point(131, 270);
+            txtPrice.Margin = new Padding(3, 2, 3, 2);
             txtPrice.Name = "txtPrice";
             txtPrice.ReadOnly = true;
-            txtPrice.Size = new Size(280, 27);
+            txtPrice.Size = new Size(246, 23);
             txtPrice.TabIndex = 5;
-            // 
-            // btnCancelSold
-            // 
-            btnCancelSold.BackColor = Color.FromArgb(255, 210, 210);
-            btnCancelSold.FlatAppearance.BorderSize = 0;
-            btnCancelSold.FlatStyle = FlatStyle.Flat;
-            btnCancelSold.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnCancelSold.ForeColor = Color.DimGray;
-            btnCancelSold.Location = new Point(150, 410);
-            btnCancelSold.Name = "btnCancelSold";
-            btnCancelSold.Size = new Size(130, 40);
-            btnCancelSold.TabIndex = 9;
-            btnCancelSold.Text = "Hủy bán";
-            btnCancelSold.UseVisualStyleBackColor = false;
             // 
             // btnRefresh
             // 
@@ -381,9 +375,10 @@
             btnRefresh.FlatStyle = FlatStyle.Flat;
             btnRefresh.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnRefresh.ForeColor = Color.DimGray;
-            btnRefresh.Location = new Point(300, 410);
+            btnRefresh.Location = new Point(192, 311);
+            btnRefresh.Margin = new Padding(3, 2, 3, 2);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(130, 40);
+            btnRefresh.Size = new Size(114, 30);
             btnRefresh.TabIndex = 15;
             btnRefresh.Text = "Làm mới";
             btnRefresh.UseVisualStyleBackColor = false;
@@ -391,12 +386,13 @@
             // 
             // ThuCungDaBan
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 230, 230);
-            ClientSize = new Size(1902, 1033);
+            ClientSize = new Size(1664, 775);
             Controls.Add(panelRight);
             Controls.Add(panelLeft);
+            Margin = new Padding(3, 2, 3, 2);
             Name = "ThuCungDaBan";
             Text = "Quản lý thú cưng đã bán";
             WindowState = FormWindowState.Maximized;
