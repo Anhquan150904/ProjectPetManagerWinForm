@@ -122,7 +122,7 @@
             btnKhachHang.FlatStyle = FlatStyle.Flat;
             btnKhachHang.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             btnKhachHang.ForeColor = Color.DimGray;
-            btnKhachHang.Location = new Point(10, 166);
+            btnKhachHang.Location = new Point(10, 136);
             btnKhachHang.Name = "btnKhachHang";
             btnKhachHang.Size = new Size(320, 50);
             btnKhachHang.TabIndex = 3;
@@ -137,7 +137,7 @@
             btnSanPham.FlatStyle = FlatStyle.Flat;
             btnSanPham.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             btnSanPham.ForeColor = Color.DimGray;
-            btnSanPham.Location = new Point(10, 319);
+            btnSanPham.Location = new Point(12, 248);
             btnSanPham.Name = "btnSanPham";
             btnSanPham.Size = new Size(320, 50);
             btnSanPham.TabIndex = 4;
@@ -152,7 +152,7 @@
             btnDichVu.FlatStyle = FlatStyle.Flat;
             btnDichVu.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             btnDichVu.ForeColor = Color.DimGray;
-            btnDichVu.Location = new Point(10, 375);
+            btnDichVu.Location = new Point(12, 304);
             btnDichVu.Name = "btnDichVu";
             btnDichVu.Size = new Size(320, 50);
             btnDichVu.TabIndex = 5;
@@ -182,7 +182,7 @@
             btnNhanVien.FlatStyle = FlatStyle.Flat;
             btnNhanVien.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             btnNhanVien.ForeColor = Color.DimGray;
-            btnNhanVien.Location = new Point(10, 222);
+            btnNhanVien.Location = new Point(12, 192);
             btnNhanVien.Name = "btnNhanVien";
             btnNhanVien.Size = new Size(320, 50);
             btnNhanVien.TabIndex = 7;
