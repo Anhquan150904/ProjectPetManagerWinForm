@@ -13,7 +13,6 @@
         private Label lblSearch;
         private TextBox txtSearch;
         private Button btnFind;
-        private Button btnShowAll;
 
         private Label lblTitle;
         private Label lblId;
@@ -24,8 +23,6 @@
         private TextBox txtType;
         private Label lblAge;
         private TextBox txtAge;
-        private Label lbldichvu;
-        private TextBox txtDichVu;
 
         private Button btnAdd;
         private Button btnUpdate;
@@ -63,7 +60,6 @@
             lblSearch = new Label();
             txtSearch = new TextBox();
             btnFind = new Button();
-            btnShowAll = new Button();
             lblTitle = new Label();
             lblId = new Label();
             txtId = new TextBox();
@@ -73,8 +69,6 @@
             txtType = new TextBox();
             lblAge = new Label();
             txtAge = new TextBox();
-            lbldichvu = new Label();
-            txtDichVu = new TextBox();
             btnAdd = new Button();
             btnUpdate = new Button();
             btnDelete = new Button();
@@ -92,7 +86,7 @@
             panelLeft.Location = new Point(0, 0);
             panelLeft.Name = "panelLeft";
             panelLeft.Padding = new Padding(9, 8, 9, 8);
-            panelLeft.Size = new Size(825, 775);
+            panelLeft.Size = new Size(825, 681);
             panelLeft.TabIndex = 0;
             // 
             // dgvPets
@@ -129,7 +123,7 @@
             dgvPets.RowsDefaultCellStyle = dataGridViewCellStyle18;
             dgvPets.RowTemplate.Height = 35;
             dgvPets.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvPets.Size = new Size(807, 759);
+            dgvPets.Size = new Size(807, 665);
             dgvPets.TabIndex = 0;
             dgvPets.CellClick += dgvPets_CellClick;
             // 
@@ -205,7 +199,6 @@
             panelRight.Controls.Add(lblSearch);
             panelRight.Controls.Add(txtSearch);
             panelRight.Controls.Add(btnFind);
-            panelRight.Controls.Add(btnShowAll);
             panelRight.Controls.Add(lblTitle);
             panelRight.Controls.Add(lblId);
             panelRight.Controls.Add(txtId);
@@ -215,8 +208,6 @@
             panelRight.Controls.Add(txtType);
             panelRight.Controls.Add(lblAge);
             panelRight.Controls.Add(txtAge);
-            panelRight.Controls.Add(lbldichvu);
-            panelRight.Controls.Add(txtDichVu);
             panelRight.Controls.Add(btnAdd);
             panelRight.Controls.Add(btnUpdate);
             panelRight.Controls.Add(btnDelete);
@@ -225,7 +216,7 @@
             panelRight.Location = new Point(825, 0);
             panelRight.Name = "panelRight";
             panelRight.Padding = new Padding(26, 22, 26, 22);
-            panelRight.Size = new Size(839, 775);
+            panelRight.Size = new Size(439, 681);
             panelRight.TabIndex = 1;
             // 
             // lblSearch
@@ -242,7 +233,7 @@
             // 
             txtSearch.Location = new Point(18, 41);
             txtSearch.Name = "txtSearch";
-            txtSearch.Size = new Size(320, 23);
+            txtSearch.Size = new Size(359, 23);
             txtSearch.TabIndex = 10;
             // 
             // btnFind
@@ -252,7 +243,7 @@
             btnFind.FlatStyle = FlatStyle.Flat;
             btnFind.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnFind.ForeColor = Color.DimGray;
-            btnFind.Location = new Point(350, 38);
+            btnFind.Location = new Point(262, 70);
             btnFind.Name = "btnFind";
             btnFind.Size = new Size(114, 30);
             btnFind.TabIndex = 11;
@@ -260,26 +251,11 @@
             btnFind.UseVisualStyleBackColor = false;
             btnFind.Click += btnFind_Click;
             // 
-            // btnShowAll
-            // 
-            btnShowAll.BackColor = Color.FromArgb(255, 210, 210);
-            btnShowAll.FlatAppearance.BorderSize = 0;
-            btnShowAll.FlatStyle = FlatStyle.Flat;
-            btnShowAll.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnShowAll.ForeColor = Color.DimGray;
-            btnShowAll.Location = new Point(470, 38);
-            btnShowAll.Name = "btnShowAll";
-            btnShowAll.Size = new Size(114, 30);
-            btnShowAll.TabIndex = 12;
-            btnShowAll.Text = "Tất cả";
-            btnShowAll.UseVisualStyleBackColor = false;
-            btnShowAll.Click += btnShowAll_Click;
-            // 
             // lblTitle
             // 
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblTitle.Location = new Point(18, 100);
+            lblTitle.Location = new Point(18, 143);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(240, 25);
             lblTitle.TabIndex = 13;
@@ -289,15 +265,15 @@
             // 
             lblId.AutoSize = true;
             lblId.Font = new Font("Segoe UI", 11F);
-            lblId.Location = new Point(18, 150);
+            lblId.Location = new Point(18, 193);
             lblId.Name = "lblId";
-            lblId.Size = new Size(54, 20);
+            lblId.Size = new Size(57, 20);
             lblId.TabIndex = 14;
-            lblId.Text = "Mã PC:";
+            lblId.Text = "Mã Pet:";
             // 
             // txtId
             // 
-            txtId.Location = new Point(131, 150);
+            txtId.Location = new Point(131, 193);
             txtId.Name = "txtId";
             txtId.ReadOnly = true;
             txtId.Size = new Size(246, 23);
@@ -307,7 +283,7 @@
             // 
             lblName.AutoSize = true;
             lblName.Font = new Font("Segoe UI", 11F);
-            lblName.Location = new Point(18, 190);
+            lblName.Location = new Point(18, 233);
             lblName.Name = "lblName";
             lblName.Size = new Size(35, 20);
             lblName.TabIndex = 15;
@@ -315,7 +291,7 @@
             // 
             // txtName
             // 
-            txtName.Location = new Point(131, 190);
+            txtName.Location = new Point(131, 233);
             txtName.Name = "txtName";
             txtName.Size = new Size(246, 23);
             txtName.TabIndex = 2;
@@ -324,7 +300,7 @@
             // 
             lblType.AutoSize = true;
             lblType.Font = new Font("Segoe UI", 11F);
-            lblType.Location = new Point(18, 230);
+            lblType.Location = new Point(18, 273);
             lblType.Name = "lblType";
             lblType.Size = new Size(52, 20);
             lblType.TabIndex = 16;
@@ -332,7 +308,7 @@
             // 
             // txtType
             // 
-            txtType.Location = new Point(131, 230);
+            txtType.Location = new Point(131, 273);
             txtType.Name = "txtType";
             txtType.Size = new Size(246, 23);
             txtType.TabIndex = 3;
@@ -341,7 +317,7 @@
             // 
             lblAge.AutoSize = true;
             lblAge.Font = new Font("Segoe UI", 11F);
-            lblAge.Location = new Point(18, 270);
+            lblAge.Location = new Point(18, 313);
             lblAge.Name = "lblAge";
             lblAge.Size = new Size(41, 20);
             lblAge.TabIndex = 17;
@@ -349,27 +325,10 @@
             // 
             // txtAge
             // 
-            txtAge.Location = new Point(131, 270);
+            txtAge.Location = new Point(131, 313);
             txtAge.Name = "txtAge";
             txtAge.Size = new Size(246, 23);
             txtAge.TabIndex = 4;
-            // 
-            // lbldichvu
-            // 
-            lbldichvu.AutoSize = true;
-            lbldichvu.Font = new Font("Segoe UI", 11F);
-            lbldichvu.Location = new Point(18, 310);
-            lbldichvu.Name = "lbldichvu";
-            lbldichvu.Size = new Size(61, 20);
-            lbldichvu.TabIndex = 18;
-            lbldichvu.Text = "Dịch vụ:";
-            // 
-            // txtDichVu
-            // 
-            txtDichVu.Location = new Point(131, 310);
-            txtDichVu.Name = "txtDichVu";
-            txtDichVu.Size = new Size(246, 23);
-            txtDichVu.TabIndex = 5;
             // 
             // btnAdd
             // 
@@ -378,7 +337,7 @@
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnAdd.ForeColor = Color.DimGray;
-            btnAdd.Location = new Point(131, 350);
+            btnAdd.Location = new Point(132, 360);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(114, 30);
             btnAdd.TabIndex = 6;
@@ -393,7 +352,7 @@
             btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnUpdate.ForeColor = Color.DimGray;
-            btnUpdate.Location = new Point(262, 350);
+            btnUpdate.Location = new Point(263, 360);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(114, 30);
             btnUpdate.TabIndex = 7;
@@ -408,7 +367,7 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnDelete.ForeColor = Color.DimGray;
-            btnDelete.Location = new Point(131, 394);
+            btnDelete.Location = new Point(132, 404);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(114, 30);
             btnDelete.TabIndex = 8;
@@ -423,7 +382,7 @@
             btnRefresh.FlatStyle = FlatStyle.Flat;
             btnRefresh.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnRefresh.ForeColor = Color.DimGray;
-            btnRefresh.Location = new Point(262, 394);
+            btnRefresh.Location = new Point(263, 404);
             btnRefresh.Name = "btnRefresh";
             btnRefresh.Size = new Size(114, 30);
             btnRefresh.TabIndex = 9;
@@ -436,12 +395,11 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(255, 230, 230);
-            ClientSize = new Size(1664, 775);
+            ClientSize = new Size(1264, 681);
             Controls.Add(panelRight);
             Controls.Add(panelLeft);
             Name = "ThuCungCuaKhangHang";
             Text = "Thú cưng của khách hàng";
-            WindowState = FormWindowState.Maximized;
             panelLeft.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgvPets).EndInit();
             panelRight.ResumeLayout(false);
