@@ -56,7 +56,7 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             // Reset giá trị
             dtpGioVao.Value = DateTime.Now;
             dtpGioRa.Value = DateTime.Now;
-
+            dataGridViewLichSu.Columns["colID"].Visible = false;
             // Tải lịch sử chấm công
             LoadAttendanceHistory();
         }
@@ -69,6 +69,9 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
                     return;
 
                 DataTable dt = AttendanceDataAccess.GetAttendanceHistory(employeeId);
+                DataView dv = dt.DefaultView;
+                dv.Sort = "Date ASC"; // ASC = tăng dần (cũ nhất trước)
+                dt = dv.ToTable();
 
                 dataGridViewLichSu.Rows.Clear();
 
