@@ -23,8 +23,6 @@
         private TextBox txtType;
         private Label lblAge;
         private TextBox txtAge;
-        private Label lbldichvu;
-        private TextBox txtDichVu;
 
         private Button btnAdd;
         private Button btnUpdate;
@@ -41,17 +39,23 @@
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
             panelLeft = new Panel();
             dgvPets = new DataGridView();
+            colPetId = new DataGridViewTextBoxColumn();
+            colPetName = new DataGridViewTextBoxColumn();
+            colPetType = new DataGridViewTextBoxColumn();
+            colPetAge = new DataGridViewTextBoxColumn();
+            colServiceUsed = new DataGridViewTextBoxColumn();
+            colOwnerName = new DataGridViewTextBoxColumn();
             panelRight = new Panel();
             lblSearch = new Label();
             txtSearch = new TextBox();
@@ -65,18 +69,10 @@
             txtType = new TextBox();
             lblAge = new Label();
             txtAge = new TextBox();
-            lbldichvu = new Label();
-            txtDichVu = new TextBox();
             btnAdd = new Button();
             btnUpdate = new Button();
             btnDelete = new Button();
             btnRefresh = new Button();
-            colOwnerName = new DataGridViewTextBoxColumn();
-            colServiceUsed = new DataGridViewTextBoxColumn();
-            colPetAge = new DataGridViewTextBoxColumn();
-            colPetType = new DataGridViewTextBoxColumn();
-            colPetName = new DataGridViewTextBoxColumn();
-            colPetId = new DataGridViewTextBoxColumn();
             panelLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvPets).BeginInit();
             panelRight.SuspendLayout();
@@ -96,19 +92,19 @@
             // dgvPets
             // 
             dgvPets.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.BackColor = Color.FromArgb(255, 240, 240);
-            dgvPets.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle10.BackColor = Color.FromArgb(255, 240, 240);
+            dgvPets.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             dgvPets.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvPets.BackgroundColor = Color.White;
             dgvPets.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(220, 100, 100);
-            dataGridViewCellStyle2.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            dgvPets.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = Color.FromArgb(220, 100, 100);
+            dataGridViewCellStyle11.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            dataGridViewCellStyle11.ForeColor = Color.White;
+            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.True;
+            dgvPets.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             dgvPets.ColumnHeadersHeight = 40;
             dgvPets.Columns.AddRange(new DataGridViewColumn[] { colPetId, colPetName, colPetType, colPetAge, colServiceUsed, colOwnerName });
             dgvPets.Dock = DockStyle.Fill;
@@ -119,17 +115,83 @@
             dgvPets.ReadOnly = true;
             dgvPets.RowHeadersVisible = false;
             dgvPets.RowHeadersWidth = 10;
-            dataGridViewCellStyle9.BackColor = SystemColors.Window;
-            dataGridViewCellStyle9.Font = new Font("Segoe UI", 10F);
-            dataGridViewCellStyle9.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = Color.FromArgb(255, 224, 192);
-            dataGridViewCellStyle9.SelectionForeColor = Color.Black;
-            dgvPets.RowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle18.BackColor = SystemColors.Window;
+            dataGridViewCellStyle18.Font = new Font("Segoe UI", 10F);
+            dataGridViewCellStyle18.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle18.SelectionBackColor = Color.FromArgb(255, 224, 192);
+            dataGridViewCellStyle18.SelectionForeColor = Color.Black;
+            dgvPets.RowsDefaultCellStyle = dataGridViewCellStyle18;
             dgvPets.RowTemplate.Height = 35;
             dgvPets.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgvPets.Size = new Size(807, 665);
             dgvPets.TabIndex = 0;
             dgvPets.CellClick += dgvPets_CellClick;
+            // 
+            // colPetId
+            // 
+            colPetId.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            colPetId.DefaultCellStyle = dataGridViewCellStyle12;
+            colPetId.FillWeight = 6F;
+            colPetId.HeaderText = "Mã Pet";
+            colPetId.MinimumWidth = 6;
+            colPetId.Name = "colPetId";
+            colPetId.ReadOnly = true;
+            // 
+            // colPetName
+            // 
+            colPetName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle13.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            colPetName.DefaultCellStyle = dataGridViewCellStyle13;
+            colPetName.FillWeight = 30F;
+            colPetName.HeaderText = "Tên Thú Cưng";
+            colPetName.MinimumWidth = 6;
+            colPetName.Name = "colPetName";
+            colPetName.ReadOnly = true;
+            // 
+            // colPetType
+            // 
+            colPetType.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle14.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            colPetType.DefaultCellStyle = dataGridViewCellStyle14;
+            colPetType.FillWeight = 18F;
+            colPetType.HeaderText = "Giống";
+            colPetType.MinimumWidth = 6;
+            colPetType.Name = "colPetType";
+            colPetType.ReadOnly = true;
+            // 
+            // colPetAge
+            // 
+            colPetAge.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle15.Alignment = DataGridViewContentAlignment.MiddleRight;
+            colPetAge.DefaultCellStyle = dataGridViewCellStyle15;
+            colPetAge.FillWeight = 6F;
+            colPetAge.HeaderText = "Tuổi";
+            colPetAge.MinimumWidth = 6;
+            colPetAge.Name = "colPetAge";
+            colPetAge.ReadOnly = true;
+            // 
+            // colServiceUsed
+            // 
+            colServiceUsed.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle16.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            colServiceUsed.DefaultCellStyle = dataGridViewCellStyle16;
+            colServiceUsed.FillWeight = 20F;
+            colServiceUsed.HeaderText = "Dịch vụ đã sử dụng";
+            colServiceUsed.MinimumWidth = 6;
+            colServiceUsed.Name = "colServiceUsed";
+            colServiceUsed.ReadOnly = true;
+            // 
+            // colOwnerName
+            // 
+            colOwnerName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle17.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            colOwnerName.DefaultCellStyle = dataGridViewCellStyle17;
+            colOwnerName.FillWeight = 20F;
+            colOwnerName.HeaderText = "Chủ sở hữu";
+            colOwnerName.MinimumWidth = 6;
+            colOwnerName.Name = "colOwnerName";
+            colOwnerName.ReadOnly = true;
             // 
             // panelRight
             // 
@@ -146,8 +208,6 @@
             panelRight.Controls.Add(txtType);
             panelRight.Controls.Add(lblAge);
             panelRight.Controls.Add(txtAge);
-            panelRight.Controls.Add(lbldichvu);
-            panelRight.Controls.Add(txtDichVu);
             panelRight.Controls.Add(btnAdd);
             panelRight.Controls.Add(btnUpdate);
             panelRight.Controls.Add(btnDelete);
@@ -207,9 +267,9 @@
             lblId.Font = new Font("Segoe UI", 11F);
             lblId.Location = new Point(18, 193);
             lblId.Name = "lblId";
-            lblId.Size = new Size(54, 20);
+            lblId.Size = new Size(57, 20);
             lblId.TabIndex = 14;
-            lblId.Text = "Mã PC:";
+            lblId.Text = "Mã Pet:";
             // 
             // txtId
             // 
@@ -270,23 +330,6 @@
             txtAge.Size = new Size(246, 23);
             txtAge.TabIndex = 4;
             // 
-            // lbldichvu
-            // 
-            lbldichvu.AutoSize = true;
-            lbldichvu.Font = new Font("Segoe UI", 11F);
-            lbldichvu.Location = new Point(18, 353);
-            lbldichvu.Name = "lbldichvu";
-            lbldichvu.Size = new Size(61, 20);
-            lbldichvu.TabIndex = 18;
-            lbldichvu.Text = "Dịch vụ:";
-            // 
-            // txtDichVu
-            // 
-            txtDichVu.Location = new Point(131, 353);
-            txtDichVu.Name = "txtDichVu";
-            txtDichVu.Size = new Size(246, 23);
-            txtDichVu.TabIndex = 5;
-            // 
             // btnAdd
             // 
             btnAdd.BackColor = Color.FromArgb(255, 210, 210);
@@ -294,7 +337,7 @@
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnAdd.ForeColor = Color.DimGray;
-            btnAdd.Location = new Point(131, 393);
+            btnAdd.Location = new Point(132, 360);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(114, 30);
             btnAdd.TabIndex = 6;
@@ -309,7 +352,7 @@
             btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnUpdate.ForeColor = Color.DimGray;
-            btnUpdate.Location = new Point(262, 393);
+            btnUpdate.Location = new Point(263, 360);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(114, 30);
             btnUpdate.TabIndex = 7;
@@ -324,7 +367,7 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnDelete.ForeColor = Color.DimGray;
-            btnDelete.Location = new Point(131, 437);
+            btnDelete.Location = new Point(132, 404);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(114, 30);
             btnDelete.TabIndex = 8;
@@ -339,79 +382,13 @@
             btnRefresh.FlatStyle = FlatStyle.Flat;
             btnRefresh.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnRefresh.ForeColor = Color.DimGray;
-            btnRefresh.Location = new Point(262, 437);
+            btnRefresh.Location = new Point(263, 404);
             btnRefresh.Name = "btnRefresh";
             btnRefresh.Size = new Size(114, 30);
             btnRefresh.TabIndex = 9;
             btnRefresh.Text = "Làm mới";
             btnRefresh.UseVisualStyleBackColor = false;
             btnRefresh.Click += btnRefresh_Click;
-            // 
-            // colOwnerName
-            // 
-            colOwnerName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            colOwnerName.DefaultCellStyle = dataGridViewCellStyle8;
-            colOwnerName.FillWeight = 20F;
-            colOwnerName.HeaderText = "Chủ sở hữu";
-            colOwnerName.MinimumWidth = 6;
-            colOwnerName.Name = "colOwnerName";
-            colOwnerName.ReadOnly = true;
-            // 
-            // colServiceUsed
-            // 
-            colServiceUsed.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            colServiceUsed.DefaultCellStyle = dataGridViewCellStyle7;
-            colServiceUsed.FillWeight = 20F;
-            colServiceUsed.HeaderText = "Dịch vụ đã sử dụng";
-            colServiceUsed.MinimumWidth = 6;
-            colServiceUsed.Name = "colServiceUsed";
-            colServiceUsed.ReadOnly = true;
-            // 
-            // colPetAge
-            // 
-            colPetAge.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleRight;
-            colPetAge.DefaultCellStyle = dataGridViewCellStyle6;
-            colPetAge.FillWeight = 6F;
-            colPetAge.HeaderText = "Tuổi";
-            colPetAge.MinimumWidth = 6;
-            colPetAge.Name = "colPetAge";
-            colPetAge.ReadOnly = true;
-            // 
-            // colPetType
-            // 
-            colPetType.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            colPetType.DefaultCellStyle = dataGridViewCellStyle5;
-            colPetType.FillWeight = 18F;
-            colPetType.HeaderText = "Giống";
-            colPetType.MinimumWidth = 6;
-            colPetType.Name = "colPetType";
-            colPetType.ReadOnly = true;
-            // 
-            // colPetName
-            // 
-            colPetName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            colPetName.DefaultCellStyle = dataGridViewCellStyle4;
-            colPetName.FillWeight = 30F;
-            colPetName.HeaderText = "Tên Thú Cưng";
-            colPetName.MinimumWidth = 6;
-            colPetName.Name = "colPetName";
-            colPetName.ReadOnly = true;
-            // 
-            // colPetId
-            // 
-            colPetId.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            colPetId.DefaultCellStyle = dataGridViewCellStyle3;
-            colPetId.FillWeight = 6F;
-            colPetId.HeaderText = "Mã Pet";
-            colPetId.MinimumWidth = 6;
-            colPetId.Name = "colPetId";
-            colPetId.ReadOnly = true;
             // 
             // ThuCungCuaKhangHang
             // 
