@@ -34,6 +34,8 @@ namespace PetManagerWinForm.NghiepVu
         private System.Windows.Forms.ComboBox cbPets;
         private System.Windows.Forms.Label lblPet;
         private System.Windows.Forms.Button btnAddPet;
+        private System.Windows.Forms.Button btnChoosePet;
+        private System.Windows.Forms.Label lblSelectedPet;
 
         private System.Windows.Forms.Panel pnlCart;
         private System.Windows.Forms.DataGridView dgvCart;
@@ -81,6 +83,8 @@ namespace PetManagerWinForm.NghiepVu
             lblPet = new Label();
             cbPets = new ComboBox();
             btnAddPet = new Button();
+            btnChoosePet = new Button();
+            lblSelectedPet = new Label();
             pnlCart = new Panel();
             dgvCart = new DataGridView();
             btnRemove = new Button();
@@ -306,6 +310,23 @@ namespace PetManagerWinForm.NghiepVu
             pnlPets.Controls.Add(lblPet);
             pnlPets.Controls.Add(cbPets);
             pnlPets.Controls.Add(btnAddPet);
+            // new choose button and label
+            btnChoosePet = new Button();
+            btnChoosePet.Location = new Point(470, 33);
+            btnChoosePet.Name = "btnChoosePet";
+            btnChoosePet.Size = new Size(90, 42);
+            btnChoosePet.TabIndex = 3;
+            btnChoosePet.Text = "Chọn Pet";
+            btnChoosePet.Click += btnChoosePet_Click;
+            pnlPets.Controls.Add(btnChoosePet);
+
+            lblSelectedPet = new Label();
+            lblSelectedPet.AutoSize = true;
+            lblSelectedPet.Location = new Point(100, 45);
+            lblSelectedPet.Name = "lblSelectedPet";
+            lblSelectedPet.Size = new Size(0, 20);
+            lblSelectedPet.TabIndex = 4;
+            pnlPets.Controls.Add(lblSelectedPet);
             pnlPets.Location = new Point(636, 190);
             pnlPets.Name = "pnlPets";
             pnlPets.Size = new Size(690, 80);
