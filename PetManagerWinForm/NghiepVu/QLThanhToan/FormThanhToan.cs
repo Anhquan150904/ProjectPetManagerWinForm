@@ -68,9 +68,160 @@ namespace PetManagerWinForm.NghiepVu
 
             using (var frm = new Form())
             {
-                frm.Text = $"Chọn thú cưng của khách hàng ID {_currentCustomerId}";
-                frm.Size = new Size(500, 400);
-                var dgv = new DataGridView { Dock = DockStyle.Fill, ReadOnly = true, SelectionMode = DataGridViewSelectionMode.FullRowSelect, AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill };
+                // Form styling - TĂNG SIZE
+                frm.Text = "Chọn Thú Cưng";
+                frm.Size = new Size(1076, 500);
+                frm.FormBorderStyle = FormBorderStyle.FixedDialog;
+                frm.MaximizeBox = false;
+                frm.MinimizeBox = false;
+                frm.StartPosition = FormStartPosition.CenterParent;
+                frm.BackColor = Color.FromArgb(240, 244, 248);
+
+                // Header panel
+                var pnlHeader = new Panel
+                {
+                    Dock = DockStyle.Top,
+                    Height = 60,
+                    BackColor = Color.FromArgb(59, 130, 246),
+                    Padding = new Padding(20, 15, 20, 15)
+                };
+
+                var lblTitle = new Label
+                {
+                    Text = "🐾 Danh sách thú cưng",
+                    Font = new Font("Segoe UI", 14, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    AutoSize = true,
+                    Location = new Point(20, 10)
+                };
+
+                var lblSubtitle = new Label
+                {
+                    Text = $"Khách hàng ID: {_currentCustomerId}",
+                    Font = new Font("Segoe UI", 9),
+                    ForeColor = Color.FromArgb(220, 230, 255),
+                    AutoSize = true,
+                    Location = new Point(20, 35)
+                };
+
+                pnlHeader.Controls.Add(lblTitle);
+                pnlHeader.Controls.Add(lblSubtitle);
+
+                // DataGridView container panel
+                var pnlGrid = new Panel
+                {
+                    Dock = DockStyle.Fill,
+                    Padding = new Padding(20, 15, 20, 15),
+                    BackColor = Color.FromArgb(240, 244, 248)
+                };
+
+                // DataGridView styling
+                var dgv = new DataGridView
+                {
+                    Dock = DockStyle.Fill,
+                    ReadOnly = true,
+                    SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                    AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None, // ← ĐỔI THÀNH None
+                    AllowUserToAddRows = false,
+                    AllowUserToDeleteRows = false,
+                    AllowUserToResizeRows = false,
+                    AllowUserToResizeColumns = true, // ← CHO PHÉP RESIZE CỘT
+                    RowHeadersVisible = false,
+                    BackgroundColor = Color.White,
+                    BorderStyle = BorderStyle.None,
+                    CellBorderStyle = DataGridViewCellBorderStyle.SingleHorizontal,
+                    ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None,
+                    GridColor = Color.FromArgb(230, 230, 230),
+                    AutoGenerateColumns = false, // ← QUAN TRỌNG: Tắt tự động tạo cột
+
+                    // Header styling
+                    EnableHeadersVisualStyles = false,
+                    ColumnHeadersHeight = 40,
+                    ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing,
+
+                    // Row styling
+                    RowTemplate = { Height = 45 },
+
+                    // Selection colors
+                    DefaultCellStyle = new DataGridViewCellStyle
+                    {
+                        Font = new Font("Segoe UI", 10),
+                        ForeColor = Color.FromArgb(51, 51, 51),
+                        BackColor = Color.White,
+                        SelectionBackColor = Color.FromArgb(219, 234, 254),
+                        SelectionForeColor = Color.FromArgb(30, 64, 175),
+                        Padding = new Padding(10, 5, 10, 5)
+                    },
+
+                    ColumnHeadersDefaultCellStyle = new DataGridViewCellStyle
+                    {
+                        Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                        ForeColor = Color.FromArgb(71, 85, 105),
+                        BackColor = Color.FromArgb(248, 250, 252),
+                        SelectionBackColor = Color.FromArgb(248, 250, 252),
+                        Padding = new Padding(10, 5, 10, 5)
+                    },
+
+                    AlternatingRowsDefaultCellStyle = new DataGridViewCellStyle
+                    {
+                        BackColor = Color.FromArgb(249, 250, 251)
+                    }
+                };
+
+                // Tạo các cột thủ công với WIDTH CỐ ĐỊNH
+                dgv.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = "Pet_Id",
+                    DataPropertyName = "Pet_Id",
+                    HeaderText = "Mã số",
+                    Width = 80,
+                    DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleCenter }
+                });
+
+                dgv.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = "Pet_Name",
+                    DataPropertyName = "Pet_Name",
+                    HeaderText = "Tên thú cưng",
+                    Width = 200,
+                    DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleLeft }
+                });
+
+                dgv.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = "Pet_Breed",
+                    DataPropertyName = "Pet_Breed",
+                    HeaderText = "Giống loài",
+                    Width = 180,
+                    DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleLeft }
+                });
+
+                dgv.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = "Pet_Age",
+                    DataPropertyName = "Pet_Age",
+                    HeaderText = "Tuổi",
+                    Width = 80,
+                    DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleCenter }
+                });
+
+                dgv.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = "ServiceUsed",
+                    DataPropertyName = "ServiceUsed",
+                    HeaderText = "Dịch vụ đã dùng",
+                    Width = 280,
+                    DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleLeft }
+                });
+
+                dgv.Columns.Add(new DataGridViewTextBoxColumn
+                {
+                    Name = "Cus_Name",
+                    DataPropertyName = "Cus_Name",
+                    HeaderText = "Tên chủ nhân",
+                    Width = 200,
+                    DefaultCellStyle = new DataGridViewCellStyle { Alignment = DataGridViewContentAlignment.MiddleLeft }
+                });
 
                 try
                 {
@@ -78,33 +229,101 @@ namespace PetManagerWinForm.NghiepVu
                     var petRepo = new PetCusRepository(connStr);
                     var dt = petRepo.GetPetsByCustomerId(_currentCustomerId);
                     dgv.DataSource = dt;
-                    // only keep Pet_Id and Pet_Name columns visible
-                    foreach (DataGridViewColumn c in dgv.Columns)
-                    {
-                        c.Visible = c.Name == "Pet_Id" || c.Name == "Pet_Name";
-                    }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi khi tải thú cưng: " + ex.Message);
+                    MessageBox.Show("Lỗi khi tải thú cưng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                var btnOk = new Button { Text = "Chọn", Dock = DockStyle.Bottom, Height = 40 };
+                pnlGrid.Controls.Add(dgv);
+
+                // Button panel
+                var pnlButtons = new Panel
+                {
+                    Dock = DockStyle.Bottom,
+                    Height = 70,
+                    BackColor = Color.White,
+                    Padding = new Padding(20, 15, 20, 15)
+                };
+
+                var btnOk = new Button
+                {
+                    Text = "✓ Chọn thú cưng này",
+                    Width = 160,
+                    Height = 40,
+                    FlatStyle = FlatStyle.Flat,
+                    BackColor = Color.FromArgb(34, 197, 94),
+                    ForeColor = Color.White,
+                    Font = new Font("Segoe UI", 10, FontStyle.Bold),
+                    Cursor = Cursors.Hand,
+                    Location = new Point(pnlButtons.Width - 180, 15)
+                };
+                btnOk.FlatAppearance.BorderSize = 0;
+
+                var btnCancel = new Button
+                {
+                    Text = "Hủy",
+                    Width = 100,
+                    Height = 40,
+                    FlatStyle = FlatStyle.Flat,
+                    BackColor = Color.FromArgb(226, 232, 240),
+                    ForeColor = Color.FromArgb(71, 85, 105),
+                    Font = new Font("Segoe UI", 10),
+                    Cursor = Cursors.Hand,
+                    Location = new Point(pnlButtons.Width - 300, 15)
+                };
+                btnCancel.FlatAppearance.BorderSize = 0;
+
+                // Button hover effects
+                btnOk.MouseEnter += (s, ev) => btnOk.BackColor = Color.FromArgb(22, 163, 74);
+                btnOk.MouseLeave += (s, ev) => btnOk.BackColor = Color.FromArgb(34, 197, 94);
+
+                btnCancel.MouseEnter += (s, ev) => btnCancel.BackColor = Color.FromArgb(203, 213, 225);
+                btnCancel.MouseLeave += (s, ev) => btnCancel.BackColor = Color.FromArgb(226, 232, 240);
+
+                // Button click events
                 btnOk.Click += (s, ev) =>
                 {
-                    if (dgv.SelectedRows.Count == 0) { MessageBox.Show("Vui lòng chọn một thú cưng."); return; }
+                    if (dgv.SelectedRows.Count == 0)
+                    {
+                        MessageBox.Show("Vui lòng chọn một thú cưng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return;
+                    }
+
                     var row = (DataRowView)dgv.SelectedRows[0].DataBoundItem;
                     _selectedPetId = Convert.ToInt32(row["Pet_Id"]);
                     _selectedPetName = row["Pet_Name"].ToString();
+
                     try { txtChoosePet.Text = _selectedPetName; } catch { }
+
                     frm.DialogResult = DialogResult.OK;
                     frm.Close();
                 };
 
-                frm.Controls.Add(dgv);
-                frm.Controls.Add(btnOk);
-                frm.StartPosition = FormStartPosition.CenterParent;
+                btnCancel.Click += (s, ev) =>
+                {
+                    frm.DialogResult = DialogResult.Cancel;
+                    frm.Close();
+                };
+
+                // Double-click to select
+                dgv.CellDoubleClick += (s, ev) =>
+                {
+                    if (ev.RowIndex >= 0)
+                    {
+                        btnOk.PerformClick();
+                    }
+                };
+
+                pnlButtons.Controls.Add(btnOk);
+                pnlButtons.Controls.Add(btnCancel);
+
+                // Add all controls to form
+                frm.Controls.Add(pnlGrid);
+                frm.Controls.Add(pnlButtons);
+                frm.Controls.Add(pnlHeader);
+
                 frm.ShowDialog(this);
             }
         }
