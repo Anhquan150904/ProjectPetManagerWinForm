@@ -55,14 +55,11 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             }
 
             // Kết nối các sự kiện
-            btnAdd.Click += btnAdd_Click;
             btnUpdate.Click += btnUpdate_Click;
             btnDelete.Click += btnDelete_Click;
             btnSearch.Click += btnSearch_Click;
             btn_ShowAll.Click += btn_ShowAll_Click;
             btnRefresh.Click += BtnRefresh_Click;
-            btnAddType.Click += btnAddType_Click;
-            btnUpdateType.Click += btnUpdateType_Click;
             btnDeleteType.Click += btnDeleteType_Click;
 
             dgvSer.CellContentClick -= dgvSer_CellContentClick;
@@ -283,12 +280,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                 colSerType.DataPropertyName = "Type";
                 colSerPrice.DataPropertyName = "Price";
 
-                // populate STT
-                for (int i = 0; i < dgvSer.Rows.Count; i++)
-                {
-                    dgvSer.Rows[i].Cells["colIndex"].Value = (i + 1).ToString();
-                }
-
                 return;
             }
 
@@ -312,11 +303,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             colSerType.DataPropertyName = "Type";
             colSerPrice.DataPropertyName = "Price";
 
-            // populate STT
-            for (int i = 0; i < dgvSer.Rows.Count; i++)
-            {
-                dgvSer.Rows[i].Cells["colIndex"].Value = (i + 1).ToString();
-            }
         }
 
         public void Refresh()

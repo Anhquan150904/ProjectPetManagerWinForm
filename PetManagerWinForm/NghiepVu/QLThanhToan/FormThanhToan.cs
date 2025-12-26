@@ -1,5 +1,7 @@
 ﻿using PetManagerData.Controllers;
 using PetManagerData.Models;
+using PetManagerData.DataAccess;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -23,6 +25,9 @@ namespace PetManagerWinForm.NghiepVu
 
         // NEW: lưu ID khách hàng hiện tại (đã tìm hoặc vừa thêm)
         private int _currentCustomerId = 0;
+        // selected pet for using service
+        private int _selectedPetId = 0;
+        private string _selectedPetName = string.Empty;
 
         public FrmThanhToan()
         {
@@ -51,36 +56,67 @@ namespace PetManagerWinForm.NghiepVu
             // cbCustomers.Visible = false;
         }
 
-        #region Load dữ liệu
+        // handler for choose pet button -> show popup with pets of current customer
+        private void btnChoosePet_Click(object sender, EventArgs e)
+        {
+            if (_currentCustomerId == 0)
+            {
+                MessageBox.Show("Vui lòng tìm hoặc chọn khách hàng trước khi chọn thú cưng.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-        //private void LoadCustomers()
-        //{
-        //    try
-        //    {
-        //        // Giả định CustomerController có phương thức GetAllCustomers()
-        //        _dtCustomers = _customerCtrl.GetAllCustomers();
-        //        // Nếu bạn đã xóa cbCustomers trên giao diện thì bỏ qua phần binding này
-        //        if (cbCustomers != null)
-        //        {
-        //            cbCustomers.DataSource = _dtCustomers;
-        //            cbCustomers.DisplayMember = "Cus_Name";
-        //            cbCustomers.ValueMember = "Cus_Id";
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Lỗi tải danh sách khách hàng: " + ex.Message);
-        //    }
-        //}
+            using (var frm = new Form())
+            {
+                frm.Text = $"Chọn thú cưng của khách hàng ID {_currentCustomerId}";
+                frm.Size = new Size(500, 400);
+                var dgv = new DataGridView { Dock = DockStyle.Fill, ReadOnly = true, SelectionMode = DataGridViewSelectionMode.FullRowSelect, AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill };
+
+                try
+                {
+                    string connStr = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
+                    var petRepo = new PetCusRepository(connStr);
+                    var dt = petRepo.GetPetsByCustomerId(_currentCustomerId);
+                    dgv.DataSource = dt;
+                    // only keep Pet_Id and Pet_Name columns visible
+                    foreach (DataGridViewColumn c in dgv.Columns)
+                    {
+                        c.Visible = c.Name == "Pet_Id" || c.Name == "Pet_Name";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi khi tải thú cưng: " + ex.Message);
+                    return;
+                }
+
+                var btnOk = new Button { Text = "Chọn", Dock = DockStyle.Bottom, Height = 40 };
+                btnOk.Click += (s, ev) =>
+                {
+                    if (dgv.SelectedRows.Count == 0) { MessageBox.Show("Vui lòng chọn một thú cưng."); return; }
+                    var row = (DataRowView)dgv.SelectedRows[0].DataBoundItem;
+                    _selectedPetId = Convert.ToInt32(row["Pet_Id"]);
+                    _selectedPetName = row["Pet_Name"].ToString();
+                    try { lblSelectedPet.Text = _selectedPetName; } catch { }
+                    frm.DialogResult = DialogResult.OK;
+                    frm.Close();
+                };
+
+                frm.Controls.Add(dgv);
+                frm.Controls.Add(btnOk);
+                frm.StartPosition = FormStartPosition.CenterParent;
+                frm.ShowDialog(this);
+            }
+        }
+
+        #region Load dữ liệu
 
         private void LoadProducts()
         {
             try
             {
-                // Giả định ProductController có phương thức GetAll()
                 _dtProducts = _productCtrl.GetAll();
                 cbProducts.DataSource = _dtProducts;
-                cbProducts.DisplayMember = "Product_Name"; // Đã sửa tên cột Products
+                cbProducts.DisplayMember = "Product_Name";
                 cbProducts.ValueMember = "ID";
             }
             catch (Exception ex)
@@ -93,7 +129,6 @@ namespace PetManagerWinForm.NghiepVu
         {
             try
             {
-                // Giả định ServiceController2 có phương thức GetAll()
                 _dtServices = _serviceCtrl.GetAll();
                 cbServices.DataSource = _dtServices;
                 cbServices.DisplayMember = "ServiceName";
@@ -109,8 +144,6 @@ namespace PetManagerWinForm.NghiepVu
         {
             try
             {
-                // Gọi PetController để lấy Pet chưa bán
-                // Giả định PetController có phương thức GetPetsNotSold()
                 _dtPets = _petCtrl.GetPetsNotSold();
                 cbPets.DataSource = _dtPets;
                 cbPets.DisplayMember = "PetName";
@@ -148,37 +181,25 @@ namespace PetManagerWinForm.NghiepVu
             string name = cbProducts.Text;
             int qty = (int)nudProductQty.Value;
 
-            // Lấy dữ liệu sản phẩm từ DataTable
             DataRow[] rows = _dtProducts.Select($"ID={id}");
             if (rows.Length == 0) return;
 
             decimal price = Convert.ToDecimal(rows[0]["Price"]);
-            int stock = Convert.ToInt32(rows[0]["Quantity"]); // tồn kho
+            int stock = Convert.ToInt32(rows[0]["Quantity"]);
 
-            // Lấy số lượng đang có trong giỏ với sản phẩm này
             int qtyInCart = _cart
                 .Where(x => x.ItemId == id && x.Type == "Product")
                 .Sum(x => x.Quantity);
 
-            // Tổng sau khi muốn thêm
             int totalAfterAdd = qtyInCart + qty;
 
             if (totalAfterAdd > stock)
             {
-                MessageBox.Show(
-                    $"Số lượng sản phẩm trong kho không đủ!\n" +
-                    $"Trong kho còn lại: {stock}\n",
-                    "Cảnh báo",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning
-                );
+                MessageBox.Show($"Số lượng sản phẩm trong kho không đủ!\nTrong kho còn lại: {stock}\n", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Nếu sản phẩm đã tồn tại trong giỏ → cộng dồn số lượng
-            var existing = _cart.FirstOrDefault(
-                x => x.ItemId == id && x.Type == "Product"
-            );
+            var existing = _cart.FirstOrDefault(x => x.ItemId == id && x.Type == "Product");
 
             if (existing != null)
             {
@@ -186,20 +207,11 @@ namespace PetManagerWinForm.NghiepVu
             }
             else
             {
-                // Chưa có, thêm mới
-                _cart.Add(new InvoiceDetailItem
-                {
-                    ItemId = id,
-                    Name = name,
-                    Type = "Product",
-                    Quantity = qty,
-                    Price = price
-                });
+                _cart.Add(new InvoiceDetailItem { ItemId = id, Name = name, Type = "Product", Quantity = qty, Price = price });
             }
 
             RefreshCart();
         }
-
 
         private void btnAddService_Click(object sender, EventArgs e)
         {
@@ -209,20 +221,50 @@ namespace PetManagerWinForm.NghiepVu
             string name = cbServices.Text;
             int qty = (int)nudServiceQty.Value;
 
-            // Lấy giá từ DataTable
             DataRow[] rows = _dtServices.Select($"ServiceId={id}");
             if (rows.Length == 0) return;
             decimal price = Convert.ToDecimal(rows[0]["Price"]);
 
-            _cart.Add(new InvoiceDetailItem
+            // If a pet is selected for service and customer is set, create CustomerPetService record via direct SQL
+            if (_selectedPetId > 0 && _currentCustomerId > 0)
             {
-                ItemId = id,
-                Name = name,
-                Type = "Service",
-                Quantity = qty,
-                Price = price
-            });
+                try
+                {
+                    int cpsId = InsertCustomerPetService(_currentCustomerId, _selectedPetId, id);
+                    if (cpsId > 0)
+                    {
+                        MessageBox.Show($"Ghi nhận dịch vụ cho thú cưng {_selectedPetName} (ID {cpsId}).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Không thể ghi nhận dịch vụ cho thú cưng: " + ex.Message);
+                }
+            }
+
+            _cart.Add(new InvoiceDetailItem { ItemId = id, Name = name, Type = "Service", Quantity = qty, Price = price });
             RefreshCart();
+        }
+
+        private int InsertCustomerPetService(int cusId, int petId, int serviceId)
+        {
+            string connStr = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
+            using (var conn = new SqlConnection(connStr))
+            {
+                string sql = @"INSERT INTO CustomerPetService (Cus_Id, Pet_Id, ServiceId, StartDate, Status)
+                               VALUES (@CusId, @PetId, @ServiceId, GETDATE(), 'In Use');
+                               SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                using (var cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@CusId", cusId);
+                    cmd.Parameters.AddWithValue("@PetId", petId);
+                    cmd.Parameters.AddWithValue("@ServiceId", serviceId);
+                    conn.Open();
+                    var obj = cmd.ExecuteScalar();
+                    if (obj != null && int.TryParse(obj.ToString(), out int id)) return id;
+                }
+            }
+            return 0;
         }
 
         private void btnAddPet_Click(object sender, EventArgs e)
@@ -231,27 +273,19 @@ namespace PetManagerWinForm.NghiepVu
 
             int id = (int)cbPets.SelectedValue;
             string name = cbPets.Text;
-            int qty = 1; // Pet luôn có Quantity = 1
+            int qty = 1;
 
             DataRow[] rows = _dtPets.Select($"PetId={id}");
             if (rows.Length == 0) return;
             decimal price = Convert.ToDecimal(rows[0]["Price"]);
 
-            // Kiểm tra xem Pet đã có trong giỏ hàng chưa (Pet chỉ được bán 1 lần)
             if (_cart.Any(item => item.ItemId == id && item.Type == "Pet"))
             {
                 MessageBox.Show("Thú cưng này đã có trong giỏ hàng.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            _cart.Add(new InvoiceDetailItem
-            {
-                ItemId = id,
-                Name = name,
-                Type = "Pet",
-                Quantity = qty,
-                Price = price
-            });
+            _cart.Add(new InvoiceDetailItem { ItemId = id, Name = name, Type = "Pet", Quantity = qty, Price = price });
             RefreshCart();
         }
 
@@ -274,7 +308,6 @@ namespace PetManagerWinForm.NghiepVu
         #region Thanh toán
         private void btnThanhToan_Click(object sender, EventArgs e)
         {
-            // NOW: require _currentCustomerId instead of cbCustomers.SelectedValue
             if (_currentCustomerId == 0)
             {
                 MessageBox.Show("Vui lòng tìm hoặc thêm khách hàng trước khi thanh toán.");
@@ -292,15 +325,13 @@ namespace PetManagerWinForm.NghiepVu
 
             try
             {
-                // Xử lý tạo Invoice
                 int invoiceId = _invoiceCtrl.CreateInvoice(cusId, total);
                 foreach (var item in _cart)
                 {
                     _invoiceCtrl.AddInvoiceDetail(invoiceId, item.ItemId, item.Type, item.Quantity, item.Price);
-                    // Nếu là Pet: mark as sold
                     if (item.Type == "Pet")
                     {
-                        _petCtrl.ReturnMarkAsSold(item.ItemId); // Dùng PetController
+                        _petCtrl.ReturnMarkAsSold(item.ItemId);
                     }
                 }
 
@@ -309,7 +340,7 @@ namespace PetManagerWinForm.NghiepVu
                 RefreshCart();
                 LoadProducts();
                 LoadServices();
-                LoadPets(); // Tải lại danh sách Pet (để loại bỏ Pet vừa bán)
+                LoadPets();
 
             }
             catch (Exception ex)
@@ -332,20 +363,16 @@ namespace PetManagerWinForm.NghiepVu
 
             try
             {
-                // 1) Thử gọi Controller GetCustomerByPhone nếu có
                 Customer found = null;
                 try
                 {
-                    // Nếu CustomerController triển khai GetCustomerByPhone
                     found = _customerCtrl.GetCustomerByPhone(phone);
                 }
                 catch
                 {
-                    // ignore - fallback xuống tìm trong _dtCustomers
                     found = null;
                 }
 
-                // 2) Fallback: nếu controller không có, tìm trong _dtCustomers nếu đã load
                 if (found == null && _dtCustomers != null)
                 {
                     DataRow[] rows = _dtCustomers.Select($"Cus_PhoneNumber = '{EscapeForSelect(phone)}'");
@@ -377,11 +404,13 @@ namespace PetManagerWinForm.NghiepVu
                     txtAddress.Enabled = false;
                     txtEmail.Enabled = false;
 
+                    // Load customer's pets into pets combo so payment UI updates
+                    try { LoadPets(); } catch { }
+
                     MessageBox.Show("Đã tìm thấy khách hàng trong hệ thống.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
-                // Nếu không tìm thấy, yêu cầu nhập tên để thêm mới
                 if (string.IsNullOrWhiteSpace(txtCusName.Text))
                 {
                     MessageBox.Show("Không tìm thấy khách hàng. Vui lòng nhập tên (và có thể địa chỉ/email) để thêm mới.", "Thêm khách hàng", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -392,22 +421,18 @@ namespace PetManagerWinForm.NghiepVu
                     return;
                 }
 
-                // Thêm KH mới
-                var newCus = new Customer
-                {
-                    Cus_Name = txtCusName.Text.Trim(),
-                    Address = txtAddress.Text.Trim(),
-                    Cus_PhoneNumber = phone,
-                    Cus_Email = txtEmail.Text.Trim()
-                };
+                var newCus = new Customer { Cus_Name = txtCusName.Text.Trim(), Address = txtAddress.Text.Trim(), Cus_PhoneNumber = phone, Cus_Email = txtEmail.Text.Trim() };
 
-                int newId = _customerCtrl.AddCustomer(newCus); // giả định trả về ID mới
+                int newId = _customerCtrl.AddCustomer(newCus);
                 if (newId > 0)
                 {
                     _currentCustomerId = newId;
 
                     // Refresh danh sách khách hàng nội bộ
                     //LoadCustomers();
+
+                    // Load the newly created customer's pets into pets combo
+                    try { LoadPets(); } catch { }
 
                     MessageBox.Show("Thêm khách hàng thành công.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -427,17 +452,10 @@ namespace PetManagerWinForm.NghiepVu
             }
         }
 
-        // helper: escape đơn giản cho DataTable.Select string (đổi ' thành '' để tránh lỗi)
-        private string EscapeForSelect(string input)
-        {
-            return input.Replace("'", "''");
-        }
+        private string EscapeForSelect(string input) => input.Replace("'", "''");
         #endregion
 
-        private void btnSearchCus_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void btnSearchCus_Click(object sender, EventArgs e) { }
     }
 
     public class InvoiceDetailItem
