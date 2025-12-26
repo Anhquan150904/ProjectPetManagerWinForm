@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Configuration; // Cần thêm Reference: System.Configuration
+using System.Configuration;
 using System.Data;
 using System.Windows.Forms;
 using PetManagerData.DataAccess;
@@ -11,10 +11,27 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
     {
         private CustomerRepository _repo;
 
+        // Thêm properties để hỗ trợ chế độ chọn khách hàng
+        public bool IsSelectionMode { get; set; } = false;
+        public Customer SelectedCustomer { get; private set; }
+
+        // Constructor mặc định
         public ThongTinKhachHang()
         {
             InitializeComponent();
+            InitializeForm();
+        }
 
+        // Constructor mới cho chế độ chọn khách hàng
+        public ThongTinKhachHang(bool selectionMode)
+        {
+            InitializeComponent();
+            IsSelectionMode = selectionMode;
+            InitializeForm();
+        }
+
+        private void InitializeForm()
+        {
             // Đọc chuỗi kết nối từ App.Config
             string strConn = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
             _repo = new CustomerRepository(strConn);
@@ -34,25 +51,48 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
             colEmail.DataPropertyName = "Cus_Email";
 
             LoadData();
+
+            // Nếu đang ở chế độ chọn khách hàng
+            if (IsSelectionMode)
+            {
+                // Ẩn các nút thêm/sửa/xóa
+                btnAdd.Visible = false;
+                btnUpdate.Visible = false;
+                btnDelete.Visible = false;
+                btnThucungcuakhanghang.Visible = false;
+
+                // Đổi text của btnRefresh thành "Chọn khách hàng"
+                btnRefresh.Text = "Chọn khách hàng";
+                btnRefresh.Width = 245;
+
+                // Thay đổi title
+                this.Text = "Chọn khách hàng";
+                lblTitle.Text = "Chọn khách hàng cần thanh toán:";
+
+                // Disable các textbox nhập liệu
+                txtName.Enabled = false;
+                txtAddress.Enabled = false;
+                txtPhoneNumber.Enabled = false;
+                txtEmail.Enabled = false;
+            }
         }
 
         private void LoadData()
         {
-            try {
-                // Lấy DataTable từ SQL đổ vào Grid
+            try
+            {
                 dgvCustomers.DataSource = _repo.GetAll();
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show("Lỗi tải dữ liệu: " + ex.Message);
             }
         }
 
         private void dgvCustomers_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0) {
-                // Lấy dòng hiện tại đang chọn (đối tượng Customer)
-                // Cách an toàn hơn là lấy từ list gốc hoặc ép kiểu DataBoundItem
-                // Tuy nhiên, để sửa nhanh theo code cũ của bạn, ta truy cập qua tên cột Design:
-
+            if (e.RowIndex >= 0)
+            {
                 DataGridViewRow row = dgvCustomers.Rows[e.RowIndex];
 
                 txtId.Text = row.Cells[colCusId.Index].Value?.ToString();
@@ -65,42 +105,50 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtName.Text)) {
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
                 MessageBox.Show("Vui lòng nhập tên khách hàng.");
                 return;
             }
 
-            // 3. Tạo đối tượng mới với ID vừa tính
-            Customer newCus = new Customer {
-                // Không gán ID, SQL tự tăng
+            Customer newCus = new Customer
+            {
                 Cus_Name = txtName.Text,
                 Address = txtAddress.Text,
                 Cus_Email = txtEmail.Text,
                 Cus_PhoneNumber = txtPhoneNumber.Text
             };
 
-            try {
+            try
+            {
                 int newId = _repo.Add(newCus);
-                if (newId > 0) {
+                if (newId > 0)
+                {
                     MessageBox.Show($"Thêm thành công! ID mới: {newId}");
                     LoadData();
                     RefreshInput();
-                } else {
+                }
+                else
+                {
                     MessageBox.Show("Thêm thất bại.");
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show("Lỗi: " + ex.Message);
             }
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(txtId.Text, out int id)) {
+            if (!int.TryParse(txtId.Text, out int id))
+            {
                 MessageBox.Show("Vui lòng chọn khách hàng để sửa.");
                 return;
             }
 
-            Customer cusUpdate = new Customer {
+            Customer cusUpdate = new Customer
+            {
                 Cus_Id = id,
                 Cus_Name = txtName.Text,
                 Address = txtAddress.Text,
@@ -108,36 +156,50 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
                 Cus_PhoneNumber = txtPhoneNumber.Text
             };
 
-            try {
-                if (_repo.Update(cusUpdate)) {
+            try
+            {
+                if (_repo.Update(cusUpdate))
+                {
                     MessageBox.Show("Cập nhật thành công!");
                     LoadData();
                     RefreshInput();
-                } else {
+                }
+                else
+                {
                     MessageBox.Show("Cập nhật thất bại.");
                 }
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show("Lỗi: " + ex.Message);
             }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (!int.TryParse(txtId.Text, out int id)) {
+            if (!int.TryParse(txtId.Text, out int id))
+            {
                 MessageBox.Show("Vui lòng chọn khách hàng để xóa.");
                 return;
             }
 
-            if (MessageBox.Show("Bạn có chắc muốn xóa?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes) {
-                try {
-                    if (_repo.Delete(id)) {
+            if (MessageBox.Show("Bạn có chắc muốn xóa?", "Xác nhận", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                try
+                {
+                    if (_repo.Delete(id))
+                    {
                         MessageBox.Show("Đã xóa!");
                         LoadData();
                         RefreshInput();
-                    } else {
+                    }
+                    else
+                    {
                         MessageBox.Show("Xóa thất bại.");
                     }
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     MessageBox.Show("Lỗi xóa: " + ex.Message);
                 }
             }
@@ -146,14 +208,18 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
         private void btnFind_Click(object sender, EventArgs e)
         {
             string keyword = txtSearch.Text.Trim();
-            if (string.IsNullOrEmpty(keyword)) {
-                LoadData(); // Nếu ô tìm kiếm rỗng thì load lại tất cả
+            if (string.IsNullOrEmpty(keyword))
+            {
+                LoadData();
                 return;
             }
 
-            try {
+            try
+            {
                 dgvCustomers.DataSource = _repo.Search(keyword);
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show("Lỗi tìm kiếm: " + ex.Message);
             }
         }
@@ -166,10 +232,36 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            RefreshInput();
+            if (IsSelectionMode)
+            {
+                // Chế độ chọn khách hàng
+                if (string.IsNullOrEmpty(txtId.Text))
+                {
+                    MessageBox.Show("Vui lòng chọn một khách hàng từ danh sách!",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Tạo đối tượng Customer từ thông tin đã chọn
+                SelectedCustomer = new Customer
+                {
+                    Cus_Id = int.Parse(txtId.Text),
+                    Cus_Name = txtName.Text,
+                    Address = txtAddress.Text,
+                    Cus_PhoneNumber = txtPhoneNumber.Text,
+                    Cus_Email = txtEmail.Text
+                };
+
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else
+            {
+                // Chế độ bình thường - làm mới
+                RefreshInput();
+            }
         }
 
-        // Đổi tên hàm Refresh của bạn thành RefreshInput để tránh nhầm với hàm hệ thống
         public void RefreshInput()
         {
             txtId.Text = "";
@@ -179,6 +271,7 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
             txtEmail.Text = "";
             txtSearch.Text = "";
         }
+
         private void btnThucungcuakhanghang_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtId.Text))
