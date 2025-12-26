@@ -36,7 +36,9 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
                     return;
 
                 DataTable dt = ShiftDataAccess.GetShiftSchedule(employeeId);
-
+                DataView dv = dt.DefaultView;
+                dv.Sort = "Date ASC";
+                dt = dv.ToTable();
                 dataGridViewLich.Rows.Clear();
 
                 foreach (DataRow row in dt.Rows)
