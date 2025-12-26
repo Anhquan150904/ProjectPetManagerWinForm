@@ -1,7 +1,8 @@
-﻿using PetManagerData.Controllers;
-using PetManagerData.Models;
+﻿using Microsoft.Data.SqlClient;
+using PetManagerData.Controllers;
 using PetManagerData.DataAccess;
-using Microsoft.Data.SqlClient;
+using PetManagerData.Models;
+using PetManagerWinForm.NghiepVu.QLKhachHang;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -342,6 +343,8 @@ namespace PetManagerWinForm.NghiepVu
                 LoadServices();
                 LoadPets();
 
+                // Reset thông tin khách hàng
+                ClearCustomerInfo();
             }
             catch (Exception ex)
             {
@@ -451,11 +454,63 @@ namespace PetManagerWinForm.NghiepVu
                 MessageBox.Show("Lỗi khi tìm/thêm khách hàng: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        #region Chọn khách hàng cũ
+        private void btnSelectOldCustomer_Click(object sender, EventArgs e)
+        {
+            // Mở form ThongTinKhachHang ở chế độ chọn
+            ThongTinKhachHang formSelectCustomer = new ThongTinKhachHang(true);
 
+            if (formSelectCustomer.ShowDialog() == DialogResult.OK)
+            {
+                // Lấy khách hàng đã chọn
+                Customer selectedCustomer = formSelectCustomer.SelectedCustomer;
+
+                if (selectedCustomer != null)
+                {
+                    FillCustomerInfo(selectedCustomer);
+                    MessageBox.Show($"Đã chọn khách hàng: {selectedCustomer.Cus_Name}",
+                        "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+        private void FillCustomerInfo(Customer customer)
+        {
+            _currentCustomerId = customer.Cus_Id;
+            txtCusName.Text = customer.Cus_Name;
+            txtAddress.Text = customer.Address;
+            txtPhone.Text = customer.Cus_PhoneNumber;
+            txtEmail.Text = customer.Cus_Email;
+
+            // Disable edit
+            txtCusName.Enabled = false;
+            txtAddress.Enabled = false;
+            txtEmail.Enabled = false;
+        }
+
+        // Helper method để xóa thông tin khách hàng
+        private void ClearCustomerInfo()
+        {
+            _currentCustomerId = 0;
+            txtCusName.Text = "";
+            txtAddress.Text = "";
+            txtPhone.Text = "";
+            txtEmail.Text = "";
+
+            // Enable lại để có thể nhập khách mới
+            txtCusName.Enabled = true;
+            txtAddress.Enabled = true;
+            txtEmail.Enabled = true;
+        }
+        #endregion
         private string EscapeForSelect(string input) => input.Replace("'", "''");
         #endregion
 
         private void btnSearchCus_Click(object sender, EventArgs e) { }
+
+        private void lblAddTitle_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public class InvoiceDetailItem
