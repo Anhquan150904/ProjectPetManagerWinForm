@@ -6,8 +6,7 @@
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
-            {
+            if (disposing && (components != null)) {
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -86,7 +85,7 @@
             dgvSer.RowHeadersVisible = false;
             dgvSer.RowTemplate.Height = 35;
             dgvSer.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvSer.Size = new Size(630, 786);
+            dgvSer.Size = new Size(627, 786);
             dgvSer.TabIndex = 0;
             dgvSer.CellClick += dgvSer_CellClick;
             dgvSer.CellContentClick += dgvSer_CellContentClick;
@@ -147,10 +146,10 @@
             panelControl.Controls.Add(labelID);
             panelControl.Controls.Add(txtId);
             panelControl.Dock = DockStyle.Right;
-            panelControl.Location = new Point(630, 0);
+            panelControl.Location = new Point(627, 0);
             panelControl.Margin = new Padding(4, 3, 4, 3);
             panelControl.Name = "panelControl";
-            panelControl.Size = new Size(804, 786);
+            panelControl.Size = new Size(807, 786);
             panelControl.TabIndex = 1;
             // 
             // labelSearch
@@ -158,7 +157,7 @@
             labelSearch.AutoSize = true;
             labelSearch.Font = new Font("Segoe UI", 10F);
             labelSearch.ForeColor = Color.FromArgb(90, 30, 30);
-            labelSearch.Location = new Point(21, 17);
+            labelSearch.Location = new Point(24, 17);
             labelSearch.Margin = new Padding(4, 0, 4, 0);
             labelSearch.Name = "labelSearch";
             labelSearch.Size = new Size(145, 19);
@@ -172,7 +171,7 @@
             btn_ShowAll.FlatStyle = FlatStyle.Flat;
             btn_ShowAll.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             btn_ShowAll.ForeColor = Color.White;
-            btn_ShowAll.Location = new Point(365, 43);
+            btn_ShowAll.Location = new Point(366, 43);
             btn_ShowAll.Margin = new Padding(4, 3, 4, 3);
             btn_ShowAll.Name = "btn_ShowAll";
             btn_ShowAll.Size = new Size(82, 33);
@@ -211,7 +210,7 @@
             labelTitle.AutoSize = true;
             labelTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             labelTitle.ForeColor = Color.FromArgb(90, 30, 30);
-            labelTitle.Location = new Point(19, 104);
+            labelTitle.Location = new Point(24, 104);
             labelTitle.Margin = new Padding(4, 0, 4, 0);
             labelTitle.Name = "labelTitle";
             labelTitle.Size = new Size(173, 25);
@@ -225,10 +224,10 @@
             btnRefresh.FlatStyle = FlatStyle.Flat;
             btnRefresh.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnRefresh.ForeColor = Color.White;
-            btnRefresh.Location = new Point(314, 522);
+            btnRefresh.Location = new Point(24, 522);
             btnRefresh.Margin = new Padding(4, 3, 4, 3);
             btnRefresh.Name = "btnRefresh";
-            btnRefresh.Size = new Size(133, 39);
+            btnRefresh.Size = new Size(452, 39);
             btnRefresh.TabIndex = 35;
             btnRefresh.Text = "Làm mới";
             btnRefresh.UseVisualStyleBackColor = false;
@@ -241,10 +240,10 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(314, 475);
+            btnDelete.Location = new Point(336, 475);
             btnDelete.Margin = new Padding(4, 3, 4, 3);
             btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(133, 39);
+            btnDelete.Size = new Size(140, 39);
             btnDelete.TabIndex = 34;
             btnDelete.Text = "Xóa";
             btnDelete.UseVisualStyleBackColor = false;
@@ -257,10 +256,10 @@
             btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnUpdate.ForeColor = Color.White;
-            btnUpdate.Location = new Point(169, 475);
+            btnUpdate.Location = new Point(180, 475);
             btnUpdate.Margin = new Padding(4, 3, 4, 3);
             btnUpdate.Name = "btnUpdate";
-            btnUpdate.Size = new Size(138, 39);
+            btnUpdate.Size = new Size(140, 39);
             btnUpdate.TabIndex = 33;
             btnUpdate.Text = "Cập nhật";
             btnUpdate.UseVisualStyleBackColor = false;
@@ -276,7 +275,7 @@
             btnAdd.Location = new Point(24, 475);
             btnAdd.Margin = new Padding(4, 3, 4, 3);
             btnAdd.Name = "btnAdd";
-            btnAdd.Size = new Size(138, 39);
+            btnAdd.Size = new Size(140, 39);
             btnAdd.TabIndex = 32;
             btnAdd.Text = "Thêm";
             btnAdd.UseVisualStyleBackColor = false;
@@ -287,7 +286,7 @@
             labelPrice.AutoSize = true;
             labelPrice.Font = new Font("Segoe UI", 12F);
             labelPrice.ForeColor = Color.FromArgb(90, 30, 30);
-            labelPrice.Location = new Point(20, 387);
+            labelPrice.Location = new Point(24, 387);
             labelPrice.Margin = new Padding(4, 0, 4, 0);
             labelPrice.Name = "labelPrice";
             labelPrice.Size = new Size(36, 21);
@@ -310,7 +309,7 @@
             btnDeleteType.FlatStyle = FlatStyle.Flat;
             btnDeleteType.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnDeleteType.ForeColor = Color.White;
-            btnDeleteType.Location = new Point(401, 333);
+            btnDeleteType.Location = new Point(437, 333);
             btnDeleteType.Margin = new Padding(4, 3, 4, 3);
             btnDeleteType.Name = "btnDeleteType";
             btnDeleteType.Size = new Size(46, 33);
@@ -326,7 +325,7 @@
             btnUpdateType.FlatStyle = FlatStyle.Flat;
             btnUpdateType.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnUpdateType.ForeColor = Color.White;
-            btnUpdateType.Location = new Point(350, 333);
+            btnUpdateType.Location = new Point(382, 333);
             btnUpdateType.Margin = new Padding(4, 3, 4, 3);
             btnUpdateType.Name = "btnUpdateType";
             btnUpdateType.Size = new Size(47, 33);
@@ -342,7 +341,7 @@
             btnAddType.FlatStyle = FlatStyle.Flat;
             btnAddType.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnAddType.ForeColor = Color.White;
-            btnAddType.Location = new Point(309, 333);
+            btnAddType.Location = new Point(338, 333);
             btnAddType.Margin = new Padding(4, 3, 4, 3);
             btnAddType.Name = "btnAddType";
             btnAddType.Size = new Size(36, 33);
@@ -356,7 +355,7 @@
             labelType.AutoSize = true;
             labelType.Font = new Font("Segoe UI", 12F);
             labelType.ForeColor = Color.FromArgb(90, 30, 30);
-            labelType.Location = new Point(20, 306);
+            labelType.Location = new Point(24, 306);
             labelType.Margin = new Padding(4, 0, 4, 0);
             labelType.Name = "labelType";
             labelType.Size = new Size(42, 21);
@@ -371,7 +370,7 @@
             cmbType.Location = new Point(24, 333);
             cmbType.Margin = new Padding(4, 3, 4, 3);
             cmbType.Name = "cmbType";
-            cmbType.Size = new Size(277, 29);
+            cmbType.Size = new Size(306, 29);
             cmbType.TabIndex = 25;
             // 
             // labelName
@@ -379,7 +378,7 @@
             labelName.AutoSize = true;
             labelName.Font = new Font("Segoe UI", 12F);
             labelName.ForeColor = Color.FromArgb(90, 30, 30);
-            labelName.Location = new Point(20, 225);
+            labelName.Location = new Point(24, 225);
             labelName.Margin = new Padding(4, 0, 4, 0);
             labelName.Name = "labelName";
             labelName.Size = new Size(36, 21);
@@ -400,7 +399,7 @@
             labelID.AutoSize = true;
             labelID.Font = new Font("Segoe UI", 12F);
             labelID.ForeColor = Color.FromArgb(90, 30, 30);
-            labelID.Location = new Point(20, 144);
+            labelID.Location = new Point(24, 144);
             labelID.Margin = new Padding(4, 0, 4, 0);
             labelID.Name = "labelID";
             labelID.Size = new Size(28, 21);
