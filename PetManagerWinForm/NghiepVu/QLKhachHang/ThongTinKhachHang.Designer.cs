@@ -61,6 +61,7 @@
             colPhoneNumber = new DataGridViewTextBoxColumn();
             colEmail = new DataGridViewTextBoxColumn();
             panelRight = new Panel();
+            btnThucungcuakhanghang = new Button();
             lblSearch = new Label();
             txtSearch = new TextBox();
             btnFind = new Button();
@@ -179,6 +180,7 @@
             // panelRight
             // 
             panelRight.BackColor = Color.FromArgb(255, 230, 230);
+            panelRight.Controls.Add(btnThucungcuakhanghang);
             panelRight.Controls.Add(lblSearch);
             panelRight.Controls.Add(txtSearch);
             panelRight.Controls.Add(btnFind);
@@ -205,6 +207,21 @@
             panelRight.Padding = new Padding(26, 22, 26, 22);
             panelRight.Size = new Size(964, 775);
             panelRight.TabIndex = 1;
+            // 
+            // btnThucungcuakhanghang
+            // 
+            btnThucungcuakhanghang.BackColor = Color.FromArgb(255, 210, 210);
+            btnThucungcuakhanghang.FlatAppearance.BorderSize = 0;
+            btnThucungcuakhanghang.FlatStyle = FlatStyle.Flat;
+            btnThucungcuakhanghang.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            btnThucungcuakhanghang.ForeColor = Color.DimGray;
+            btnThucungcuakhanghang.Location = new Point(131, 438);
+            btnThucungcuakhanghang.Name = "btnThucungcuakhanghang";
+            btnThucungcuakhanghang.Size = new Size(245, 30);
+            btnThucungcuakhanghang.TabIndex = 21;
+            btnThucungcuakhanghang.Text = "Thú cưng của khách hàng";
+            btnThucungcuakhanghang.UseVisualStyleBackColor = false;
+            btnThucungcuakhanghang.Click += btnThucungcuakhanghang_Click;
             // 
             // lblSearch
             // 
@@ -257,7 +274,7 @@
             // 
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblTitle.Location = new Point(18, 159);
+            lblTitle.Location = new Point(18, 101);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(211, 25);
             lblTitle.TabIndex = 13;
@@ -267,7 +284,7 @@
             // 
             labelSection.AutoSize = true;
             labelSection.Font = new Font("Segoe UI", 9F);
-            labelSection.Location = new Point(18, 167);
+            labelSection.Location = new Point(18, 109);
             labelSection.Name = "labelSection";
             labelSection.Size = new Size(0, 15);
             labelSection.TabIndex = 14;
@@ -276,7 +293,7 @@
             // 
             labelId.AutoSize = true;
             labelId.Font = new Font("Segoe UI", 11F);
-            labelId.Location = new Point(18, 204);
+            labelId.Location = new Point(18, 146);
             labelId.Name = "labelId";
             labelId.Size = new Size(27, 20);
             labelId.TabIndex = 15;
@@ -284,7 +301,7 @@
             // 
             // txtId
             // 
-            txtId.Location = new Point(131, 204);
+            txtId.Location = new Point(131, 146);
             txtId.Name = "txtId";
             txtId.ReadOnly = true;
             txtId.Size = new Size(246, 23);
@@ -294,7 +311,7 @@
             // 
             labelName.AutoSize = true;
             labelName.Font = new Font("Segoe UI", 11F);
-            labelName.Location = new Point(18, 244);
+            labelName.Location = new Point(18, 186);
             labelName.Name = "labelName";
             labelName.Size = new Size(35, 20);
             labelName.TabIndex = 16;
@@ -302,7 +319,7 @@
             // 
             // txtName
             // 
-            txtName.Location = new Point(131, 244);
+            txtName.Location = new Point(131, 186);
             txtName.Name = "txtName";
             txtName.Size = new Size(246, 23);
             txtName.TabIndex = 2;
@@ -311,7 +328,7 @@
             // 
             labelAddress.AutoSize = true;
             labelAddress.Font = new Font("Segoe UI", 11F);
-            labelAddress.Location = new Point(18, 284);
+            labelAddress.Location = new Point(18, 226);
             labelAddress.Name = "labelAddress";
             labelAddress.Size = new Size(58, 20);
             labelAddress.TabIndex = 17;
@@ -319,7 +336,7 @@
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(131, 284);
+            txtAddress.Location = new Point(131, 226);
             txtAddress.Name = "txtAddress";
             txtAddress.Size = new Size(246, 23);
             txtAddress.TabIndex = 3;
@@ -328,7 +345,7 @@
             // 
             labelPhone.AutoSize = true;
             labelPhone.Font = new Font("Segoe UI", 11F);
-            labelPhone.Location = new Point(18, 324);
+            labelPhone.Location = new Point(18, 266);
             labelPhone.Name = "labelPhone";
             labelPhone.Size = new Size(100, 20);
             labelPhone.TabIndex = 18;
@@ -336,7 +353,7 @@
             // 
             // txtPhoneNumber
             // 
-            txtPhoneNumber.Location = new Point(131, 324);
+            txtPhoneNumber.Location = new Point(131, 266);
             txtPhoneNumber.Name = "txtPhoneNumber";
             txtPhoneNumber.Size = new Size(246, 23);
             txtPhoneNumber.TabIndex = 4;
@@ -345,7 +362,7 @@
             // 
             labelEmail.AutoSize = true;
             labelEmail.Font = new Font("Segoe UI", 11F);
-            labelEmail.Location = new Point(18, 364);
+            labelEmail.Location = new Point(18, 306);
             labelEmail.Name = "labelEmail";
             labelEmail.Size = new Size(49, 20);
             labelEmail.TabIndex = 19;
@@ -353,7 +370,7 @@
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(131, 364);
+            txtEmail.Location = new Point(131, 306);
             txtEmail.Name = "txtEmail";
             txtEmail.Size = new Size(246, 23);
             txtEmail.TabIndex = 5;
@@ -365,7 +382,7 @@
             btnAdd.FlatStyle = FlatStyle.Flat;
             btnAdd.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnAdd.ForeColor = Color.DimGray;
-            btnAdd.Location = new Point(131, 404);
+            btnAdd.Location = new Point(131, 346);
             btnAdd.Name = "btnAdd";
             btnAdd.Size = new Size(114, 30);
             btnAdd.TabIndex = 6;
@@ -380,7 +397,7 @@
             btnUpdate.FlatStyle = FlatStyle.Flat;
             btnUpdate.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnUpdate.ForeColor = Color.DimGray;
-            btnUpdate.Location = new Point(262, 404);
+            btnUpdate.Location = new Point(262, 346);
             btnUpdate.Name = "btnUpdate";
             btnUpdate.Size = new Size(114, 30);
             btnUpdate.TabIndex = 7;
@@ -395,7 +412,7 @@
             btnDelete.FlatStyle = FlatStyle.Flat;
             btnDelete.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnDelete.ForeColor = Color.DimGray;
-            btnDelete.Location = new Point(131, 448);
+            btnDelete.Location = new Point(131, 390);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(114, 30);
             btnDelete.TabIndex = 8;
@@ -410,7 +427,7 @@
             btnRefresh.FlatStyle = FlatStyle.Flat;
             btnRefresh.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             btnRefresh.ForeColor = Color.DimGray;
-            btnRefresh.Location = new Point(262, 448);
+            btnRefresh.Location = new Point(262, 390);
             btnRefresh.Name = "btnRefresh";
             btnRefresh.Size = new Size(114, 30);
             btnRefresh.TabIndex = 20;
@@ -435,5 +452,6 @@
             panelRight.PerformLayout();
             ResumeLayout(false);
         }
+        private Button btnThucungcuakhanghang;
     }
 }
