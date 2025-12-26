@@ -20,6 +20,43 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
             this.Load += FormTinhLuong_Load;
             btnTinhLuong.Click += btnTinhLuong_Click;
             btnDong.Click += (s, e) => this.Close();
+
+            txtThuong.TextChanged += TinhLaiThucLanh;
+            txtPhat.TextChanged += TinhLaiThucLanh;
+
+            txtThuong.KeyPress += ChiChoNhapSo;
+            txtPhat.KeyPress += ChiChoNhapSo;
+        }
+        private void ChiChoNhapSo(object sender, KeyPressEventArgs e)
+        {
+            // Chỉ cho phép số, phím Backspace và dấu âm (nếu cần)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
+        }
+        private void TinhLaiThucLanh(object sender, EventArgs e)
+        {
+            try
+            {
+                // Lấy lương cơ bản
+                string strLuongCoBan = lblLuongCoBan.Text.Replace(" VNĐ", "").Replace(",", "").Trim();
+                if (!double.TryParse(strLuongCoBan, out double luongCoBan))
+                    return;
+
+                // Lấy phụ cấp
+                string strPhuCap = lblPhuCap.Text.Replace(" VNĐ", "").Replace(",", "").Trim();
+                double.TryParse(strPhuCap, out double phuCap);
+
+                // Lấy thưởng và phạt
+                double.TryParse(txtThuong.Text, out double thuong);
+                double.TryParse(txtPhat.Text, out double phat);
+
+                // Tính lương thực lãnh
+                double thucLanh = luongCoBan + phuCap + thuong - phat;
+                lblThucLanh.Text = thucLanh.ToString("N0") + " VNĐ";
+            }
+            catch { }
         }
 
         private void FormTinhLuong_Load(object sender, EventArgs e)
@@ -41,6 +78,7 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
 
             ResetForm();
         }
+
 
         private void TinhPhuCapTheoViTri()
         {
@@ -76,6 +114,10 @@ namespace PetManagerWinForm.NghiepVu.QLNhanVien
 
                 // Lấy dữ liệu chấm công từ database
                 DataTable dt = AttendanceDataAccess.GetAttendanceByMonth(employeeId, month, year);
+
+                DataView dv = dt.DefaultView;
+                dv.Sort = "Date ASC";
+                dt = dv.ToTable();
 
                 dataGridViewChiTiet.Rows.Clear();
                 double tongGio = 0;

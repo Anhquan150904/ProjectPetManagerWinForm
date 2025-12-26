@@ -59,6 +59,7 @@ namespace PetManagerWinForm.NghiepVu
         private void InitializeComponent()
         {
             pnlAddCus = new Panel();
+            btnSelectOldCustomer = new Button();
             lblAddTitle = new Label();
             lblCusName = new Label();
             lblAddr = new Label();
@@ -75,15 +76,16 @@ namespace PetManagerWinForm.NghiepVu
             nudProductQty = new NumericUpDown();
             btnAddProduct = new Button();
             pnlServices = new Panel();
+            txtChoosePet = new TextBox();
             lblService = new Label();
             cbServices = new ComboBox();
             nudServiceQty = new NumericUpDown();
+            btnChoosePet = new Button();
             btnAddService = new Button();
             pnlPets = new Panel();
             lblPet = new Label();
             cbPets = new ComboBox();
             btnAddPet = new Button();
-            btnChoosePet = new Button();
             lblSelectedPet = new Label();
             pnlCart = new Panel();
             dgvCart = new DataGridView();
@@ -107,6 +109,7 @@ namespace PetManagerWinForm.NghiepVu
             // 
             pnlAddCus.BackColor = Color.SeaShell;
             pnlAddCus.BorderStyle = BorderStyle.FixedSingle;
+            pnlAddCus.Controls.Add(btnSelectOldCustomer);
             pnlAddCus.Controls.Add(lblAddTitle);
             pnlAddCus.Controls.Add(lblCusName);
             pnlAddCus.Controls.Add(lblAddr);
@@ -122,78 +125,92 @@ namespace PetManagerWinForm.NghiepVu
             pnlAddCus.Size = new Size(537, 260);
             pnlAddCus.TabIndex = 1;
             // 
+            // btnSelectOldCustomer
+            // 
+            btnSelectOldCustomer.BackColor = Color.FromArgb(255, 210, 210);
+            btnSelectOldCustomer.FlatAppearance.BorderSize = 0;
+            btnSelectOldCustomer.FlatStyle = FlatStyle.Flat;
+            btnSelectOldCustomer.Location = new Point(368, 143);
+            btnSelectOldCustomer.Name = "btnSelectOldCustomer";
+            btnSelectOldCustomer.Size = new Size(150, 40);
+            btnSelectOldCustomer.TabIndex = 10;
+            btnSelectOldCustomer.Text = "Chọn khách hàng cũ";
+            btnSelectOldCustomer.UseVisualStyleBackColor = false;
+            btnSelectOldCustomer.Click += btnSelectOldCustomer_Click;
+            // 
             // lblAddTitle
             // 
             lblAddTitle.AutoSize = true;
             lblAddTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblAddTitle.Location = new Point(10, 5);
+            lblAddTitle.Location = new Point(10, 12);
             lblAddTitle.Name = "lblAddTitle";
-            lblAddTitle.Size = new Size(168, 20);
+            lblAddTitle.Size = new Size(101, 15);
             lblAddTitle.TabIndex = 0;
-            lblAddTitle.Text = "Thêm khách hàng mới:";
+            lblAddTitle.Text = "Chọn khách hàng";
+            lblAddTitle.Click += lblAddTitle_Click;
             // 
             // lblCusName
             // 
             lblCusName.AutoSize = true;
-            lblCusName.Location = new Point(10, 30);
+            lblCusName.Location = new Point(10, 45);
             lblCusName.Name = "lblCusName";
-            lblCusName.Size = new Size(35, 20);
+            lblCusName.Size = new Size(29, 15);
             lblCusName.TabIndex = 1;
             lblCusName.Text = "Tên:";
             // 
             // lblAddr
             // 
             lblAddr.AutoSize = true;
-            lblAddr.Location = new Point(10, 93);
+            lblAddr.Location = new Point(10, 94);
             lblAddr.Name = "lblAddr";
-            lblAddr.Size = new Size(58, 20);
+            lblAddr.Size = new Size(46, 15);
             lblAddr.TabIndex = 2;
             lblAddr.Text = "Địa chỉ:";
             // 
             // lblPhone
             // 
             lblPhone.AutoSize = true;
-            lblPhone.Location = new Point(10, 141);
+            lblPhone.Location = new Point(10, 143);
             lblPhone.Name = "lblPhone";
-            lblPhone.Size = new Size(39, 20);
+            lblPhone.Size = new Size(31, 15);
             lblPhone.TabIndex = 3;
             lblPhone.Text = "SĐT:";
             // 
             // lblEmail
             // 
             lblEmail.AutoSize = true;
-            lblEmail.Location = new Point(10, 191);
+            lblEmail.Location = new Point(10, 192);
             lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(49, 20);
+            lblEmail.Size = new Size(39, 15);
             lblEmail.TabIndex = 4;
             lblEmail.Text = "Email:";
             // 
             // txtCusName
             // 
-            txtCusName.Location = new Point(70, 30);
+            txtCusName.Location = new Point(70, 42);
             txtCusName.Name = "txtCusName";
-            txtCusName.Size = new Size(268, 27);
+            txtCusName.Size = new Size(268, 23);
             txtCusName.TabIndex = 5;
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(70, 93);
+            txtAddress.Location = new Point(70, 91);
             txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(268, 27);
+            txtAddress.Size = new Size(268, 23);
             txtAddress.TabIndex = 6;
             // 
             // txtPhone
             // 
-            txtPhone.Location = new Point(70, 141);
+            txtPhone.Location = new Point(70, 140);
             txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(268, 27);
+            txtPhone.Size = new Size(268, 23);
             txtPhone.TabIndex = 7;
             // 
             // txtEmail
             // 
-            txtEmail.Location = new Point(70, 191);
+            txtEmail.Location = new Point(70, 189);
             txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(268, 27);
+            txtEmail.Size = new Size(268, 23);
             txtEmail.TabIndex = 8;
             // 
             // btnAddCustomer
@@ -201,11 +218,11 @@ namespace PetManagerWinForm.NghiepVu
             btnAddCustomer.BackColor = Color.FromArgb(255, 210, 210);
             btnAddCustomer.FlatAppearance.BorderSize = 0;
             btnAddCustomer.FlatStyle = FlatStyle.Flat;
-            btnAddCustomer.Location = new Point(368, 95);
+            btnAddCustomer.Location = new Point(368, 69);
             btnAddCustomer.Name = "btnAddCustomer";
             btnAddCustomer.Size = new Size(150, 40);
             btnAddCustomer.TabIndex = 9;
-            btnAddCustomer.Text = "Thêm KH";
+            btnAddCustomer.Text = "Thêm khách hàng mới";
             btnAddCustomer.UseVisualStyleBackColor = false;
             btnAddCustomer.Click += btnAddCustomer_Click;
             // 
@@ -219,7 +236,7 @@ namespace PetManagerWinForm.NghiepVu
             pnlProducts.Controls.Add(btnAddProduct);
             pnlProducts.Location = new Point(636, 12);
             pnlProducts.Name = "pnlProducts";
-            pnlProducts.Size = new Size(690, 80);
+            pnlProducts.Size = new Size(701, 80);
             pnlProducts.TabIndex = 2;
             // 
             // lblProduct
@@ -227,7 +244,7 @@ namespace PetManagerWinForm.NghiepVu
             lblProduct.AutoSize = true;
             lblProduct.Location = new Point(10, 10);
             lblProduct.Name = "lblProduct";
-            lblProduct.Size = new Size(78, 20);
+            lblProduct.Size = new Size(63, 15);
             lblProduct.TabIndex = 0;
             lblProduct.Text = "Sản phẩm:";
             // 
@@ -235,7 +252,7 @@ namespace PetManagerWinForm.NghiepVu
             // 
             cbProducts.Location = new Point(100, 8);
             cbProducts.Name = "cbProducts";
-            cbProducts.Size = new Size(427, 28);
+            cbProducts.Size = new Size(448, 23);
             cbProducts.TabIndex = 1;
             // 
             // nudProductQty
@@ -243,13 +260,13 @@ namespace PetManagerWinForm.NghiepVu
             nudProductQty.Location = new Point(100, 40);
             nudProductQty.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudProductQty.Name = "nudProductQty";
-            nudProductQty.Size = new Size(120, 27);
+            nudProductQty.Size = new Size(120, 23);
             nudProductQty.TabIndex = 2;
             nudProductQty.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // btnAddProduct
             // 
-            btnAddProduct.Location = new Point(571, 31);
+            btnAddProduct.Location = new Point(571, 13);
             btnAddProduct.Name = "btnAddProduct";
             btnAddProduct.Size = new Size(91, 44);
             btnAddProduct.TabIndex = 3;
@@ -260,21 +277,31 @@ namespace PetManagerWinForm.NghiepVu
             // 
             pnlServices.BackColor = Color.PeachPuff;
             pnlServices.BorderStyle = BorderStyle.FixedSingle;
+            pnlServices.Controls.Add(txtChoosePet);
             pnlServices.Controls.Add(lblService);
             pnlServices.Controls.Add(cbServices);
             pnlServices.Controls.Add(nudServiceQty);
+            pnlServices.Controls.Add(btnChoosePet);
             pnlServices.Controls.Add(btnAddService);
             pnlServices.Location = new Point(636, 104);
             pnlServices.Name = "pnlServices";
-            pnlServices.Size = new Size(690, 80);
+            pnlServices.Size = new Size(701, 80);
             pnlServices.TabIndex = 3;
+            // 
+            // txtChoosePet
+            // 
+            txtChoosePet.Location = new Point(226, 40);
+            txtChoosePet.Name = "txtChoosePet";
+            txtChoosePet.Size = new Size(230, 23);
+            txtChoosePet.TabIndex = 4;
+            txtChoosePet.TextAlign = HorizontalAlignment.Right;
             // 
             // lblService
             // 
             lblService.AutoSize = true;
             lblService.Location = new Point(10, 10);
             lblService.Name = "lblService";
-            lblService.Size = new Size(61, 20);
+            lblService.Size = new Size(50, 15);
             lblService.TabIndex = 0;
             lblService.Text = "Dịch vụ:";
             // 
@@ -282,7 +309,7 @@ namespace PetManagerWinForm.NghiepVu
             // 
             cbServices.Location = new Point(100, 8);
             cbServices.Name = "cbServices";
-            cbServices.Size = new Size(427, 28);
+            cbServices.Size = new Size(356, 23);
             cbServices.TabIndex = 1;
             // 
             // nudServiceQty
@@ -290,13 +317,22 @@ namespace PetManagerWinForm.NghiepVu
             nudServiceQty.Location = new Point(100, 40);
             nudServiceQty.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudServiceQty.Name = "nudServiceQty";
-            nudServiceQty.Size = new Size(120, 27);
+            nudServiceQty.Size = new Size(120, 23);
             nudServiceQty.TabIndex = 2;
             nudServiceQty.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
+            // btnChoosePet
+            // 
+            btnChoosePet.Location = new Point(475, 11);
+            btnChoosePet.Name = "btnChoosePet";
+            btnChoosePet.Size = new Size(90, 42);
+            btnChoosePet.TabIndex = 3;
+            btnChoosePet.Text = "Chọn Pet";
+            btnChoosePet.Click += btnChoosePet_Click;
+            // 
             // btnAddService
             // 
-            btnAddService.Location = new Point(571, 31);
+            btnAddService.Location = new Point(571, 10);
             btnAddService.Name = "btnAddService";
             btnAddService.Size = new Size(91, 44);
             btnAddService.TabIndex = 3;
@@ -310,52 +346,44 @@ namespace PetManagerWinForm.NghiepVu
             pnlPets.Controls.Add(lblPet);
             pnlPets.Controls.Add(cbPets);
             pnlPets.Controls.Add(btnAddPet);
-            // new choose button and label
-            btnChoosePet = new Button();
-            btnChoosePet.Location = new Point(470, 33);
-            btnChoosePet.Name = "btnChoosePet";
-            btnChoosePet.Size = new Size(90, 42);
-            btnChoosePet.TabIndex = 3;
-            btnChoosePet.Text = "Chọn Pet";
-            btnChoosePet.Click += btnChoosePet_Click;
-            pnlPets.Controls.Add(btnChoosePet);
-
-            lblSelectedPet = new Label();
-            lblSelectedPet.AutoSize = true;
-            lblSelectedPet.Location = new Point(100, 45);
-            lblSelectedPet.Name = "lblSelectedPet";
-            lblSelectedPet.Size = new Size(0, 20);
-            lblSelectedPet.TabIndex = 4;
             pnlPets.Controls.Add(lblSelectedPet);
             pnlPets.Location = new Point(636, 190);
             pnlPets.Name = "pnlPets";
-            pnlPets.Size = new Size(690, 80);
+            pnlPets.Size = new Size(701, 80);
             pnlPets.TabIndex = 4;
             // 
             // lblPet
             // 
             lblPet.AutoSize = true;
-            lblPet.Location = new Point(10, 10);
+            lblPet.Location = new Point(10, 32);
             lblPet.Name = "lblPet";
-            lblPet.Size = new Size(73, 20);
+            lblPet.Size = new Size(61, 15);
             lblPet.TabIndex = 0;
             lblPet.Text = "Thú cưng:";
             // 
             // cbPets
             // 
-            cbPets.Location = new Point(100, 8);
+            cbPets.Location = new Point(100, 29);
             cbPets.Name = "cbPets";
-            cbPets.Size = new Size(427, 28);
+            cbPets.Size = new Size(448, 23);
             cbPets.TabIndex = 1;
             // 
             // btnAddPet
             // 
-            btnAddPet.Location = new Point(571, 33);
+            btnAddPet.Location = new Point(571, 18);
             btnAddPet.Name = "btnAddPet";
             btnAddPet.Size = new Size(91, 42);
             btnAddPet.TabIndex = 2;
             btnAddPet.Text = "Thêm";
             btnAddPet.Click += btnAddPet_Click;
+            // 
+            // lblSelectedPet
+            // 
+            lblSelectedPet.AutoSize = true;
+            lblSelectedPet.Location = new Point(100, 45);
+            lblSelectedPet.Name = "lblSelectedPet";
+            lblSelectedPet.Size = new Size(0, 15);
+            lblSelectedPet.TabIndex = 4;
             // 
             // pnlCart
             // 
@@ -408,7 +436,7 @@ namespace PetManagerWinForm.NghiepVu
             lblTotal.AutoSize = true;
             lblTotal.Location = new Point(10, 20);
             lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(75, 20);
+            lblTotal.Size = new Size(61, 15);
             lblTotal.TabIndex = 0;
             lblTotal.Text = "Tổng tiền:";
             // 
@@ -417,7 +445,7 @@ namespace PetManagerWinForm.NghiepVu
             txtTotal.Location = new Point(100, 18);
             txtTotal.Name = "txtTotal";
             txtTotal.ReadOnly = true;
-            txtTotal.Size = new Size(150, 27);
+            txtTotal.Size = new Size(150, 23);
             txtTotal.TabIndex = 1;
             // 
             // btnThanhToan
@@ -460,5 +488,7 @@ namespace PetManagerWinForm.NghiepVu
             pnlFooter.PerformLayout();
             ResumeLayout(false);
         }
+        private TextBox txtChoosePet;
+        private Button btnSelectOldCustomer;
     }
 }
