@@ -283,12 +283,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
                 colSerType.DataPropertyName = "Type";
                 colSerPrice.DataPropertyName = "Price";
 
-                // populate STT
-                for (int i = 0; i < dgvSer.Rows.Count; i++)
-                {
-                    dgvSer.Rows[i].Cells["colIndex"].Value = (i + 1).ToString();
-                }
-
                 return;
             }
 
@@ -312,11 +306,6 @@ namespace PetManagerWinForm.NghiepVu.QLDichVu
             colSerType.DataPropertyName = "Type";
             colSerPrice.DataPropertyName = "Price";
 
-            // populate STT
-            for (int i = 0; i < dgvSer.Rows.Count; i++)
-            {
-                dgvSer.Rows[i].Cells["colIndex"].Value = (i + 1).ToString();
-            }
         }
 
         public void Refresh()
