@@ -59,6 +59,7 @@ namespace PetManagerWinForm.NghiepVu
         private void InitializeComponent()
         {
             pnlAddCus = new Panel();
+            btnSelectOldCustomer = new Button();
             lblAddTitle = new Label();
             lblCusName = new Label();
             lblAddr = new Label();
@@ -93,7 +94,6 @@ namespace PetManagerWinForm.NghiepVu
             lblTotal = new Label();
             txtTotal = new TextBox();
             btnThanhToan = new Button();
-            btnSelectOldCustomer = new Button();
             pnlAddCus.SuspendLayout();
             pnlProducts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nudProductQty).BeginInit();
@@ -125,15 +125,29 @@ namespace PetManagerWinForm.NghiepVu
             pnlAddCus.Size = new Size(537, 260);
             pnlAddCus.TabIndex = 1;
             // 
+            // btnSelectOldCustomer
+            // 
+            btnSelectOldCustomer.BackColor = Color.FromArgb(255, 210, 210);
+            btnSelectOldCustomer.FlatAppearance.BorderSize = 0;
+            btnSelectOldCustomer.FlatStyle = FlatStyle.Flat;
+            btnSelectOldCustomer.Location = new Point(368, 143);
+            btnSelectOldCustomer.Name = "btnSelectOldCustomer";
+            btnSelectOldCustomer.Size = new Size(150, 40);
+            btnSelectOldCustomer.TabIndex = 10;
+            btnSelectOldCustomer.Text = "Chọn khách hàng cũ";
+            btnSelectOldCustomer.UseVisualStyleBackColor = false;
+            btnSelectOldCustomer.Click += btnSelectOldCustomer_Click;
+            // 
             // lblAddTitle
             // 
             lblAddTitle.AutoSize = true;
             lblAddTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblAddTitle.Location = new Point(10, 5);
+            lblAddTitle.Location = new Point(10, 12);
             lblAddTitle.Name = "lblAddTitle";
-            lblAddTitle.Size = new Size(133, 15);
+            lblAddTitle.Size = new Size(101, 15);
             lblAddTitle.TabIndex = 0;
-            lblAddTitle.Text = "Thêm khách hàng mới:";
+            lblAddTitle.Text = "Chọn khách hàng";
+            lblAddTitle.Click += lblAddTitle_Click;
             // 
             // lblCusName
             // 
@@ -444,18 +458,6 @@ namespace PetManagerWinForm.NghiepVu
             btnThanhToan.Text = "THANH TOÁN";
             btnThanhToan.UseVisualStyleBackColor = false;
             btnThanhToan.Click += btnThanhToan_Click;
-            // 
-            // btnSelectOldCustomer
-            // 
-            btnSelectOldCustomer.BackColor = Color.FromArgb(255, 210, 210);
-            btnSelectOldCustomer.FlatAppearance.BorderSize = 0;
-            btnSelectOldCustomer.FlatStyle = FlatStyle.Flat;
-            btnSelectOldCustomer.Location = new Point(368, 143);
-            btnSelectOldCustomer.Name = "btnSelectOldCustomer";
-            btnSelectOldCustomer.Size = new Size(150, 40);
-            btnSelectOldCustomer.TabIndex = 10;
-            btnSelectOldCustomer.Text = "Chọn khách hàng cũ";
-            btnSelectOldCustomer.UseVisualStyleBackColor = false;
             // 
             // FrmThanhToan
             // 
