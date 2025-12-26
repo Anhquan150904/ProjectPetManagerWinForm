@@ -27,17 +27,14 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
 
         private void ThuCungChuaBan_Load(object sender, EventArgs e)
         {
-            try
-            {
+            try {
                 string connStr = ConfigurationManager.ConnectionStrings["PetDb"].ConnectionString;
                 _petController = new PetController(connStr); // Khởi tạo BLL
 
 
                 // Tải dữ liệu
                 LoadPets();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MessageBox.Show("Không thể tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -83,14 +80,12 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
             // Xử lý click nút (Nếu bạn đã thêm các nút vào GridView)
             string columnName = dgvPets.Columns[e.ColumnIndex].Name;
 
-            switch (columnName)
-            {
+            switch (columnName) {
                 // Logic xử lý nút trong Gridview: XÓA
                 case "btnDelete":
                     var confirmDelete = MessageBox.Show($"Bạn có chắc muốn xóa {petName}?",
                                                         "Xác nhận", MessageBoxButtons.YesNo);
-                    if (confirmDelete == DialogResult.Yes)
-                    {
+                    if (confirmDelete == DialogResult.Yes) {
                         bool success = _petController.DeletePet(petId); // Gọi BLL
                         MessageBox.Show(success ? "Xóa thành công!" : "Xóa thất bại!");
                         if (success) LoadPets();
@@ -104,8 +99,7 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            try
-            {
+            try {
                 // Lấy data từ TextBox
                 string name = txtName.Text;
                 string type = txtType.Text;
@@ -117,17 +111,14 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
 
                 if (success)
                     LoadPets();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MessageBox.Show("Lỗi khi thêm: " + ex.Message);
             }
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            try
-            {
+            try {
                 // Lấy data từ TextBox
                 int id = Convert.ToInt32(txtId.Text);
                 string name = txtName.Text;
@@ -140,37 +131,30 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
 
                 if (success)
                     LoadPets();
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MessageBox.Show("Lỗi khi cập nhật: " + ex.Message);
             }
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            try
-            {
+            try {
                 int id = Convert.ToInt32(txtId.Text);
-                if (id <= 0)
-                {
+                if (id <= 0) {
                     MessageBox.Show("Vui lòng chọn thú cưng từ lưới trước.");
                     return;
                 }
 
                 var confirmDelete = MessageBox.Show($"Bạn có chắc muốn xóa thú cưng ID {id}?",
                                                     "Xác nhận", MessageBoxButtons.YesNo);
-                if (confirmDelete == DialogResult.Yes)
-                {
+                if (confirmDelete == DialogResult.Yes) {
                     bool success = _petController.DeletePet(id); // Gọi BLL
                     MessageBox.Show(success ? "Xóa thành công!" : "Xóa thất bại!");
                     if (success)
                         LoadPets();
                     Refresh();
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MessageBox.Show("Lỗi khi xóa: " + ex.Message);
             }
         }
@@ -180,26 +164,21 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
         {
             string keyword = txtSearch.Text;
 
-            if (string.IsNullOrWhiteSpace(keyword))
-            {
+            if (string.IsNullOrWhiteSpace(keyword)) {
                 MessageBox.Show("Vui lòng nhập từ khóa tìm kiếm.");
                 return;
             }
 
-            try
-            {
+            try {
                 // Gọi hàm SearchPetsNotSold mới trong BLL
                 DataTable dt = _petController.SearchPetsNotSold(keyword);
 
                 dgvPets.DataSource = dt;
 
-                if (dt.Rows.Count == 0)
-                {
+                if (dt.Rows.Count == 0) {
                     MessageBox.Show("Không tìm thấy kết quả nào.");
                 }
-            }
-            catch (Exception ex)
-            {
+            } catch (Exception ex) {
                 MessageBox.Show("Lỗi khi tìm kiếm: " + ex.Message);
             }
         }
@@ -214,6 +193,11 @@ namespace PetManagerWinForm.NghiepVu.QLThuCung
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             Refresh();
+        }
+
+        private void dgvPets_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

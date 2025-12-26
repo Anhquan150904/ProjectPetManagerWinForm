@@ -32,8 +32,7 @@ namespace PetManagerWinForm
         private void SetActiveButton(Button btn)
         {
             // Nếu có nút cũ -> reset màu
-            if (currentButton != null)
-            {
+            if (currentButton != null) {
                 currentButton.BackColor = Color.FromArgb(255, 224, 192);
             }
 
@@ -54,11 +53,7 @@ namespace PetManagerWinForm
             LoadForm(new ThuCungDaBan());
         }
 
-        private void btnThuCungKhachHang_Click(object sender, EventArgs e)
-        {
-            SetActiveButton((Button)sender);
-            LoadForm(new QLThuCungDichVu());
-        }
+
 
         private void btnKhachHang_Click(object sender, EventArgs e)
         {
@@ -96,5 +91,6 @@ namespace PetManagerWinForm
             LoadForm(new FrmThanhToan());
         }
 
+     
     }
 }
