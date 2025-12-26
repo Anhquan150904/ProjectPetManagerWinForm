@@ -187,7 +187,9 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            ThuCungCuaKhangHang frm = new ThuCungCuaKhangHang();
+            int customerId = int.Parse(txtId.Text);
+            string customerName = txtName.Text;
+            ThuCungCuaKhangHang frm = new ThuCungCuaKhangHang(customerId, customerName);
             frm.ShowDialog();
         }
     }

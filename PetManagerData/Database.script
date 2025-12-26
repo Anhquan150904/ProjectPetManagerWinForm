@@ -25,18 +25,13 @@ CREATE TABLE Pets (
     Price DECIMAL(18,2),
     IsSold BIT DEFAULT 0     -- 0 = chưa bán, 1 = đã bán
 );
-
-
+GO
 
 INSERT INTO Pets (PetName, Type, Age, Price, IsSold)
 VALUES
 ('Milu', 'Dog', 2, 1500000, 0),
 ('Tom', 'Cat', 1, 800000, 1),
 ('Bun', 'Rabbit', 1, 500000, 0);
-
-
-
-
 
 -- Customer
 CREATE TABLE Customer (
@@ -50,7 +45,11 @@ GO
 
 INSERT INTO Customer (Cus_Name, Address, Cus_PhoneNumber, Cus_Email)
 VALUES 
-(N'Long Đại Đế', N'Thái Bình', '0123456789', 'longdaide@gmail.com')
+(N'Long Đại Đế', N'Thái Bình', '0123456789', 'longdaide@gmail.com'),
+(N'Long Đại Vương', N'Hà Nội', '0901234567', 'longdaivuong@gmail.com'),
+(N'Long Đại Ca', N'Hồ Chí Minh', '0912345678', 'longdaica@gmail.com'),
+(N'Long Đại Hiệp', N'Trung Quốc', '0987654321', 'longdaihiep@gmail.com');
+GO
 
 -- Product
 CREATE TABLE Product (
@@ -61,7 +60,7 @@ CREATE TABLE Product (
     Country NVARCHAR(50),
     Condition NVARCHAR(50)
 );
-
+GO
 -- Service
 CREATE TABLE Service (
     ServiceId INT IDENTITY PRIMARY KEY,
@@ -69,6 +68,18 @@ CREATE TABLE Service (
     Type NVARCHAR(50),
     Price DECIMAL(18,2)
 );
+GO
+
+IF NOT EXISTS (SELECT 1 FROM Service WHERE ServiceName = N'Khám sức khỏe')
+BEGIN
+    INSERT INTO Service (ServiceName, Type, Price)
+    VALUES 
+    (N'Khám sức khỏe', N'Medical', 200000.00),
+    (N'Tiêm phòng', N'Medical', 150000.00),
+    (N'Cắt móng', N'Grooming', 50000.00),
+    (N'Vệ sinh răng miệng', N'Grooming', 250000.00);
+END
+GO
 
 -- Services: table + sample data + stored procedures
 USE PetManager;
@@ -93,14 +104,14 @@ END
 GO
 
 -- Insert sample data if table empty
-IF EXISTS (SELECT 1 FROM dbo.Service) = 0
+IF NOT EXISTS (SELECT 1 FROM dbo.Service)
 BEGIN
     INSERT INTO dbo.Service (ServiceName, Type, Price)
     VALUES
       (N'Tắm', N'Spa', 300000.00),
       (N'Cắt tỉa lông', N'Spa', 100000.00),
-      (N'Huấn luyện', N'Behavior', 500000.00);
-
+      (N'Huấn luyện', N'Behavior', 500000.00),
+	  (N'Vệ sinh răng miệng', N'Grooming', 250000.00);
     PRINT 'Inserted sample Service rows';
 END
 GO
@@ -237,6 +248,7 @@ CREATE TABLE Invoice (
     CreatedAt DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (Cus_Id) REFERENCES Customer(Cus_Id)
 );
+GO
 
 -- InvoiceDetail
 CREATE TABLE InvoiceDetail (
@@ -249,7 +261,7 @@ CREATE TABLE InvoiceDetail (
     Status INT DEFAULT 0, -- 0 = chưa hoàn tiền, 1 = đã hoàn tiền
     FOREIGN KEY (InvoiceId) REFERENCES Invoice(InvoiceId)
 );
-
+GO
 
   CREATE TABLE PetCus (
     Pet_Id INT IDENTITY PRIMARY KEY,
@@ -259,6 +271,17 @@ CREATE TABLE InvoiceDetail (
     Pet_Breed NVARCHAR(100), -- Giống/Loài (Thay thế cho Type trong mẫu)
     FOREIGN KEY (Cus_Id) REFERENCES Customer(Cus_Id)
 );
+GO
+INSERT INTO PetCus (Cus_Id, Pet_Name, Pet_Age, Pet_Breed)
+VALUES 
+(1, N'Gâu Gâu', 2, N'Poodle'),   
+(1, N'Mimi', 1, N'Mèo Anh'),        
+(2, N'Lu', 3, N'Husky'),           
+(2, N'Bông', 1, N'Samoyed'),        
+(3, N'Kiki', 4, N'Chihuahua'),       
+(3, N'Mập', 2, N'Mèo Ba Tư'),
+(4, N'Bingchilling', 2, N'Chó Ngao');
+GO
 
 CREATE TABLE CustomerPetService (
     CPS_Id INT IDENTITY PRIMARY KEY,
@@ -276,7 +299,23 @@ CREATE TABLE CustomerPetService (
     -- Đảm bảo mỗi thú cưng chỉ có thể có một dịch vụ 'In Use' tại một thời điểm (tùy theo logic nghiệp vụ)
     -- UNIQUE (Pet_Id, ServiceId, Status) - Tùy chọn nếu cần ràng buộc chi tiết hơn
 );
+GO
 
+INSERT INTO CustomerPetService (Cus_Id, Pet_Id, ServiceId, StartDate, CompletionDate, Status)
+VALUES 
+(1, 1, 2, '2024-12-01', '2024-12-15', 'Done'),  
+(1, 2, 1, '2024-11-20', '2024-11-25', 'Done'), 
+(2, 4, 2, '2024-12-01', '2024-12-15', 'Done'); 
+GO
+
+INSERT INTO CustomerPetService (Cus_Id, Pet_Id, ServiceId, StartDate, Status)
+VALUES 
+(1, 1, 1, '2024-12-20', 'In Use'),  
+(1, 2, 2, '2024-12-20', 'In Use'), 
+(3, 6, 1, '2024-12-18', 'In Use'),  
+(3, 6, 2, '2024-12-18', 'In Use'),  
+(2, 3, 1, '2024-12-22', 'In Use');
+GO
 
 INSERT INTO Product (product_Name, Quantity, Price, Country, Condition)
 VALUES
