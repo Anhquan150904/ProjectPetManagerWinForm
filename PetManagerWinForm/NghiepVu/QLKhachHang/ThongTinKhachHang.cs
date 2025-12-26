@@ -179,10 +179,9 @@ namespace PetManagerWinForm.NghiepVu.QLKhachHang
             txtEmail.Text = "";
             txtSearch.Text = "";
         }
-
-        private void btnTransHis_Click(object sender, EventArgs e)
+        private void btnThucungcuakhanghang_Click(object sender, EventArgs e)
         {
-            // Code xử lý lịch sử
+
         }
     }
 }
